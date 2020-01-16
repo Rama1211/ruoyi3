@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MisStudentFacultyMapper">
+
+	<resultMap type="MisFaculty" id="MisFacultyResult">
+		<id     property="facultyId"        column="id"       />
+		<result property="facultyName"      column="faculty_name"     />
+		<result property="facultyHead"      column="faculty_head"     />
+	</resultMap>
+
+	<sql id="selectFacultyVo">
+		select * from mis_faculty
+	</sql>
+
+	<select id="selectFacultyList" resultMap="MisFacultyResult">
+		<include refid="selectFacultyVo"/>
+	</select>
+
+</mapper> 
