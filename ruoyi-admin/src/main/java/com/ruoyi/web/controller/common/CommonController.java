@@ -2,12 +2,18 @@ package com.ruoyi.web.controller.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.domain.MisFaculty;
+import com.ruoyi.system.domain.MisProfession;
+import com.ruoyi.system.service.MisStudentFacultyService;
+import com.ruoyi.system.service.MisStudentProfessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.config.Global;
@@ -17,6 +23,9 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 通用请求处理
@@ -31,9 +40,15 @@ public class CommonController
     @Autowired
     private ServerConfig serverConfig;
 
+    @Autowired
+    private MisStudentFacultyService facultyService;
+
+    @Autowired
+    private MisStudentProfessionService professionService;
+
     /**
      * 通用下载请求
-     * 
+     *
      * @param fileName 文件名称
      * @param delete 是否删除
      */
@@ -109,4 +124,28 @@ public class CommonController
                 "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, downloadName));
         FileUtils.writeBytes(downloadPath, response.getOutputStream());
     }
+
+    /**
+     *院系下拉框查询
+     */
+    @GetMapping("/common/studentFaculty")
+    public @ResponseBody List<MisFaculty> studentFaculty()
+    {
+        List<MisFaculty> list = facultyService.selectFacultyList();
+        return list ;
+    }
+
+    /**
+     *专业下拉框查询
+     */
+    @GetMapping("/common/studentProfession")
+    public @ResponseBody List<MisProfession> studentProfession(String facultyId)
+    {
+            if(facultyId.equals("null")){
+                facultyId="1";
+            }
+        List<MisProfession> list =professionService.selectProfessionList(facultyId);
+        return list ;
+    }
+
 }
