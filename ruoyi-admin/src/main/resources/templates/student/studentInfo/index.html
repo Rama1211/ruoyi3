@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('学生列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="student-form">
+					<div class="select-list">
+
+						<ul>
+							<li>
+								院系：<input type="text" name="faculty"/>
+							</li>
+							<li>
+								专业：<input type="text" name="profession"/>
+							</li>
+							<li>
+								学号：<input type="text" name="studentCode"/>
+							</li>
+							<li>
+								姓名：<input type="text" name="studentName"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="student:studentInfo:add">
+	                <i class="fa fa-plus"></i> 新增
+	            </a>
+				<!--<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:student:edit">-->
+		            <!--<i class="fa fa-edit"></i> 修改-->
+		        <!--</a>-->
+				<a class="btn btn-info" onclick="$.table.importExcel()">
+					<i class="fa fa-upload"></i> 导入
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="student:studentInfo:export">
+		            <i class="fa fa-download"></i> 导出
+		        </a>
+	        </div>
+	        
+	        <div class="col-sm-12 select-table table-striped">
+			    <table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+		var editFlag = [[${@permission.hasPermi('student:studentInfo:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('student:studentInfo:remove')}]];
+		var datas = [[${@dict.getType('sys_normal_disable')}]];
+		var prefix = ctx + "student/studentInfo";
+
+		$(function() {
+		    var options = {
+		        url: prefix + "/list",
+		        createUrl: prefix + "/add",
+		        updateUrl: prefix + "/edit/{id}",
+		        removeUrl: prefix + "/remove",
+		        exportUrl: prefix + "/export",
+                importUrl: prefix + "/importData",
+		     //   sortName: "studentSort",
+		        modalName: "学生信息",
+		        columns: [{
+		            checkbox: true
+		        },
+		        {
+		            field: 'studentId',
+		            title: '学号'
+		        },
+		        {
+		            field: 'studentName',
+		            title: '姓名',
+		            sortable: true
+		        },
+		        {
+		            field: 'studentFaculty',
+		            title: '院系',
+		            sortable: true
+		        },
+		        {
+		            field: 'studentProfession',
+		            title: '专业',
+		            sortable: true
+		        },
+		        {
+		            field: 'floorId',
+		            title: '楼栋',
+		            align: 'center',
+		        },
+                    {
+                        field: 'apartmentId',
+                        title: '宿舍号',
+                        align: 'center',
+                    },
+                    {
+                        field: 'studentYear',
+                        title: '入学年份',
+                        align: 'center',
+                    },
+                    {
+                        field: 'time',
+                        title: '入住时间',
+                        align: 'center',
+                    },
+                    {
+                        field: 'gender',
+                        title: '性别',
+                        align: 'center',
+                    },
+		        {
+		            field: 'createTime',
+		            title: '创建时间',
+		            sortable: true
+		        }
+
+				]
+		    };
+		    $.table.init(options);
+		});
+	</script>
+
+</body>
+<!-- 导入区域 -->
+<script id="importTpl" type="text/template">
+	<form enctype="multipart/form-data" class="mt20 mb10">
+		<div class="col-xs-offset-1">
+			<input type="file" id="file" name="file"/>
+			<div class="mt10 pt5">
+				<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+				&nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+			</div>
+			<font color="red" class="pull-left mt10">
+				提示：仅允许导入“xls”或“xlsx”格式文件！
+			</font>
+		</div>
+	</form>
+</script>
+</html>
