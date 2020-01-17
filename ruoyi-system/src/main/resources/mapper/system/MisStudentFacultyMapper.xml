@@ -14,8 +14,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from mis_faculty
 	</sql>
 
+	<sql id="selectFacultyVo2">
+		select faculty_name  from mis_faculty
+	</sql>
+
 	<select id="selectFacultyList" resultMap="MisFacultyResult">
 		<include refid="selectFacultyVo"/>
+	</select>
+
+	<select id="selectFacultyByid" resultType="String">
+		<include refid="selectFacultyVo2"/>
+			WHERE id=#{FacultyId}
 	</select>
 
 </mapper> 

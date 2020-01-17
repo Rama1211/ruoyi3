@@ -24,4 +24,9 @@ public class MisStudentFacultyServiceImpl implements MisStudentFacultyService
     public List<MisFaculty> selectFacultyList() {
         return studentFacultyMapper.selectFacultyList();
     }
+
+    @Override
+    public String selectFacultyByid(String FacultyId) {
+        return studentFacultyMapper.selectFacultyByid(FacultyId);
+    }
 }

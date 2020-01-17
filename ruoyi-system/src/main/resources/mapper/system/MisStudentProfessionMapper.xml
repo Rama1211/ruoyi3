@@ -14,9 +14,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from mis_profession
 	</sql>
 
+	<sql id="selectProfessionVo2">
+		select profession_name  from mis_profession
+	</sql>
+
+
 	<select id="selectProfessionList" resultMap="MisProfessionResult">
 		<include refid="selectProfessionVo"/>
 		where faculty_id=#{facultyId}
 	</select>
+
+	<select id="selectProfessionById" resultType="String">
+		<include refid="selectProfessionVo2"/>
+		where id=#{ProfessionId}
+	</select>
+
 
 </mapper> 

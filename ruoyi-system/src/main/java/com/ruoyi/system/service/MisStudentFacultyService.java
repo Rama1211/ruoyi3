@@ -19,6 +19,11 @@ public interface MisStudentFacultyService
      */
     public List<MisFaculty> selectFacultyList();
 
+    /**
+     * 根据id查询院系名称集合
+     */
+    public String selectFacultyByid(String FacultyId);
+
 
 
 }

@@ -22,5 +22,8 @@ public interface MisStudentProfessionMapper
     public List<MisProfession> selectProfessionList(String facultyId);
 
 
-
+    /**
+     * 根据id查询专业名称
+     */
+    public String selectProfessionById(String ProfessionId);
 }

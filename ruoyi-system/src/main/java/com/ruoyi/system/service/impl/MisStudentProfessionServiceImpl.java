@@ -28,4 +28,9 @@ public class MisStudentProfessionServiceImpl implements MisStudentProfessionServ
     public List<MisProfession> selectProfessionList(String facultyId) {
         return professionMapper.selectProfessionList(facultyId);
     }
+
+    @Override
+    public String selectProfessionByid(String ProfessionId) {
+        return professionMapper.selectProfessionById(ProfessionId);
+    }
 }

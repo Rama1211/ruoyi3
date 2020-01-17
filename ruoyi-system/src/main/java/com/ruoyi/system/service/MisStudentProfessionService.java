@@ -19,4 +19,9 @@ public interface MisStudentProfessionService
      */
     public List<MisProfession> selectProfessionList(String facultyId);
 
+    /**
+     * 根据id查询专业名称
+     */
+    public String selectProfessionByid(String ProfessionId);
+
 }
