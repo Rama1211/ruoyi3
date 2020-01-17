@@ -19,44 +19,44 @@ public class MisStudent extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 学号 */
-    @Excel(name = "学号", cellType = ColumnType.NUMERIC)
+    @Excel(name = "学号", cellType = ColumnType.STRING)
     private Long studentId;
 
     /** 姓名 */
-    @Excel(name = "姓名",cellType = ColumnType.NUMERIC)
+    @Excel(name = "姓名",cellType = ColumnType.STRING)
     private String studentName;
 
     /** 院系 */
-    @Excel(name = "院系",cellType = ColumnType.NUMERIC)
+    @Excel(name = "院系",cellType = ColumnType.STRING)
     private String studentFaculty;
 
     /** 专业 */
-    @Excel(name = "专业", cellType = ColumnType.NUMERIC)
+    @Excel(name = "专业", cellType = ColumnType.STRING)
     private String studentProfession;
 
     /**班级 */
-    @Excel(name = "班级",  cellType = ColumnType.NUMERIC)
+    @Excel(name = "班级",  cellType = ColumnType.STRING)
     private String studentClass;
 
     /**宿舍号 */
-    @Excel(name = "宿舍号",  cellType = ColumnType.NUMERIC)
+    @Excel(name = "宿舍号",  cellType = ColumnType.STRING,type = Excel.Type.EXPORT)
     private String apartmentId;
 
     /**入学年份 */
-    @Excel(name = "入学年份",  cellType = ColumnType.NUMERIC)
+    @Excel(name = "入学年份",  cellType = ColumnType.STRING)
     private String studentYear;
 
     /**入住日期 */
-    @Excel(name = "入住日期",  cellType = ColumnType.NUMERIC)
+    @Excel(name = "入住日期",  cellType = ColumnType.STRING)
     private String time;
 
 
     /**性别 */
-    @Excel(name = "性别",  cellType = ColumnType.NUMERIC)
+    @Excel(name = "性别",  cellType = ColumnType.STRING)
     private String gender;
 
     /**楼栋号 */
-    @Excel(name = "楼栋号",  cellType = ColumnType.NUMERIC)
+    @Excel(name = "楼栋号",  cellType = ColumnType.STRING,type = Excel.Type.EXPORT)
     private String floorId;
 
     public static long getSerialVersionUID() {
