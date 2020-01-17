@@ -21,11 +21,16 @@ public class MiFloor extends BaseEntity
     @Excel(name = "楼栋编号",cellType = ColumnType.STRING)
     private String floorName;
 
+    /** 对应校区id */
+    @Excel(name = "校区id",cellType = ColumnType.STRING)
+    private String canpusId;
+
     @Override
     public String toString() {
         return "MiFloor{" +
                 "floorId='" + floorId + '\'' +
                 ", floorName='" + floorName + '\'' +
+                ", canpusId='" + canpusId + '\'' +
                 '}';
     }
 
@@ -47,5 +52,13 @@ public class MiFloor extends BaseEntity
 
     public void setFloorName(String floorName) {
         this.floorName = floorName;
+    }
+
+    public String getCanpusId() {
+        return canpusId;
+    }
+
+    public void setCanpusId(String canpusId) {
+        this.canpusId = canpusId;
     }
 }
