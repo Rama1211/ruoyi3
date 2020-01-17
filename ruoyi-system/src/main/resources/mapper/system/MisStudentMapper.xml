@@ -22,11 +22,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectStudentVo">
-		select student_id,student_name,student_faculty,student_profession,student_class,apartment_id,student_year,time,gender,floor_id from mis_student
+		select student_id,student_name,student_faculty,student_profession,student_class,apartment_id,student_year,time,gender,floor_id,createTime from mis_student
 	</sql>
 
 	<select id="selectStudentList" parameterType="MisStudent" resultMap="MisStudentResult">
 		<include refid="selectStudentVo"/>
+		<where>
+			<if test="studentFaculty != null and studentFaculty != ''">
+				AND student_faculty like concat('%', #{studentFaculty}, '%')
+			</if>
+			<if test="studentProfession != null and studentProfession != ''">
+				AND student_profession like concat('%', #{studentProfession}, '%')
+			</if>
+			<if test="studentId != null and studentId != ''">
+				AND student_id like concat('%', #{studentId}, '%')
+			</if>
+			<if test="studentName != null and studentName != ''">
+				AND student_name like concat('%', #{studentName}, '%')
+			</if>
+		</where>
 	</select>
 
 	<select id="checkStudentCodeUnique" parameterType="String" resultMap="MisStudentResult">
