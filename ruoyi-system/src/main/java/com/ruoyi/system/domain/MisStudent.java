@@ -46,8 +46,8 @@ public class MisStudent extends BaseEntity
     @Excel(name = "入学年份",  cellType = ColumnType.NUMERIC)
     private String studentYear;
 
-    /**入住时间 */
-    @Excel(name = "入住时间",  cellType = ColumnType.NUMERIC)
+    /**入住日期 */
+    @Excel(name = "入住日期",  cellType = ColumnType.NUMERIC)
     private String time;
 
 
