@@ -21,11 +21,16 @@ public class MiScampus extends BaseEntity
     @Excel(name = "校区名称",cellType = ColumnType.STRING)
     private String campusName;
 
+    /** 校区楼栋数 */
+    @Excel(name = "校区楼栋数",cellType = ColumnType.STRING)
+    private String floorNum;
+
     @Override
     public String toString() {
         return "MiScampus{" +
                 "campusId='" + campusId + '\'' +
                 ", campusName='" + campusName + '\'' +
+                ", floorNum='" + floorNum + '\'' +
                 '}';
     }
 
@@ -47,5 +52,13 @@ public class MiScampus extends BaseEntity
 
     public void setCampusName(String campusName) {
         this.campusName = campusName;
+    }
+
+    public String getFloorNum() {
+        return floorNum;
+    }
+
+    public void setFloorNum(String floorNum) {
+        this.floorNum = floorNum;
     }
 }
