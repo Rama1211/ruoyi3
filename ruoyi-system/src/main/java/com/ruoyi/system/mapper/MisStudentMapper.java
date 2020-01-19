@@ -38,6 +38,15 @@ public interface MisStudentMapper
      */
     public int insertStudent(MisStudent student);
 
+    /**
+     * 更新学生信息
+     *
+     * @param student 学生信息
+     * @return 结果
+     */
+    public int updateStudent(MisStudent student);
+
+
 //    /**
 //     * 查询所有岗位
 //     *

@@ -78,73 +78,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	)
 	</insert>
 
-
-	<!---->
-	<!--<select id="selectPostAll" resultMap="SysPostResult">-->
-		<!--<include refid="selectPostVo"/>-->
-	<!--</select>-->
-	<!---->
-	<!--<select id="selectPostsByUserId" parameterType="Long" resultMap="SysPostResult">-->
-		<!--SELECT p.post_id, p.post_name, p.post_code-->
-		<!--FROM sys_user u-->
-			 <!--LEFT JOIN sys_user_post up ON u.user_id = up.user_id-->
-			 <!--LEFT JOIN sys_post p ON up.post_id = p.post_id-->
-		<!--WHERE up.user_id = #{userId}-->
-	<!--</select>-->
-	<!---->
-	<!--<select id="selectPostById" parameterType="Long" resultMap="SysPostResult">-->
-		<!--<include refid="selectPostVo"/>-->
-		<!--where post_id = #{postId}-->
-	<!--</select>-->
-	<!---->
-	<!--<select id="checkPostNameUnique" parameterType="String" resultMap="SysPostResult">-->
-		<!--<include refid="selectPostVo"/>-->
-		 <!--where post_name=#{postName}-->
-	<!--</select>-->
-	<!---->
-
-	<!---->
- 	<!--<delete id="deletePostByIds" parameterType="Long">-->
- 		<!--delete from sys_post where post_id in-->
- 		<!--<foreach collection="array" item="postId" open="(" separator="," close=")">-->
- 			<!--#{postId}-->
-        <!--</foreach> -->
- 	<!--</delete>-->
- 	<!---->
- 	<!--<update id="updatePost" parameterType="SysPost">-->
- 		<!--update sys_post-->
- 		<!--<set>-->
- 			<!--<if test="postCode != null and postCode != ''">post_code = #{postCode},</if>-->
- 			<!--<if test="postName != null and postName != ''">post_name = #{postName},</if>-->
- 			<!--<if test="postSort != null and postSort != ''">post_sort = #{postSort},</if>-->
- 			<!--<if test="status != null and status != ''">status = #{status},</if>-->
- 			<!--<if test="remark != null">remark = #{remark},</if>-->
- 			<!--<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>-->
- 			<!--update_time = sysdate()-->
- 		<!--</set>-->
- 		<!--where post_id = #{postId}-->
-	<!--</update>-->
- 	<!---->
- 	<!--<insert id="insertPost" parameterType="SysPost" useGeneratedKeys="true" keyProperty="postId">-->
- 		<!--insert into sys_post(-->
- 			<!--<if test="postId != null and postId != 0">post_id,</if>-->
- 			<!--<if test="postCode != null and postCode != ''">post_code,</if>-->
- 			<!--<if test="postName != null and postName != ''">post_name,</if>-->
- 			<!--<if test="postSort != null and postSort != ''">post_sort,</if>-->
- 			<!--<if test="status != null and status != ''">status,</if>-->
- 			<!--<if test="remark != null and remark != ''">remark,</if>-->
- 			<!--<if test="createBy != null and createBy != ''">create_by,</if>-->
- 			<!--create_time-->
- 		<!--)values(-->
- 			<!--<if test="postId != null and postId != 0">#{postId},</if>-->
- 			<!--<if test="postCode != null and postCode != ''">#{postCode},</if>-->
- 			<!--<if test="postName != null and postName != ''">#{postName},</if>-->
- 			<!--<if test="postSort != null and postSort != ''">#{postSort},</if>-->
- 			<!--<if test="status != null and status != ''">#{status},</if>-->
- 			<!--<if test="remark != null and remark != ''">#{remark},</if>-->
- 			<!--<if test="createBy != null and createBy != ''">#{createBy},</if>-->
- 			<!--sysdate()-->
- 		<!--)-->
-	<!--</insert>-->
+	<update id="updateStudent" parameterType="MisStudent">
+		update mis_student
+		<set>
+			<if test="studentName != null and studentName != ''">student_name = #{studentName},</if>
+			<if test="studentFaculty != null and studentFaculty != ''">student_faculty = #{studentFaculty},</if>
+			<if test="studentProfession != null and studentProfession != ''">student_profession = #{studentProfession},</if>
+			<if test="studentClass != null and studentClass != ''">student_class = #{studentClass},</if>
+			<if test="studentYear != null and studentYear != ''">student_year = #{studentYear},</if>
+			<if test="time != null and time != ''">time = #{time},</if>
+			<if test="gender != null and gender != ''">gender = #{gender},</if>
+			<if test="updateBy != null and updateBy != ''">updateBy = #{updateBy},</if>
+			updateTime = sysdate()
+		</set>
+		where student_id = #{studentId}
+	</update>
 
 </mapper> 
