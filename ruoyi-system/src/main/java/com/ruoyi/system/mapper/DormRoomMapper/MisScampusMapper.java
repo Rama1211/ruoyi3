@@ -1,56 +1,54 @@
-package com.ruoyi.system.service;
+package com.ruoyi.system.mapper.DormRoomMapper;
 
-import com.ruoyi.system.domain.MiScampus;
 import com.ruoyi.system.domain.MisStudent;
 import com.ruoyi.system.domain.SysPost;
+import org.springframework.stereotype.Repository;
+import com.ruoyi.system.domain.MiScampus;
 
 import java.util.List;
 
 /**
- * 公寓信息 服务层
+ * 学生信息 数据层
  * 
  * @author dg
  */
-public interface MiScampusService
+@Repository
+public interface MisScampusMapper
 {
     /**
-     * 查询公寓信息集合
+     * 查询校区信息集合
      * 
-     * @param scampus 公寓信息
-     * @return 公寓信息集合
+     * @param scampus 校区信息
+     * @return 校区数据集合
      */
     public List<MiScampus> selectScampusList(MiScampus scampus);
 
-
     /**
-     * 通过校区ID查询校区信息
+     * 根据校区id查询校区信息
      *
-     * @param campusId 校区ID
-     * @return 校区信息
+     * @param campusId 校区id
+     * @return 校区数据
      */
-    public MiScampus selectMiScampusById(Long campusId);
+    public MiScampus selectScampusById(Long campusId);
 
     /**
-     * 修改保存校区信息
+     * 修改校区信息
      *
      * @param scampus 校区信息
      * @return 结果
      */
     public int updateScampus(MiScampus scampus);
 
-
     /**
-     * 校验校区名称是否唯一
+     * 校验校区名称唯一
      *
-     *
-     * @param scampus 校区信息
+     * @param campusName 校区名称
      * @return 结果
      */
-    public String checkCampusNameUnique(MiScampus scampus);
-
+    public MiScampus checkCampusNameUnique(String campusName);
 
     /**
-     * 新增保存校区信息
+     * 新增校区信息
      *
      * @param scampus 校区信息
      * @return 结果

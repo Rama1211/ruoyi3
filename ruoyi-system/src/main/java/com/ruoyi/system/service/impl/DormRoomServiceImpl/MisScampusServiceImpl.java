@@ -1,11 +1,10 @@
-package com.ruoyi.system.service.impl;
+package com.ruoyi.system.service.impl.DormRoomServiceImpl;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.MiScampus;
-import com.ruoyi.system.domain.MisStudent;
-import com.ruoyi.system.mapper.MisScampusMapper;
-import com.ruoyi.system.service.MiScampusService;
+import com.ruoyi.system.mapper.DormRoomMapper.MisScampusMapper;
+import com.ruoyi.system.service.DormRoomService.MisCampusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ import java.util.List;
  * @author dg
  */
 @Service
-public class MisScampusServiceImpl implements MiScampusService
+public class MisScampusServiceImpl implements MisCampusService
 {
     @Autowired
     private MisScampusMapper scampusMapper;

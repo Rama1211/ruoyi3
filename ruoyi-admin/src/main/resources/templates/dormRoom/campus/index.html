@@ -47,7 +47,8 @@
 		var editFlag = [[${@permission.hasPermi('dormRoom:dormRoomInfo:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('dormRoom:dormRoomInfo:remove')}]];
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
-		var prefix = ctx + "dormRoom/dormRoomInfo";
+		var prefix = ctx + "campus/campusInfo";
+		var prefix2 = ctx + "floor/floorInfo";
 
 		$(function() {
 		    var options = {
@@ -93,6 +94,7 @@
                             var actions = [];
                             actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.campusId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                             actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.campusId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                            actions.push('<a class="btn btn-info btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="floorView(\'' + row.campusId + '\')"><i class="fa fa-user"></i>查看楼栋</a> ');
                             return actions.join('');
                         }
                     }
@@ -100,6 +102,11 @@
 		    };
 		    $.table.init(options);
 		});
+        /* 查看楼栋信息 */
+        function floorView(campusId) {
+            var url = prefix2 + '/select/' + campusId;
+            $.modal.openTab("查看楼栋", url);
+        }
 	</script>
 
 </body>

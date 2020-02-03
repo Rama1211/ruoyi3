@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DormRoomMapper.MisFloorMapper">
+
+    <resultMap type="MisFloor" id="MisFloorResult">
+        <id property="floorId" column="id"/>
+        <result property="floorName" column="floor_name"/>
+        <result property="campusId" column="campus_id"/>
+        <result property="floorLevel" column="floor_level"/>
+        <result property="everyLevelNum" column="everyLevel_num"/>
+        <result property="totalNum" column="total_num"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="createBy" column="createBy"/>
+        <result property="updateBy" column="updateBy"/>
+    </resultMap>
+
+    <sql id="selectScampusVo">
+        select *
+        from mis_floor
+    </sql>
+
+    <select id="selectFloorByCampusId" parameterType="Long" resultMap="MisFloorResult">
+        <include refid="selectScampusVo"/>
+        WHERE campus_id=#{campusId}
+    </select>
+
+
+</mapper> 

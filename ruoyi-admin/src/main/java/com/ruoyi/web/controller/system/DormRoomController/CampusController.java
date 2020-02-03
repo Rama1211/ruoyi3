@@ -1,26 +1,21 @@
-package com.ruoyi.web.controller.system;
+package com.ruoyi.web.controller.system.DormRoomController;
 
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.domain.Ztree;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.*;
-import com.ruoyi.system.service.MiScampusService;
-import com.ruoyi.system.service.MisStudentFacultyService;
-import com.ruoyi.system.service.MisStudentProfessionService;
-import com.ruoyi.system.service.MisStudentService;
+import com.ruoyi.system.service.DormRoomService.MisCampusService;
+import com.ruoyi.system.service.DormRoomService.MisFloorService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,15 +25,17 @@ import java.util.List;
  * @author dg
  */
 @Controller
-@RequestMapping("/dormRoom/dormRoomInfo")
-public class DormRoomController extends BaseController
+@RequestMapping("/campus/campusInfo")
+public class CampusController extends BaseController
 {
-    private String prefix = "/dormRoom";
+    private String prefix = "dormRoom/campus";
 
     @Autowired
-    private MiScampusService scampusService;
+    private MisCampusService scampusService;
 
-    @RequiresPermissions("dormRoom:dormRoomInfo:view")
+
+
+    @RequiresPermissions("campus:campusInfo:view")
     @GetMapping()
     public String operlog()
     {
@@ -46,7 +43,7 @@ public class DormRoomController extends BaseController
     }
 
     //查询公寓列表
-    @RequiresPermissions("dormRoom:dormRoomInfo:list")
+    @RequiresPermissions("campus:campusInfo:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(MiScampus scampus)
@@ -70,7 +67,7 @@ public class DormRoomController extends BaseController
     /**
      * 修改保存校区
      */
-    @RequiresPermissions("dormRoom:dormRoomInfo:edit")
+    @RequiresPermissions("campus:campusInfo:edit")
     @Log(title = "校区管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -93,7 +90,7 @@ public class DormRoomController extends BaseController
     /**
      * 新增校区信息保存
      */
-    @RequiresPermissions("dormRoom:dormRoomInfo:add")
+    @RequiresPermissions("campus:campusInfo:add")
     @Log(title = "校区信息管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -113,7 +110,7 @@ public class DormRoomController extends BaseController
     /**
      * 删除校区信息
      */
-    @RequiresPermissions("dormRoom:dormRoomInfo:remove")
+    @RequiresPermissions("campus:campusInfo:remove")
     @Log(title = "校区信息管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
@@ -128,4 +125,5 @@ public class DormRoomController extends BaseController
             return error(e.getMessage());
         }
     }
+
 }
