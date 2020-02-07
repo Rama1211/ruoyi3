@@ -38,13 +38,14 @@ public class FloorController extends BaseController
 
 
     //查询校区楼栋信息
-    @RequiresPermissions("floor/floorInfo:list")
+    @RequiresPermissions("floor:floorInfo:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Long campusId)
+    public TableDataInfo list(Long campusId,@RequestParam(defaultValue = " ") String floorId)
     {
         startPage();
-        List<MisFloor> list = floorService.selectFloorByCampusId(campusId);
+        String temp=floorId.substring(1)+"号楼";
+        List<MisFloor> list = floorService.selectFloorByCampusId(campusId,temp);
         return getDataTable(list);
     }
 
@@ -52,7 +53,7 @@ public class FloorController extends BaseController
     /**
      * 跳转楼栋信息页面
      */
-    @RequiresPermissions("floor/floorInfo:select")
+    @RequiresPermissions("floor:floorInfo:select")
     @GetMapping("/select/{campusId}")
     public String select(@PathVariable("campusId") Long campusId, ModelMap mmap)
     {
@@ -60,5 +61,44 @@ public class FloorController extends BaseController
         return prefix + "/index";
     }
 
+    /**
+     * 新增楼栋
+     */
+    @RequiresPermissions("floor:floorInfo:add")
+    @GetMapping("/add")
+    public String add(Long campusId,ModelMap mmap)
+    {
+        mmap.put("campusId",campusId);
+        return prefix + "/add";
+    }
 
+    /**
+     * 新增楼栋信息保存
+     */
+    @RequiresPermissions("campus:campusInfo:add")
+    @Log(title = "楼栋信息管理", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(@Validated MisFloor floor)
+    {
+        floor.setFloorName(floor.getFloorName()+"号楼");
+        if (UserConstants.FLOOR_NAME_NOT_UNIQUE.equals(floorService.checkFloorNameUnique(floor)))
+        {
+            return error("新增楼栋'" + floor.getFloorName() + "'失败，该楼栋已存在");
+        }
+        floor.setCreateBy(ShiroUtils.getLoginName());
+        return toAjax(floorService.insertFloor(floor));
+    }
+
+    /**
+     * 修改楼栋信息
+     */
+    @GetMapping("/edit/{floorId}")
+    public String edit(@PathVariable("floorId") String floorId,ModelMap mmap)
+    {
+        String[] split = floorId.split("-");
+        mmap.put("floorId", split[0]);
+        mmap.put("campusId", split[1]);
+        return prefix + "/edit";
+    }
 }

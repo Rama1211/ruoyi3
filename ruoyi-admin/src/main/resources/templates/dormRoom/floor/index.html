@@ -13,13 +13,7 @@
 
 						<ul>
 							<li>
-								校区编号：<input type="text" name="campusId"/>
-							</li>
-							<li>
-								校区名称：<input type="text" name="campusName"/>
-							</li>
-							<li>
-								校区楼栋数：<input type="text" name="floorNum"/>
+								楼栋号：<input type="text" name="floorId" id="floorId"/>
 							</li>
 
 							<li>
@@ -32,7 +26,7 @@
 			</div>
 			
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="dormRoom:dormRoomInfo:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="floor:floorInfo:add">
 	                <i class="fa fa-plus"></i> 新增
 	            </a>
 
@@ -49,12 +43,13 @@
 		var removeFlag = [[${@permission.hasPermi('dormRoom:dormRoomInfo:remove')}]];
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
 		var prefix = ctx + "floor/floorInfo";
-        var campusId=$("#campusId").val()
+        var campusId=$("#campusId").val();
+        var floorId=$("#floorId").val();
 		$(function() {
 		    var options = {
-                url: prefix + "/list?campusId="+campusId,
-		        createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
+                url: prefix + "/list?campusId="+campusId+"&floorId="+floorId,
+		        createUrl: prefix + "/add?campusId="+campusId,
+                updateUrl: prefix + "/edit/{id}"+"-"+campusId,
 		        removeUrl: prefix + "/remove",
 		        exportUrl: prefix + "/export",
                 importUrl: prefix + "/importData",
@@ -63,8 +58,13 @@
 		        columns: [{
 		            checkbox: true
 		        },
+                    {
+                        field: 'floorId',
+                        title: '楼栋id',
+                        visible:false
+                    },
 		        {
-		            field: 'canpusId',
+		            field: 'campusId',
 		            title: '所属校区编号'
 		        },
 		        {
@@ -102,9 +102,8 @@
                         align: 'center',
                         formatter: function(value, row, index) {
                             var actions = [];
-                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.campusId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.campusId + '\')"><i class="fa fa-remove"></i>删除</a>');
-                            actions.push('<a class="btn btn-info btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="floorView(\'' + row.campusId + '\')"><i class="fa fa-user"></i>查看楼栋</a> ');
+                            actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.floorId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.floorId + '\')"><i class="fa fa-remove"></i>删除</a>');
                             return actions.join('');
                         }
                     }

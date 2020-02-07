@@ -17,15 +17,43 @@
         <result property="updateBy" column="updateBy"/>
     </resultMap>
 
-    <sql id="selectScampusVo">
+    <sql id="selectFloorVo">
         select *
         from mis_floor
     </sql>
 
-    <select id="selectFloorByCampusId" parameterType="Long" resultMap="MisFloorResult">
-        <include refid="selectScampusVo"/>
+    <select id="selectFloorByCampusId"  resultMap="MisFloorResult">
+        <include refid="selectFloorVo"/>
         WHERE campus_id=#{campusId}
+        <if test="floorName != null and floorName != ''">
+            AND floor_name like concat('%', #{floorName}, '%')
+        </if>
     </select>
 
+
+    <select id="checkFloorNameUnique" parameterType="String" resultMap="MisFloorResult">
+        <include refid="selectFloorVo"/>
+        where floor_name=#{floorName} and campus_id=#{campusId}
+    </select>
+
+    <insert id="insertFloor" parameterType="MisFloor" useGeneratedKeys="true" keyProperty="id">
+        insert into mis_floor(
+        <if test="floorName != null and floorName != ''">floor_name,</if>
+        <if test="campusId != null and campusId != ''">campus_id,</if>
+        <if test="floorLevel != null and floorLevel != ''">floor_level,</if>
+        <if test="everyLevelNum != null and everyLevelNum != ''">everyLevel_num,</if>
+        <if test="totalNum != null and totalNum != ''">total_num,</if>
+        <if test="createBy != null and createBy != ''">createBy,</if>
+        createTime
+        )values(
+        #{floorName},
+        #{campusId},
+        #{floorLevel},
+        #{everyLevelNum},
+        #{totalNum},
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
 
 </mapper> 
