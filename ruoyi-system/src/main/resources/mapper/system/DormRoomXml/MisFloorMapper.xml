@@ -30,11 +30,20 @@
         </if>
     </select>
 
+    <select id="selectFloorById"  resultMap="MisFloorResult">
+        <include refid="selectFloorVo"/>
+        WHERE id=#{floorId}
+    </select>
+
+
 
     <select id="checkFloorNameUnique" parameterType="String" resultMap="MisFloorResult">
         <include refid="selectFloorVo"/>
         where floor_name=#{floorName} and campus_id=#{campusId}
     </select>
+
+
+
 
     <insert id="insertFloor" parameterType="MisFloor" useGeneratedKeys="true" keyProperty="id">
         insert into mis_floor(
@@ -56,4 +65,50 @@
         )
     </insert>
 
+
+    <update id="updateFloor" parameterType="MisFloor">
+        update mis_floor
+        <set>
+            <if test="floorLevel != null and floorLevel != ''">floor_level = #{floorLevel},</if>
+            <if test="everyLevelNum != null and everyLevelNum != ''">everyLevel_num = #{everyLevelNum},</if>
+            <if test="totalNum != null and totalNum != ''">total_num = #{totalNum},</if>
+            <if test="updateBy != null and updateBy != ''">updateBy = #{updateBy},</if>
+            updateTime = sysdate()
+        </set>
+        where campus_id = #{campusId} and floor_name=#{floorName}
+    </update>
+
+    <update id="addOne">
+        update mis_campus
+        <set>
+            floor_num=#{floorNum}+1,
+            updateBy=#{updateBy},
+            updateTime = sysdate()
+        </set>
+        where id = #{campusId}
+    </update>
+
+    <update id="reduceOne">
+        update mis_campus
+        <set>
+            floor_num=#{floorNum}-1,
+            updateBy=#{updateBy},
+            updateTime = sysdate()
+        </set>
+        where id = #{campusId}
+    </update>
+
+    <delete id="deleteFloor" parameterType="String">
+        delete
+        from mis_floor
+        where id = #{floorId}
+    </delete>
+
+    <select id="selectFloorByCampus" parameterType="String" resultType="int">
+        select floor_num from mis_campus where id =#{campusId}
+    </select>
+
+    <select id="selectCampusIdByFloorId" parameterType="String" resultType="int">
+        select campus_id from mis_floor where id =#{floorId}
+    </select>
 </mapper> 

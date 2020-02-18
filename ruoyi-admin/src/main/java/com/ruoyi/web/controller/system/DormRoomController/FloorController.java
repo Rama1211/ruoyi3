@@ -41,7 +41,7 @@ public class FloorController extends BaseController
     @RequiresPermissions("floor:floorInfo:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Long campusId,@RequestParam(defaultValue = " ") String floorId)
+    public TableDataInfo list(String campusId,@RequestParam(defaultValue = " ") String floorId)
     {
         startPage();
         String temp=floorId.substring(1)+"号楼";
@@ -75,7 +75,7 @@ public class FloorController extends BaseController
     /**
      * 新增楼栋信息保存
      */
-    @RequiresPermissions("campus:campusInfo:add")
+    @RequiresPermissions("floor:floorInfo:add")
     @Log(title = "楼栋信息管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -96,9 +96,40 @@ public class FloorController extends BaseController
     @GetMapping("/edit/{floorId}")
     public String edit(@PathVariable("floorId") String floorId,ModelMap mmap)
     {
-        String[] split = floorId.split("-");
-        mmap.put("floorId", split[0]);
-        mmap.put("campusId", split[1]);
+        mmap.put("dorm", floorService.selectFloorById(floorId));
         return prefix + "/edit";
+    }
+
+    /**
+     * 修改保存楼栋
+     */
+    @RequiresPermissions("floor:floorInfo:edit")
+    @Log(title = "楼栋信息管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(@Validated MisFloor floor)
+    {
+
+        floor.setUpdateBy(ShiroUtils.getLoginName());
+        return toAjax(floorService.updateFloor(floor));
+    }
+
+    /**
+     * 删除楼栋信息
+     */
+    @RequiresPermissions("floor:floorInfo:remove")
+    @Log(title = "楼栋信息管理", businessType = BusinessType.DELETE)
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        try
+        {
+            return toAjax(floorService.deleteFloor(ids,ShiroUtils.getLoginName()));
+        }
+        catch (Exception e)
+        {
+            return error(e.getMessage());
+        }
     }
 }

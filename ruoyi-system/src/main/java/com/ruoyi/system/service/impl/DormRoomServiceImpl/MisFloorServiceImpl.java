@@ -25,7 +25,7 @@ public class MisFloorServiceImpl implements MisFloorService
 
 
     @Override
-    public List<MisFloor> selectFloorByCampusId(Long campusId,String floorId) {
+    public List<MisFloor> selectFloorByCampusId(String campusId,String floorId) {
         return floorMapper.selectFloorByCampusId(campusId,floorId);
     }
 
@@ -43,6 +43,24 @@ public class MisFloorServiceImpl implements MisFloorService
 
     @Override
     public int insertFloor(MisFloor floor) {
+        floorMapper.addOne(floorMapper.selectFloorByCampus(floor.getCampusId()),floor.getCampusId(),floor.getUpdateBy());
         return floorMapper.insertFloor(floor);
+    }
+
+    @Override
+    public MisFloor selectFloorById(String floorId) {
+        return floorMapper.selectFloorById(floorId);
+    }
+
+    @Override
+    public int updateFloor(MisFloor floor) {
+        return floorMapper.updateFloor(floor);
+    }
+
+    @Override
+    public int deleteFloor(String floorId,String loginName) {
+        int campusId=floorMapper.selectCampusIdByFloorId(floorId);
+        floorMapper.reduceOne(floorMapper.selectFloorByCampus(String.valueOf(campusId)),String.valueOf(campusId),loginName);
+        return floorMapper.deleteFloor(floorId);
     }
 }
