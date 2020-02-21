@@ -55,9 +55,30 @@ public class MisStudent extends BaseEntity
     @Excel(name = "性别",  cellType = ColumnType.STRING)
     private String gender;
 
+    /**家庭住址*/
+    @Excel(name = "家庭住址",  cellType = ColumnType.STRING)
+    private String address;
+
     /**楼栋号 */
     @Excel(name = "楼栋号",  cellType = ColumnType.STRING,type = Excel.Type.EXPORT)
     private String floorId;
+
+    @Override
+    public String toString() {
+        return "MisStudent{" +
+                "studentId=" + studentId +
+                ", studentName='" + studentName + '\'' +
+                ", studentFaculty='" + studentFaculty + '\'' +
+                ", studentProfession='" + studentProfession + '\'' +
+                ", studentClass='" + studentClass + '\'' +
+                ", apartmentId='" + apartmentId + '\'' +
+                ", studentYear='" + studentYear + '\'' +
+                ", time='" + time + '\'' +
+                ", gender='" + gender + '\'' +
+                ", address='" + address + '\'' +
+                ", floorId='" + floorId + '\'' +
+                '}';
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -135,27 +156,19 @@ public class MisStudent extends BaseEntity
         this.gender = gender;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getFloorId() {
         return floorId;
     }
 
     public void setFloorId(String floorId) {
         this.floorId = floorId;
-    }
-
-    @Override
-    public String toString() {
-        return "MisStudent{" +
-                "studentId=" + studentId +
-                ", studentName='" + studentName + '\'' +
-                ", studentFaculty='" + studentFaculty + '\'' +
-                ", studentProfession='" + studentProfession + '\'' +
-                ", studentClass='" + studentClass + '\'' +
-                ", apartmentId='" + apartmentId + '\'' +
-                ", studentYear='" + studentYear + '\'' +
-                ", time='" + time + '\'' +
-                ", gender='" + gender + '\'' +
-                ", floorId='" + floorId + '\'' +
-                '}';
     }
 }
