@@ -5,7 +5,7 @@ import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 学生信息表 student
+ * 楼栋信息表 student
  * 
  * @author dg
  */
@@ -37,6 +37,10 @@ public class MisFloor extends BaseEntity
     @Excel(name = "总宿舍数量",cellType = ColumnType.NUMERIC)
     private String totalNum;
 
+    /** 管理员 */
+    @Excel(name = "管理员",cellType = ColumnType.STRING)
+    private String manager;
+
     @Override
     public String toString() {
         return "MisFloor{" +
@@ -46,6 +50,7 @@ public class MisFloor extends BaseEntity
                 ", floorLevel='" + floorLevel + '\'' +
                 ", everyLevelNum='" + everyLevelNum + '\'' +
                 ", totalNum='" + totalNum + '\'' +
+                ", manager='" + manager + '\'' +
                 '}';
     }
 
@@ -99,5 +104,13 @@ public class MisFloor extends BaseEntity
 
     public void setTotalNum(String totalNum) {
         this.totalNum = totalNum;
+    }
+
+    public String getManager() {
+        return manager;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager;
     }
 }
