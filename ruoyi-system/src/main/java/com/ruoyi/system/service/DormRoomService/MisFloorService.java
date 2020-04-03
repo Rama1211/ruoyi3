@@ -36,7 +36,7 @@ public interface MisFloorService
      * @param floor 楼栋信息
      * @return 结果
      */
-    public int insertFloor(MisFloor floor);
+    public int insertFloor(MisFloor floor,String flag);
 
 
     /**
@@ -60,5 +60,12 @@ public interface MisFloorService
      * @return 结果
      */
     public int deleteFloor(String floorId,String loginName);
+
+    /**
+     * 删除校区信息时删除所有该小区楼栋
+     *
+     * @return 结果
+     */
+    public int deleteFloorBycampuse(String campusId);
 
 }

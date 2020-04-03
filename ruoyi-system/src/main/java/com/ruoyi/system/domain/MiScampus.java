@@ -5,7 +5,7 @@ import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 学生信息表 student
+ * 校区信息表
  * 
  * @author dg
  */
@@ -25,13 +25,14 @@ public class MiScampus extends BaseEntity
     @Excel(name = "校区楼栋数",cellType = ColumnType.STRING)
     private String floorNum;
 
-    @Override
-    public String toString() {
-        return "MiScampus{" +
-                "campusId='" + campusId + '\'' +
-                ", campusName='" + campusName + '\'' +
-                ", floorNum='" + floorNum + '\'' +
-                '}';
+    private long nextid;
+
+    public long getNextid() {
+        return nextid;
+    }
+
+    public void setNextid(long nextid) {
+        this.nextid = nextid;
     }
 
     public static long getSerialVersionUID() {

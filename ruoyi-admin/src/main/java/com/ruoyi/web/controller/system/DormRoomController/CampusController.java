@@ -33,6 +33,9 @@ public class CampusController extends BaseController
     @Autowired
     private MisCampusService scampusService;
 
+    @Autowired
+    private MisFloorService floorService;
+
 
 
     @RequiresPermissions("campus:campusInfo:view")
@@ -96,13 +99,22 @@ public class CampusController extends BaseController
     @ResponseBody
     public AjaxResult addSave(@Validated MiScampus scampus)
     {
-        scampus.setFloorNum("0");
         if (UserConstants.CAMPUS_NAME_NOT_UNIQUE.equals(scampusService.checkCampusNameUnique(scampus)))
         {
             return error("新增校区'" + scampus.getCampusName() + "'失败，该校区名称已存在");
         }
         scampus.setCreateBy(ShiroUtils.getLoginName());
-        return toAjax(scampusService.insertCampus(scampus));
+        int i = scampusService.insertCampus(scampus);
+        String a= scampus.getCampusId();
+        MisFloor misFloor=new MisFloor();
+        misFloor.setCampusId(a);
+        misFloor.setCreateBy(ShiroUtils.getLoginName());
+        misFloor.setCampusName(scampus.getCampusName());
+        for (int j=1;j<=Integer.parseInt(scampus.getFloorNum());j++){
+            misFloor.setFloorName(j+"号楼");
+            floorService.insertFloor(misFloor,"false");
+        }
+        return toAjax(i);
     }
 
 
@@ -118,6 +130,7 @@ public class CampusController extends BaseController
     {
         try
         {
+            floorService.deleteFloorBycampuse(ids);
             return toAjax(scampusService.deleteCampus(ids));
         }
         catch (Exception e)

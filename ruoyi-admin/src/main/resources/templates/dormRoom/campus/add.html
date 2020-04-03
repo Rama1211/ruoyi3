@@ -10,10 +10,18 @@
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
 		<form class="form-horizontal m" id="form-post-add">
 			<div class="form-group">
-				<label class="col-sm-3 control-label is-required">校区名称：</label>
-				<div class="col-sm-8">
-					<input class="form-control" type="text" name="campusName" id="campusName" required>
-				</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label is-required">校区名称：</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="text" name="campusName" id="campusName" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label is-required">校区楼栋数：</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="text" name="floorNum" id="floorNum" required>
+							</div>
+						</div>
 			</div>
 		</form>
 	</div>
@@ -21,7 +29,7 @@
 	<th:block th:include="include :: datetimepicker-js" />
 	<script type="text/javascript">
 
-		var prefix = ctx + "dormRoom/dormRoomInfo";
+		var prefix = ctx + "campus/campusInfo";
 
 		function submitHandler() {
 	        if ($.validate.form()) {

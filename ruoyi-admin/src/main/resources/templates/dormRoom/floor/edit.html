@@ -6,6 +6,7 @@
 <body class="white-bg">
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
 		<form class="form-horizontal m" id="form-dorm-edit" th:object="${dorm}">
+			<input id="floorId" name="floorId" type="hidden" th:field="*{floorId}"/>
 			<div class="form-group">
 				<label class="col-sm-3 control-label is-required">校区编号：</label>
 				<div class="col-sm-8">

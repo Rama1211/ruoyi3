@@ -7,6 +7,18 @@ package com.ruoyi.common.constant;
  */
 public class UserConstants
 {
+
+    /** 学生学号是否唯一的返回结果码 */
+    public final static String STUDENT_CODE_UNIQUE = "0";
+    public final static String STUDENT_CODE_NOT_UNIQUE = "1";
+
+    /** 校区名称是否唯一的返回结果码 */
+    public final static String CAMPUS_NAME_UNIQUE = "0";
+    public final static String CAMPUS_NAME_NOT_UNIQUE = "1";
+
+    /** 楼栋名称是否唯一的返回结果码 */
+    public final static String FLOOR_NAME_UNIQUE = "0";
+    public final static String FLOOR_NAME_NOT_UNIQUE = "1";
     /**
      * 平台内系统用户的唯一标志
      */

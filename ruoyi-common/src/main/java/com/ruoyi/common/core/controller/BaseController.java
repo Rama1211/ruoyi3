@@ -147,12 +147,22 @@ public class BaseController
     }
 
     /**
+     * 返回成功数据
+     */
+    public AjaxResult success(Object data)
+    {
+        return AjaxResult.success(data);
+    }
+
+    /**
      * 返回失败消息
      */
     public AjaxResult error(String message)
     {
         return AjaxResult.error(message);
     }
+
+
 
     /**
      * 返回错误码消息
@@ -161,6 +171,7 @@ public class BaseController
     {
         return new AjaxResult(type, message);
     }
+
 
     /**
      * 页面跳转

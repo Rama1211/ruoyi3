@@ -25,6 +25,10 @@ public class MisFloor extends BaseEntity
     @Excel(name = "校区id",cellType = ColumnType.STRING)
     private String campusId;
 
+    /** 对应校区名称 */
+    @Excel(name = "校区名称",cellType = ColumnType.STRING)
+    private String campusName;
+
     /** 楼层数量 */
     @Excel(name = "楼层数量",cellType = ColumnType.NUMERIC)
     private String floorLevel;
@@ -41,18 +45,15 @@ public class MisFloor extends BaseEntity
     @Excel(name = "管理员",cellType = ColumnType.STRING)
     private String manager;
 
-    @Override
-    public String toString() {
-        return "MisFloor{" +
-                "floorId='" + floorId + '\'' +
-                ", floorName='" + floorName + '\'' +
-                ", campusId='" + campusId + '\'' +
-                ", floorLevel='" + floorLevel + '\'' +
-                ", everyLevelNum='" + everyLevelNum + '\'' +
-                ", totalNum='" + totalNum + '\'' +
-                ", manager='" + manager + '\'' +
-                '}';
+    public String getCampusName() {
+        return campusName;
     }
+
+    public void setCampusName(String campusName) {
+        this.campusName = campusName;
+    }
+
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

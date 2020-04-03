@@ -53,7 +53,7 @@ public interface MisScampusMapper
      * @param scampus 校区信息
      * @return 结果
      */
-    public int insertCampus(MiScampus scampus);
+    public Integer insertCampus(MiScampus scampus);
 
     /**
      * 删除校区信息

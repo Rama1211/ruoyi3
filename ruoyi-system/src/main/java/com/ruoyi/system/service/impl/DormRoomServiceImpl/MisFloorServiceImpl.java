@@ -42,8 +42,10 @@ public class MisFloorServiceImpl implements MisFloorService
     }
 
     @Override
-    public int insertFloor(MisFloor floor) {
-        floorMapper.addOne(floorMapper.selectFloorByCampus(floor.getCampusId()),floor.getCampusId(),floor.getUpdateBy());
+    public int insertFloor(MisFloor floor,String flag) {
+        if (flag.equals("true")){
+            floorMapper.addOne(floorMapper.selectFloorByCampus(floor.getCampusId()),floor.getCampusId(),floor.getUpdateBy());
+        }
         return floorMapper.insertFloor(floor);
     }
 
@@ -62,5 +64,10 @@ public class MisFloorServiceImpl implements MisFloorService
         int campusId=floorMapper.selectCampusIdByFloorId(floorId);
         floorMapper.reduceOne(floorMapper.selectFloorByCampus(String.valueOf(campusId)),String.valueOf(campusId),loginName);
         return floorMapper.deleteFloor(floorId);
+    }
+
+    @Override
+    public int deleteFloorBycampuse(String campusId) {
+        return floorMapper.deleteFloorBycampuse(campusId);
     }
 }

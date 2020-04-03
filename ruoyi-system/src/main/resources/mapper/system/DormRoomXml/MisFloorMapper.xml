@@ -8,6 +8,7 @@
         <id property="floorId" column="id"/>
         <result property="floorName" column="floor_name"/>
         <result property="campusId" column="campus_id"/>
+        <result property="campusName" column="campus_name"/>
         <result property="floorLevel" column="floor_level"/>
         <result property="everyLevelNum" column="everyLevel_num"/>
         <result property="totalNum" column="total_num"/>
@@ -49,17 +50,19 @@
         insert into mis_floor(
         <if test="floorName != null and floorName != ''">floor_name,</if>
         <if test="campusId != null and campusId != ''">campus_id,</if>
+        <if test="campusName != null and campusName != ''">campus_name,</if>
         <if test="floorLevel != null and floorLevel != ''">floor_level,</if>
         <if test="everyLevelNum != null and everyLevelNum != ''">everyLevel_num,</if>
         <if test="totalNum != null and totalNum != ''">total_num,</if>
         <if test="createBy != null and createBy != ''">createBy,</if>
         createTime
         )values(
-        #{floorName},
-        #{campusId},
-        #{floorLevel},
-        #{everyLevelNum},
-        #{totalNum},
+        <if test="floorName != null and floorName != ''">  #{floorName},</if>
+        <if test="campusId != null and campusId != ''"> #{campusId},</if>
+        <if test="campusName != null and campusName != ''"> #{campusName},</if>
+        <if test="floorLevel != null and floorLevel != ''">#{floorLevel},</if>
+        <if test="everyLevelNum != null and everyLevelNum != ''">#{everyLevelNum},</if>
+        <if test="totalNum != null and totalNum != ''">#{totalNum},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )
@@ -70,12 +73,13 @@
         update mis_floor
         <set>
             <if test="floorLevel != null and floorLevel != ''">floor_level = #{floorLevel},</if>
+            <if test="floorName != null and floorName != ''">floor_name = #{floorName},</if>
             <if test="everyLevelNum != null and everyLevelNum != ''">everyLevel_num = #{everyLevelNum},</if>
             <if test="totalNum != null and totalNum != ''">total_num = #{totalNum},</if>
             <if test="updateBy != null and updateBy != ''">updateBy = #{updateBy},</if>
             updateTime = sysdate()
         </set>
-        where campus_id = #{campusId} and floor_name=#{floorName}
+        where id=#{floorId}
     </update>
 
     <update id="addOne">
@@ -103,6 +107,14 @@
         from mis_floor
         where id = #{floorId}
     </delete>
+
+
+    <delete id="deleteFloorBycampuse" parameterType="String">
+        delete
+        from mis_floor
+        where campus_id=#{campusId}
+    </delete>
+
 
     <select id="selectFloorByCampus" parameterType="String" resultType="int">
         select floor_num from mis_campus where id =#{campusId}

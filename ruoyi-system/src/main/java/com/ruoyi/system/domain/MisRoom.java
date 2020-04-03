@@ -13,9 +13,15 @@ public class MisRoom extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 宿舍ID
+     */
+    @Excel(name = "宿舍ID", cellType = ColumnType.NUMERIC)
+    private Integer dormId;
+
+    /**
      * 宿舍号
      */
-    @Excel(name = "宿舍号", cellType = ColumnType.NUMERIC)
+    @Excel(name = "宿舍号", cellType = ColumnType.STRING)
     private String dormNum;
 
     /**
@@ -27,34 +33,51 @@ public class MisRoom extends BaseEntity {
     /**
      * 宿舍应住人数
      */
-    @Excel(name = "宿舍应住人数", cellType = ColumnType.STRING)
-    private String dormShouldPeople;
+    @Excel(name = "宿舍应住人数", cellType = ColumnType.NUMERIC)
+    private Integer dormShouldPeople;
 
     /**
      * 宿舍实住人数
      */
-    @Excel(name = "宿舍实住人数", cellType = ColumnType.STRING)
-    private String dormActualPeople;
+    @Excel(name = "宿舍实住人数", cellType = ColumnType.NUMERIC)
+    private Integer dormActualPeople;
 
     /**
      * 所在楼栋id
      */
-    @Excel(name = "所在楼栋id", cellType = ColumnType.STRING)
-    private String floorId;
+    @Excel(name = "所在楼栋id", cellType = ColumnType.NUMERIC)
+    private Integer floorId;
 
-    @Override
-    public String toString() {
-        return "MisRoom{" +
-                "dormNum='" + dormNum + '\'' +
-                ", dormType='" + dormType + '\'' +
-                ", dormShouldPeople='" + dormShouldPeople + '\'' +
-                ", dormActualPeople='" + dormActualPeople + '\'' +
-                ", floorId='" + floorId + '\'' +
-                '}';
+    /**
+     * 所在楼层
+     */
+    @Excel(name = "所在楼层", cellType = ColumnType.NUMERIC)
+    private Integer floorLevel;
+
+    /**
+     * 所在校区id
+     */
+    @Excel(name = "所在校区id", cellType = ColumnType.NUMERIC)
+    private Integer campusId;
+
+    public Integer getFloorLevel() {
+        return floorLevel;
+    }
+
+    public void setFloorLevel(Integer floorLevel) {
+        this.floorLevel = floorLevel;
     }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public Integer getDormId() {
+        return dormId;
+    }
+
+    public void setDormId(Integer dormId) {
+        this.dormId = dormId;
     }
 
     public String getDormNum() {
@@ -73,27 +96,35 @@ public class MisRoom extends BaseEntity {
         this.dormType = dormType;
     }
 
-    public String getDormShouldPeople() {
+    public Integer getDormShouldPeople() {
         return dormShouldPeople;
     }
 
-    public void setDormShouldPeople(String dormShouldPeople) {
+    public void setDormShouldPeople(Integer dormShouldPeople) {
         this.dormShouldPeople = dormShouldPeople;
     }
 
-    public String getDormActualPeople() {
+    public Integer getDormActualPeople() {
         return dormActualPeople;
     }
 
-    public void setDormActualPeople(String dormActualPeople) {
+    public void setDormActualPeople(Integer dormActualPeople) {
         this.dormActualPeople = dormActualPeople;
     }
 
-    public String getFloorId() {
+    public Integer getFloorId() {
         return floorId;
     }
 
-    public void setFloorId(String floorId) {
+    public void setFloorId(Integer floorId) {
         this.floorId = floorId;
+    }
+
+    public Integer getCampusId() {
+        return campusId;
+    }
+
+    public void setCampusId(Integer campusId) {
+        this.campusId = campusId;
     }
 }

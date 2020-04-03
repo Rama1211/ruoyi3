@@ -36,7 +36,8 @@ public class FloorController extends BaseController
     @Autowired
     private MisFloorService floorService;
 
-
+    @Autowired
+    private MisCampusService scampusService;
     //查询校区楼栋信息
     @RequiresPermissions("floor:floorInfo:list")
     @PostMapping("/list")
@@ -87,7 +88,8 @@ public class FloorController extends BaseController
             return error("新增楼栋'" + floor.getFloorName() + "'失败，该楼栋已存在");
         }
         floor.setCreateBy(ShiroUtils.getLoginName());
-        return toAjax(floorService.insertFloor(floor));
+        floor.setCampusName(scampusService.selectMiScampusById(Long.parseLong(floor.getCampusId())).getCampusName());
+        return toAjax(floorService.insertFloor(floor,"true"));
     }
 
     /**

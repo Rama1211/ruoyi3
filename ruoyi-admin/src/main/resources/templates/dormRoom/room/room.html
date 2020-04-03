@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('岗位列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="post-form">
+					<div class="select-list">
+						<ul>
+							<li>校区：<select id="campus" name="campusId"  onclick="selectCam()" title="请选择"  style="width: 200px">
+									</select>
+							</li>
+
+							<li>
+								楼栋：<select id="floor"  name="floorId" title="请选择"  style="width: 200px">
+									</select>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:post:add">
+	                <i class="fa fa-plus"></i> 新增
+	            </a>
+				<a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:post:edit">
+		            <i class="fa fa-edit"></i> 批量新增
+		        </a>
+				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:post:remove">
+		            <i class="fa fa-remove"></i> 删除
+		        </a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:post:export">
+		            <i class="fa fa-download"></i> 导出
+		        </a>
+	        </div>
+	        
+	        <div class="col-sm-12 select-table table-striped">
+			    <table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer"/>
+	<script th:inline="javascript">
+		var editFlag = [[${@permission.hasPermi('system:post:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('system:post:remove')}]];
+		var datas = [[${@dict.getType('sys_normal_disable')}]];
+		var prefix = ctx + "room/roomInfo";
+
+		$(function() {
+		    var options = {
+		        url: prefix + "/list",
+		        createUrl: prefix + "/add",
+		        updateUrl: prefix + "/edit/{id}",
+		        removeUrl: prefix + "/remove",
+		        exportUrl: prefix + "/export",
+		        // sortName: "roomSort",
+		        modalName: "房间",
+		        columns: [{
+		            checkbox: true
+		        },
+		        {
+		            field: 'dormNum',
+		            title: '宿舍号'
+		        },
+		        {
+		            field: 'dormType',
+		            title: '宿舍类型',
+		            sortable: true
+		        },
+		        {
+		            field: 'dormShouldPeople',
+		            title: '宿舍应住人数',
+		            sortable: true
+		        },
+                    {
+                        field: 'dormActualPeople',
+                        title: '宿舍实住人数',
+                        sortable: true
+                    },
+		        // {
+		        //     field: 'postSort',
+		        //     title: '显示顺序',
+		        //     sortable: true
+		        // },
+                    {
+                        field: 'floorLevel',
+                        title: '楼层',
+                        sortable: true
+                    },
+		        {
+		            field: 'status',
+		            title: '状态',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	return $.table.selectDictLabel(datas, value);
+		            }
+		        },
+		        {
+		            field: 'createTime',
+		            title: '创建时间',
+		            sortable: true
+		        },
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		                var actions = [];
+		                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.postId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+		                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.postId + '\')"><i class="fa fa-remove"></i>删除</a>');
+		                return actions.join('');
+		            }
+		        }]
+		    };
+		    $.table.init(options);
+		});
+
+        $(function(){
+            // //初始化下一级下拉框
+            // //动态加载
+            $.ajax({
+                type: 'get',
+                url: ctx + "common/studentScampus",
+                dataType: "json",
+                success: function (data) {
+                    for(var i=0;i<data.length;i++){
+                        $("#campus").append("<option value='"+data[i].campusId+"'>"+data[i].campusName+"</option>");
+                    }
+                    $("#campus").selectpicker("refresh");
+                }
+            });
+            // $.ajax({
+            //     type: 'get',
+            //     url: ctx + "common/studentfloor?campusId="+$("#campus").val(),
+            //     dataType: "json",
+            //     success: function (data) {
+            //         for(var i=0;i<data.length;i++){
+            //             $("#floor").append("<option value='"+data[i].floorId+"'>"+data[i].floorName+"</option>");
+            //         }
+            //         $("#floor").selectpicker("refresh");
+            //     }
+            // });
+
+            //二级下拉框的选项随一级下拉框的值而改变
+            $("#campus").change(function(){
+                //根据bUnit去获取Division
+                $.ajax({
+                    type: 'get',
+                    url: ctx + "common/studentfloor?campusId="+$("#campus").val(),
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.length == 0){
+                            //如果一级没有对应的二级 则清空二级并 不往下执行
+                            $("#floor").empty();
+                            $("#floor").selectpicker("refresh");
+                            return ;
+                        }
+                        //如果一级有对应的二级 则进行拼接
+                        //每次拼接前都进行清空
+                        $("#floor").empty();
+                        for(var i=0;i<data.length;i++){
+                            $("#floor").append("<option value='"+data[i].floorId+"'>"+data[i].floorName+"</option>");
+                        }
+                        //这里千万别忘记了
+                        $("#floor").selectpicker("refresh");
+                    }
+                });
+            });
+        });
+
+	</script>
+</body>
+</html>

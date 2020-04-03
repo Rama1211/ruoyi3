@@ -57,7 +57,7 @@
         where campus_name=#{campusName}
     </select>
 
-    <insert id="insertCampus" parameterType="MiScampus" useGeneratedKeys="true" keyProperty="id">
+        <insert id="insertCampus" parameterType="MiScampus" useGeneratedKeys="true" keyProperty="campusId">
         insert into mis_campus(
         campus_name,
         floor_num,

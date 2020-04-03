@@ -3,8 +3,12 @@ package com.ruoyi.web.controller.common;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.system.domain.MiScampus;
 import com.ruoyi.system.domain.MisFaculty;
+import com.ruoyi.system.domain.MisFloor;
 import com.ruoyi.system.domain.MisProfession;
+import com.ruoyi.system.service.DormRoomService.MisCampusService;
+import com.ruoyi.system.service.DormRoomService.MisFloorService;
 import com.ruoyi.system.service.MisStudentFacultyService;
 import com.ruoyi.system.service.MisStudentProfessionService;
 import org.slf4j.Logger;
@@ -45,6 +49,12 @@ public class CommonController
 
     @Autowired
     private MisStudentProfessionService professionService;
+
+    @Autowired
+    private MisCampusService misCampusService;
+
+    @Autowired
+    private MisFloorService misFloorService;
 
     /**
      * 通用下载请求
@@ -146,6 +156,29 @@ public class CommonController
             }
         List<MisProfession> list =professionService.selectProfessionList(facultyId);
         return list ;
+    }
+    /**
+     *校区下拉框查询
+     */
+    @GetMapping("/common/studentScampus")
+    public @ResponseBody List<MiScampus> MiScampusFaculty()
+    {
+        MiScampus miScampus=new MiScampus();
+        List<MiScampus> list = misCampusService.selectScampusList(miScampus);
+        return list;
+    }
+
+    /**
+     *楼栋下拉框查询
+     */
+    @GetMapping("/common/studentfloor")
+    public @ResponseBody List<MisFloor> studentfloor(String campusId)
+    {
+        if(campusId.equals("null")){
+            campusId="1";
+        }
+        List<MisFloor> list =misFloorService.selectFloorByCampusId(campusId,"");
+        return list;
     }
 
 }

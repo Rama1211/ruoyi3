@@ -81,4 +81,14 @@ public interface MisFloorMapper
      * @return 结果
      */
     public int selectCampusIdByFloorId(String floorId);
+
+
+
+    /**
+     * 删除校区信息时删除所有该小区楼栋
+     *
+     * @return 结果
+     */
+    public int deleteFloorBycampuse(String campusId);
+
 }
