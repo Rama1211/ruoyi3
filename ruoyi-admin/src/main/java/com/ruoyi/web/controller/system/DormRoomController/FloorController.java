@@ -39,14 +39,13 @@ public class FloorController extends BaseController
     @Autowired
     private MisCampusService scampusService;
     //查询校区楼栋信息
-    @RequiresPermissions("floor:floorInfo:list")
+//    @RequiresPermissions("floor:floorInfo:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(String campusId,@RequestParam(defaultValue = " ") String floorId)
+    public TableDataInfo list(String campusId,@RequestParam(defaultValue = "") String floorId)
     {
         startPage();
-        String temp=floorId.substring(1)+"号楼";
-        List<MisFloor> list = floorService.selectFloorByCampusId(campusId,temp);
+        List<MisFloor> list = floorService.selectFloorByCampusId(campusId,floorId);
         return getDataTable(list);
     }
 
@@ -54,18 +53,19 @@ public class FloorController extends BaseController
     /**
      * 跳转楼栋信息页面
      */
-    @RequiresPermissions("floor:floorInfo:select")
+//    @RequiresPermissions("floor:floorInfo:select")
     @GetMapping("/select/{campusId}")
     public String select(@PathVariable("campusId") Long campusId, ModelMap mmap)
     {
         mmap.put("campusId",campusId);
+        mmap.put("user",ShiroUtils.getSysUser());
         return prefix + "/index";
     }
 
     /**
      * 新增楼栋
      */
-    @RequiresPermissions("floor:floorInfo:add")
+//    @RequiresPermissions("floor:floorInfo:add")
     @GetMapping("/add")
     public String add(Long campusId,ModelMap mmap)
     {
@@ -76,7 +76,7 @@ public class FloorController extends BaseController
     /**
      * 新增楼栋信息保存
      */
-    @RequiresPermissions("floor:floorInfo:add")
+//    @RequiresPermissions("floor:floorInfo:add")
     @Log(title = "楼栋信息管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -105,7 +105,7 @@ public class FloorController extends BaseController
     /**
      * 修改保存楼栋
      */
-    @RequiresPermissions("floor:floorInfo:edit")
+//    @RequiresPermissions("floor:floorInfo:edit")
     @Log(title = "楼栋信息管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -119,7 +119,7 @@ public class FloorController extends BaseController
     /**
      * 删除楼栋信息
      */
-    @RequiresPermissions("floor:floorInfo:remove")
+//    @RequiresPermissions("floor:floorInfo:remove")
     @Log(title = "楼栋信息管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

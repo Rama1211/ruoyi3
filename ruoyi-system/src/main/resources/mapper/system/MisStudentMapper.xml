@@ -9,6 +9,7 @@
         <result property="studentName" column="student_name"/>
         <result property="studentFaculty" column="student_faculty"/>
         <result property="studentProfession" column="student_profession"/>
+        <result property="campusName" column="campus_name"/>
         <result property="studentClass" column="student_class"/>
         <result property="apartmentId" column="apartment_id"/>
         <result property="createTime" column="createTime"/>
@@ -30,6 +31,7 @@
                student_class,
                apartment_id,
                student_year,
+               campus_name,
                time,
                gender,
                floor_id,

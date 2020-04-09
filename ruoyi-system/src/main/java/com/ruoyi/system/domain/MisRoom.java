@@ -60,6 +60,20 @@ public class MisRoom extends BaseEntity {
     @Excel(name = "所在校区id", cellType = ColumnType.NUMERIC)
     private Integer campusId;
 
+    /**
+     * 状态
+     */
+    @Excel(name = "状态", cellType = ColumnType.NUMERIC)
+    private Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getFloorLevel() {
         return floorLevel;
     }

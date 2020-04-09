@@ -74,6 +74,18 @@ public class SysUser extends BaseEntity
     @Excel(name = "最后登陆IP", type = Type.EXPORT)
     private String loginIp;
 
+    /** 管理级别 */
+    @Excel(name = "管理级别", type = Type.EXPORT)
+    private String level;
+
+    /** 所在校区 */
+    @Excel(name = "所在校区", type = Type.EXPORT)
+    private String campus;
+
+    /** 所在楼栋 */
+    @Excel(name = "所在楼栋", type = Type.EXPORT)
+    private String floor;
+
     /** 最后登陆时间 */
     @Excel(name = "最后登陆时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
@@ -96,6 +108,30 @@ public class SysUser extends BaseEntity
     public SysUser()
     {
 
+    }
+
+    public String getCampus() {
+        return campus;
+    }
+
+    public void setCampus(String campus) {
+        this.campus = campus;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public SysUser(Long userId)

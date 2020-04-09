@@ -63,6 +63,10 @@ public class MisStudent extends BaseEntity
     @Excel(name = "楼栋号",  cellType = ColumnType.STRING,type = Excel.Type.EXPORT)
     private String floorId;
 
+    /**校区名称 */
+    @Excel(name = "校区名称",  cellType = ColumnType.STRING,type = Excel.Type.EXPORT)
+    private String campusName;
+
     @Override
     public String toString() {
         return "MisStudent{" +
@@ -78,6 +82,14 @@ public class MisStudent extends BaseEntity
                 ", address='" + address + '\'' +
                 ", floorId='" + floorId + '\'' +
                 '}';
+    }
+
+    public String getCampusName() {
+        return campusName;
+    }
+
+    public void setCampusName(String campusName) {
+        this.campusName = campusName;
     }
 
     public static long getSerialVersionUID() {

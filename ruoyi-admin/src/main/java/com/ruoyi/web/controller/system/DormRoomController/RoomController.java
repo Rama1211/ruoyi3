@@ -1,28 +1,19 @@
 package com.ruoyi.web.controller.system.DormRoomController;
 
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.MiScampus;
 import com.ruoyi.system.domain.MisRoom;
-import com.ruoyi.system.domain.SysPost;
+import com.ruoyi.system.service.DormRoomService.MisCampusService;
 import com.ruoyi.system.service.DormRoomService.MisRoomService;
-import com.ruoyi.system.service.ISysPostService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 房间信息操作处理
@@ -31,30 +22,31 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/room/roomInfo")
-public class RoomController extends BaseController
-{
+public class RoomController extends BaseController {
     private String prefix = "dormRoom/room";
+
+    @Autowired
+    private MisCampusService scampusService;
 
     @Autowired
     private MisRoomService roomService;
 
-    @RequiresPermissions("room:roomInfo:view")
+//    @RequiresPermissions("room:roomInfo:view")
     @GetMapping()
-    public String operlog()
-    {
+    public String operlog( ModelMap mmap) {
+        mmap.put("user", ShiroUtils.getSysUser());
         return prefix + "/room";
     }
 
-    @RequiresPermissions("room:roomInfo:list")
+//    @RequiresPermissions("room:roomInfo:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(String campusId,String floorId)
-    {
+    public TableDataInfo list(String campusId, String floorId) {
         startPage();
-        List<MisRoom> list = roomService.selectRoomList(campusId,floorId);
+        MiScampus miScampus = scampusService.selectMiScampusByName(campusId);
+        List<MisRoom> list = roomService.selectRoomList(miScampus.getCampusId(), floorId);
         return getDataTable(list);
     }
-
 
 
 //
@@ -115,15 +107,15 @@ public class RoomController extends BaseController
 //        return toAjax(postService.insertPost(post));
 //    }
 //
-//    /**
-//     * 修改岗位
-//     */
-//    @GetMapping("/edit/{postId}")
-//    public String edit(@PathVariable("postId") Long postId, ModelMap mmap)
-//    {
-//        mmap.put("post", postService.selectPostById(postId));
-//        return prefix + "/edit";
-//    }
+
+    /**
+     * 修改岗位
+     */
+    @GetMapping("/edit/{dormId}")
+    public String edit(@PathVariable("dormId") long dormId, ModelMap mmap) {
+        mmap.put("room", roomService.selectRoomById(dormId));
+        return prefix + "/edit";
+    }
 //
 //    /**
 //     * 修改保存岗位

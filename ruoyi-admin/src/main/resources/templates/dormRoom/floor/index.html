@@ -9,11 +9,14 @@
 			<div class="col-sm-12 search-collapse">
 				<form id="floor-form">
 					<input type="hidden" id="campusId" name="campusId" th:value="${campusId}">
+					<input id="level" name="level" type="hidden" th:value="${user.level}"/>
 					<div class="select-list">
 
 						<ul>
 							<li>
-								楼栋号：<input type="text" name="floorId" id="floorId"/>
+								楼栋号：<input th:if="${user.level} eq floor" type="text" name="floorId" id="floorId" th:value="${user.floor}"/>
+								<input th:if="${user.level} eq school" type="text" name="floorId" id="floorId" />
+								<input th:if="${user.level} eq county" type="text" name="floorId" id="floorId" />
 							</li>
 
 							<li>
@@ -26,7 +29,7 @@
 			</div>
 			
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="floor:floorInfo:add">
+				<a class="btn btn-success" onclick="$.operate.add()">
 	                <i class="fa fa-plus"></i> 新增
 	            </a>
 
@@ -39,15 +42,19 @@
 	</div>
 	<th:block th:include="include :: footer" />
 	<script th:inline="javascript">
-		var editFlag = [[${@permission.hasPermi('dormRoom:dormRoomInfo:edit')}]];
-		var removeFlag = [[${@permission.hasPermi('dormRoom:dormRoomInfo:remove')}]];
+        var editFlag ="";
+        var removeFlag = "";
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
 		var prefix = ctx + "floor/floorInfo";
         var campusId=$("#campusId").val();
         var floorId=$("#floorId").val();
 		$(function() {
+            if ($(" input[ name='level' ] ").val()=="floor") {
+                $("#toolbar").hide();
+            }
 		    var options = {
-                url: prefix + "/list?campusId="+campusId+"&floorId="+floorId,
+                url: prefix + "/list",
+                // url: prefix + "/list?campusId="+campusId+"&floorId="+floorId,
 		        createUrl: prefix + "/add?campusId="+campusId,
                 updateUrl: prefix + "/edit/{id}",
 		        removeUrl: prefix + "/remove",
@@ -102,8 +109,10 @@
                         align: 'center',
                         formatter: function(value, row, index) {
                             var actions = [];
+                            if ($(" input[ name='level' ] ").val()=="school"  || $(" input[ name='level' ] ").val()=="county" ) {
+                                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.floorId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                            }
                             actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.floorId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                            actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.floorId + '\')"><i class="fa fa-remove"></i>删除</a>');
                             return actions.join('');
                         }
                     }

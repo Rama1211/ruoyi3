@@ -38,15 +38,16 @@ public class CampusController extends BaseController
 
 
 
-    @RequiresPermissions("campus:campusInfo:view")
+//    @RequiresPermissions("campus:campusInfo:view")
     @GetMapping()
-    public String operlog()
+    public String operlog(ModelMap mmap)
     {
+        mmap.put("user",ShiroUtils.getSysUser());
         return prefix + "/index";
     }
 
     //查询公寓列表
-    @RequiresPermissions("campus:campusInfo:list")
+//    @RequiresPermissions("campus:campusInfo:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(MiScampus scampus)
@@ -70,7 +71,7 @@ public class CampusController extends BaseController
     /**
      * 修改保存校区
      */
-    @RequiresPermissions("campus:campusInfo:edit")
+//    @RequiresPermissions("campus:campusInfo:edit")
     @Log(title = "校区管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -93,7 +94,7 @@ public class CampusController extends BaseController
     /**
      * 新增校区信息保存
      */
-    @RequiresPermissions("campus:campusInfo:add")
+//    @RequiresPermissions("campus:campusInfo:add")
     @Log(title = "校区信息管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -122,7 +123,7 @@ public class CampusController extends BaseController
     /**
      * 删除校区信息
      */
-    @RequiresPermissions("campus:campusInfo:remove")
+//    @RequiresPermissions("campus:campusInfo:remove")
     @Log(title = "校区信息管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

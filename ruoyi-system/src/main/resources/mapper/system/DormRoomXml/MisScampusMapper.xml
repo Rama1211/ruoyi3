@@ -22,15 +22,15 @@
     <select id="selectScampusList" parameterType="MiScampus" resultMap="MisScampusResult">
         <include refid="selectScampusVo"/>
         <where>
-            <if test="campusId != null and campusId != ''">
-                AND id like concat('%', #{campusId}, '%')
-            </if>
+            <!--<if test="campusId != null and campusId != ''">-->
+                <!--AND id like concat('%', #{campusId}, '%')-->
+            <!--</if>-->
             <if test="campusName != null and campusName != ''">
                 AND campus_name like concat('%', #{campusName}, '%')
             </if>
-            <if test="floorNum != null and floorNum != ''">
-                AND floor_num like concat('%', #{floorNum}, '%')
-            </if>
+            <!--<if test="floorNum != null and floorNum != ''">-->
+                <!--AND floor_num like concat('%', #{floorNum}, '%')-->
+            <!--</if>-->
         </where>
     </select>
 
@@ -38,6 +38,11 @@
     <select id="selectScampusById" parameterType="Long" resultMap="MisScampusResult">
         <include refid="selectScampusVo"/>
         WHERE id=#{campusId}
+    </select>
+
+    <select id="selectMiScampusByName" parameterType="String" resultMap="MisScampusResult">
+        <include refid="selectScampusVo"/>
+        WHERE campus_name=#{campusName}
     </select>
 
 

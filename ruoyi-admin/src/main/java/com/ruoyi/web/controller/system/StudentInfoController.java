@@ -43,7 +43,7 @@ public class StudentInfoController extends BaseController
     @Autowired
     private MisStudentService studentService;
 
-    @RequiresPermissions("student:studentInfo:view")
+//    @RequiresPermissions("student:studentInfo:view")
     @GetMapping()
     public String operlog()
     {
@@ -51,7 +51,7 @@ public class StudentInfoController extends BaseController
     }
 
     //查询学生列表
-    @RequiresPermissions("student:studentInfo:list")
+//    @RequiresPermissions("student:studentInfo:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(MisStudent student)
@@ -74,7 +74,7 @@ public class StudentInfoController extends BaseController
         /**
      * 新增学生信息
      */
-    @RequiresPermissions("student:studentInfo:add")
+//    @RequiresPermissions("student:studentInfo:add")
     @Log(title = "学生信息管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -91,7 +91,7 @@ public class StudentInfoController extends BaseController
     }
 
     @Log(title = "学生信息管理", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("student:studentInfo:export")
+//    @RequiresPermissions("student:studentInfo:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(MisStudent student)
@@ -102,7 +102,7 @@ public class StudentInfoController extends BaseController
     }
 
     //下载导入模板
-    @RequiresPermissions("student:studentInfo:view")
+//    @RequiresPermissions("student:studentInfo:view")
     @GetMapping("/importTemplate")
     @ResponseBody
     public AjaxResult importTemplate()
@@ -113,7 +113,7 @@ public class StudentInfoController extends BaseController
 
     //导入学生信息
     @Log(title = "学生信息管理", businessType = BusinessType.IMPORT)
-    @RequiresPermissions("student:studentInfo:import")
+//    @RequiresPermissions("student:studentInfo:import")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception

@@ -164,6 +164,9 @@ public class SysDeptController extends BaseController
     public List<Ztree> treeData()
     {
         List<Ztree> ztrees = deptService.selectDeptTree(new SysDept());
+        for (Ztree tree:ztrees){
+            System.out.println(tree.getTitle());
+        }
         return ztrees;
     }
 

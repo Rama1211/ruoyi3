@@ -45,6 +45,11 @@ public class MisRoomServiceImpl implements MisRoomService
         return map;
     }
 
+    @Override
+    public MisRoom selectRoomById(Long dormId) {
+        return roomMapper.selectRoomById(dormId);
+    }
+
 //    /**
 //     * 查询所有岗位
 //     *

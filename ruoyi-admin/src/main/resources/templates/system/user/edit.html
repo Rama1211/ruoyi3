@@ -93,6 +93,24 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">所在校区：</label>
+                        <div class="col-sm-8">
+                            <input name="campus" placeholder="请输入所在校区" class="form-control" type="text" maxlength="11" th:field="*{campus}" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">所在楼栋：</label>
+                        <div class="col-sm-8">
+                            <input name="floor" placeholder="请输入所在楼栋：1号楼" class="form-control" type="text" maxlength="11" th:field="*{floor}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
             	<div class="col-sm-12">
                     <div class="form-group">
                         <label class="col-xs-2 control-label">角色：</label>
@@ -100,6 +118,23 @@
                             <label th:each="role:${roles}" class="check-box">
 								<input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}" th:checked="${role.flag}" th:disabled="${role.status == '1'}">
 							</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">管理级别：</label>
+                        <div class="col-sm-8">
+                            <select id="level" name="level" class="form-control" >
+                                <option th:if="${user.level} eq school" th:selected="selected" value="school">校级</option>
+                                <option th:unless="${user.level} eq school" value="school">校级</option>
+
+                                <option th:if="${user.level} eq county" th:selected="selected"  value="county">区级</option>
+                                <option th:unless="${user.level} eq county" value="county">区级</option>
+
+                                <option th:if="${user.level} eq floor" th:selected="selected" value="floor" >楼级</option>
+                                <option th:unless="${user.level} eq floor"  value="floor" >楼级</option>
+                            </select>
                         </div>
                     </div>
                 </div>

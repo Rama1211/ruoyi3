@@ -34,14 +34,14 @@
 			</div>
 			
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="student:studentInfo:add">
+				<a class="btn btn-success" onclick="$.operate.add()">
 	                <i class="fa fa-plus"></i> 新增
 	            </a>
 
 				<a class="btn btn-info" onclick="$.table.importExcel()">
 					<i class="fa fa-upload"></i> 导入
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="student:studentInfo:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" >
 		            <i class="fa fa-download"></i> 导出
 		        </a>
 	        </div>
@@ -53,9 +53,11 @@
 	</div>
 	<th:block th:include="include :: footer" />
 	<script th:inline="javascript">
-		var editFlag = [[${@permission.hasPermi('student:studentInfo:edit')}]];
-		var removeFlag = [[${@permission.hasPermi('student:studentInfo:remove')}]];
-		var datas = [[${@dict.getType('sys_normal_disable')}]];
+		// var editFlag = [[${@permission.hasPermi('student:studentInfo:edit')}]];
+		// var removeFlag = [[${@permission.hasPermi('student:studentInfo:remove')}]];
+		// var datas = [[${@dict.getType('sys_normal_disable')}]];
+        var editFlag ="";
+        var removeFlag = "";
 		var prefix = ctx + "student/studentInfo";
 
 		$(function() {
@@ -89,6 +91,11 @@
 		            title: '专业',
 		            sortable: true
 		        },
+                    {
+                        field: 'campusName',
+                        title: '校区',
+                        align: 'center',
+                    },
 		        {
 		            field: 'floorId',
 		            title: '楼栋',

@@ -33,6 +33,11 @@ public class MisScampusServiceImpl implements MisCampusService
     }
 
     @Override
+    public MiScampus selectMiScampusByName(String campusName) {
+        return scampusMapper.selectMiScampusByName(campusName);
+    }
+
+    @Override
     public int updateScampus(MiScampus scampus) {
         return scampusMapper.updateScampus(scampus);
     }

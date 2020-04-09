@@ -32,6 +32,14 @@ public interface MisScampusMapper
     public MiScampus selectScampusById(Long campusId);
 
     /**
+     * 根据校区名称查询校区信息
+     *
+     * @param campusName 校区名称
+     * @return 校区数据
+     */
+    public MiScampus selectMiScampusByName(String campusName);
+
+    /**
      * 修改校区信息
      *
      * @param scampus 校区信息

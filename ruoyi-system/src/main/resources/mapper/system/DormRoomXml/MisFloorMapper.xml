@@ -27,7 +27,7 @@
         <include refid="selectFloorVo"/>
         WHERE campus_id=#{campusId}
         <if test="floorName != null and floorName != ''">
-            AND floor_name like concat('%', #{floorName}, '%')
+            AND floor_name like concat(#{floorName}, '%')
         </if>
     </select>
 
