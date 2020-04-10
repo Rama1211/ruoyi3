@@ -25,6 +25,16 @@ public interface MisFloorMapper
 
 
     /**
+     * 通过校区id和楼栋名称查询楼栋信息集合
+     *
+     * @param campusId 校区id
+     * @return 楼栋数据集合
+     */
+    public MisFloor selectFloorByFloorName(@Param("campusId")String campusId,@Param("floorName")String floorName);
+
+
+
+    /**
      * 校验楼栋名称唯一
      *
      * @param floorName 楼栋名称

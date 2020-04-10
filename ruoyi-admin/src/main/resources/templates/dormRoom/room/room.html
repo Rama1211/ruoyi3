@@ -53,13 +53,12 @@
 	</div>
 	<th:block th:include="include :: footer"/>
 	<script th:inline="javascript">
-		// var editFlag = [[${@permission.hasPermi('system:post:edit')}]];
-        // var removeFlag = [[${@permission.hasPermi('system:post:remove')}]];
         var editFlag ="";
 		var removeFlag = "";
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
 		var prefix = ctx + "room/roomInfo";
-
+        var campusName=$("#campus").val();
+        var floorName=$("#floor").val();
 		$(function() {
             if ($(" input[ name='level' ] ").val()=="floor" || $(" input[ name='level' ] ").val()=="county") {
                 $("#campus").attr("readonly",true);
@@ -69,15 +68,21 @@
             }
 		    var options = {
 		        url: prefix + "/list",
-		        createUrl: prefix + "/add",
+		        createUrl: prefix + "/add?campusName="+campusName+"&floorName="+floorName,
 		        updateUrl: prefix + "/edit/{id}",
 		        removeUrl: prefix + "/remove",
 		        exportUrl: prefix + "/export",
-		        // sortName: "roomSort",
+				// sortName: "createTime",
 		        modalName: "房间",
+                // sortOrder: "desc",
 		        columns: [{
 		            checkbox: true
 		        },
+                    {
+                        field: 'dormId',
+                        title: 'id',
+                        visible:false
+                    },
 		        {
 		            field: 'dormNum',
 		            title: '宿舍号'
@@ -85,27 +90,23 @@
 		        {
 		            field: 'dormType',
 		            title: '宿舍类型',
-		            sortable: true
+		            // sortable: true
 		        },
 		        {
 		            field: 'dormShouldPeople',
 		            title: '宿舍应住人数',
-		            sortable: true
+		            // sortable: true
 		        },
                     {
                         field: 'dormActualPeople',
                         title: '宿舍实住人数',
-                        sortable: true
+                        // sortable: true
                     },
-		        {
-		            field: 'dormId',
-		            title: 'id',
-                    visible:false
-		        },
+
                     {
                         field: 'floorLevel',
                         title: '楼层',
-                        sortable: true
+                        // sortable: true
                     },
 		        {
 		            field: 'status',
@@ -118,7 +119,7 @@
 		        {
 		            field: 'createTime',
 		            title: '创建时间',
-		            sortable: true
+		            // sortable: true
 		        },
 		        {
 		            title: '操作',

@@ -1,8 +1,11 @@
 package com.ruoyi.system.service.impl.DormRoomServiceImpl;
 
+import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.system.domain.MiScampus;
 import com.ruoyi.system.domain.MisFloor;
 import com.ruoyi.system.domain.MisRoom;
+import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.mapper.DormRoomMapper.MisRoomMapper;
 import com.ruoyi.system.service.DormRoomService.MisRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,12 @@ public class MisRoomServiceImpl implements MisRoomService
     @Override
     public MisRoom selectRoomById(Long dormId) {
         return roomMapper.selectRoomById(dormId);
+    }
+
+
+    @Override
+    public int updateRoom(MisRoom room) {
+        return roomMapper.updateRoom(room);
     }
 
 //    /**
@@ -97,27 +106,19 @@ public class MisRoomServiceImpl implements MisRoomService
 //    {
 //        return postMapper.selectPostById(postId);
 //    }
-//
-//    /**
-//     * 批量删除岗位信息
-//     *
-//     * @param ids 需要删除的数据ID
-//     * @throws Exception
-//     */
-//    @Override
-//    public int deletePostByIds(String ids) throws BusinessException
-//    {
-//        Long[] postIds = Convert.toLongArray(ids);
-//        for (Long postId : postIds)
-//        {
-//            SysPost post = selectPostById(postId);
-//            if (countUserPostById(postId) > 0)
-//            {
-//                throw new BusinessException(String.format("%1$s已分配,不能删除", post.getPostName()));
-//            }
-//        }
-//        return postMapper.deletePostByIds(postIds);
-//    }
+
+    /**
+     * 批量删除岗位信息
+     *
+     * @param ids 需要删除的数据ID
+     * @throws Exception
+     */
+    @Override
+    public int deleteRoomByIds(String ids) throws BusinessException
+    {
+        Long[] roomIds = Convert.toLongArray(ids);
+        return roomMapper.deleteRoomByIds(roomIds);
+    }
 //
 //    /**
 //     * 新增保存岗位信息

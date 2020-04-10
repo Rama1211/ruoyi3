@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper.DormRoomMapper;
 
 import com.ruoyi.system.domain.MisFloor;
 import com.ruoyi.system.domain.MisRoom;
+import com.ruoyi.system.domain.SysPost;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -52,21 +53,21 @@ public interface MisRoomMapper
      */
     public MisRoom selectRoomById(Long dormId);
 
-//    /**
-//     * 批量删除岗位信息
-//     *
-//     * @param ids 需要删除的数据ID
-//     * @return 结果
-//     */
-//    public int deletePostByIds(Long[] ids);
-//
-//    /**
-//     * 修改岗位信息
-//     *
-//     * @param post 岗位信息
-//     * @return 结果
-//     */
-//    public int updatePost(SysPost post);
+    /**
+     * 批量删除房间信息
+     *
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */
+    public int deleteRoomByIds(Long[] ids);
+
+    /**
+     * 修改房间信息
+     *
+     * @param room 房间信息
+     * @return 结果
+     */
+    public int updateRoom(MisRoom room);
 //
 //    /**
 //     * 新增岗位信息

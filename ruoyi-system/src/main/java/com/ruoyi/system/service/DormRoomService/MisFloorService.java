@@ -21,6 +21,14 @@ public interface MisFloorService
     public List<MisFloor> selectFloorByCampusId(String campusId,String floorId);
 
     /**
+     * 通过校区ID和楼栋名称查询楼栋信息
+     *
+     * @param campusId 校区ID
+     * @return 楼栋信息
+     */
+    public MisFloor selectFloorByFloorName(String campusId,String floorName);
+
+    /**
      * 校验楼栋名称是否唯一
      *
      *
