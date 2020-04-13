@@ -13,10 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="floorId" column="floor_id"/>
 		<result property="floorLevel" column="floor_level"/>
 		<result property="status" column="status"/>
-		<result property="createTime" column="createTime"/>
-		<result property="updateTime" column="updateTime"/>
-		<result property="createBy" column="createBy"/>
-		<result property="updateBy" column="updateBy"/>
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="createBy" column="create_by"/>
+		<result property="updateBy" column="update_by"/>
 	</resultMap>
 
 	<resultMap type="MisFloor" id="MisFloorResult">
@@ -101,27 +101,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		</set>
  		where id = #{dormId}
 	</update>
- 	<!---->
- 	<!--<insert id="insertPost" parameterType="SysPost" useGeneratedKeys="true" keyProperty="postId">-->
- 		<!--insert into sys_post(-->
- 			<!--<if test="postId != null and postId != 0">post_id,</if>-->
- 			<!--<if test="postCode != null and postCode != ''">post_code,</if>-->
- 			<!--<if test="postName != null and postName != ''">post_name,</if>-->
- 			<!--<if test="postSort != null and postSort != ''">post_sort,</if>-->
- 			<!--<if test="status != null and status != ''">status,</if>-->
- 			<!--<if test="remark != null and remark != ''">remark,</if>-->
- 			<!--<if test="createBy != null and createBy != ''">create_by,</if>-->
- 			<!--create_time-->
- 		<!--)values(-->
- 			<!--<if test="postId != null and postId != 0">#{postId},</if>-->
- 			<!--<if test="postCode != null and postCode != ''">#{postCode},</if>-->
- 			<!--<if test="postName != null and postName != ''">#{postName},</if>-->
- 			<!--<if test="postSort != null and postSort != ''">#{postSort},</if>-->
- 			<!--<if test="status != null and status != ''">#{status},</if>-->
- 			<!--<if test="remark != null and remark != ''">#{remark},</if>-->
- 			<!--<if test="createBy != null and createBy != ''">#{createBy},</if>-->
- 			<!--sysdate()-->
- 		<!--)-->
-	<!--</insert>-->
+
+ 	<insert id="insertRoom" parameterType="MisRoom" useGeneratedKeys="true" keyProperty="dormId">
+ 		insert into mis_room(
+ 			<if test="dormNum != null and dormNum != 0">dorm_num,</if>
+ 			<if test="dormType != null and dormType != ''">dorm_type,</if>
+ 			<if test="dormShouldPeople != null and dormShouldPeople != ''">dorm_should_people,</if>
+ 			<if test="dormActualPeople != null and dormActualPeople != ''">dorm_actual_people,</if>
+ 			<if test="floorId != null and floorId != ''">floor_id,</if>
+ 			<if test="campusId != null and campusId != ''">campus_id,</if>
+ 			<if test="status != null and status != ''">status,</if>
+ 			<if test="createBy != null and createBy != ''">create_by,</if>
+ 			<if test="updateBy != null and updateBy != ''">update_by,</if>
+ 			<if test="floorLevel != null and floorLevel != ''">floor_level,</if>
+ 			create_time,
+			update_time
+ 		)values(
+ 			<if test="dormNum != null and dormNum != 0">#{dormNum},</if>
+ 			<if test="dormType != null and dormType != ''">#{dormType},</if>
+ 			<if test="dormShouldPeople != null and dormShouldPeople != ''">#{dormShouldPeople},</if>
+ 			<if test="dormActualPeople != null and dormActualPeople != ''">#{dormActualPeople},</if>
+ 			<if test="floorId != null and floorId != ''">#{floorId},</if>
+ 			<if test="campusId != null and campusId != ''">#{campusId},</if>
+ 			<if test="status != null and status != ''">#{status},</if>
+ 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+ 			<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+ 			<if test="floorLevel != null and floorLevel != ''">#{floorLevel},</if>
+ 			sysdate(),
+ 			sysdate()
+ 		)
+	</insert>
 
 </mapper> 

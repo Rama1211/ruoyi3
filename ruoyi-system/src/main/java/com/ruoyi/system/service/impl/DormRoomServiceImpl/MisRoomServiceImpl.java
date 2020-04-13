@@ -59,54 +59,6 @@ public class MisRoomServiceImpl implements MisRoomService
         return roomMapper.updateRoom(room);
     }
 
-//    /**
-//     * 查询所有岗位
-//     *
-//     * @return 岗位列表
-//     */
-//    @Override
-//    public List<SysPost> selectPostAll()
-//    {
-//        return postMapper.selectPostAll();
-//    }
-//
-//    /**
-//     * 根据用户ID查询岗位
-//     *
-//     * @param userId 用户ID
-//     * @return 岗位列表
-//     */
-//    @Override
-//    public List<SysPost> selectPostsByUserId(Long userId)
-//    {
-//        List<SysPost> userPosts = postMapper.selectPostsByUserId(userId);
-//        List<SysPost> posts = postMapper.selectPostAll();
-//        for (SysPost post : posts)
-//        {
-//            for (SysPost userRole : userPosts)
-//            {
-//                if (post.getPostId().longValue() == userRole.getPostId().longValue())
-//                {
-//                    post.setFlag(true);
-//                    break;
-//                }
-//            }
-//        }
-//        return posts;
-//    }
-//
-//    /**
-//     * 通过岗位ID查询岗位信息
-//     *
-//     * @param postId 岗位ID
-//     * @return 角色对象信息
-//     */
-//    @Override
-//    public SysPost selectPostById(Long postId)
-//    {
-//        return postMapper.selectPostById(postId);
-//    }
-
     /**
      * 批量删除岗位信息
      *
@@ -119,19 +71,12 @@ public class MisRoomServiceImpl implements MisRoomService
         Long[] roomIds = Convert.toLongArray(ids);
         return roomMapper.deleteRoomByIds(roomIds);
     }
-//
-//    /**
-//     * 新增保存岗位信息
-//     *
-//     * @param post 岗位信息
-//     * @return 结果
-//     */
-//    @Override
-//    public int insertPost(SysPost post)
-//    {
-//        return postMapper.insertPost(post);
-//    }
-//
+
+    @Override
+    public int insertRoom(MisRoom room) {
+        return roomMapper.insertRoom(room);
+    }
+
 //    /**
 //     * 修改保存岗位信息
 //     *

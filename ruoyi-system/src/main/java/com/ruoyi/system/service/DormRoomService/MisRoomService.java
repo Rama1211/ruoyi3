@@ -26,24 +26,6 @@ public interface MisRoomService
      */
     public Map<String,String> selectfloor(String campusId);
 
-
-
-
-//    /**
-//     * 查询所有岗位
-//     *
-//     * @return 岗位列表
-//     */
-//    public List<SysPost> selectPostAll();
-//
-//    /**
-//     * 根据用户ID查询岗位
-//     *
-//     * @param userId 用户ID
-//     * @return 岗位列表
-//     */
-//    public List<SysPost> selectPostsByUserId(Long userId);
-//
     /**
      * 通过房间ID查询房间信息
      *
@@ -59,15 +41,15 @@ public interface MisRoomService
      * @throws Exception 异常
      */
     public int deleteRoomByIds(String ids) throws Exception;
-//
-//    /**
-//     * 新增保存岗位信息
-//     *
-//     * @param post 岗位信息
-//     * @return 结果
-//     */
-//    public int insertPost(SysPost post);
-//
+
+    /**
+     * 新增保存房间信息
+     *
+     * @param room 房间信息
+     * @return 结果
+     */
+    public int insertRoom(MisRoom room);
+
     /**
      * 修改保存房间信息
      *

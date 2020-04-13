@@ -107,16 +107,10 @@ public class RoomController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(@Validated MisRoom room)
     {
-//        if (UserConstants.POST_NAME_NOT_UNIQUE.equals(postService.checkPostNameUnique(post)))
-//        {
-//            return error("新增岗位'" + post.getPostName() + "'失败，岗位名称已存在");
-//        }
-//        else if (UserConstants.POST_CODE_NOT_UNIQUE.equals(postService.checkPostCodeUnique(post)))
-//        {
-//            return error("新增岗位'" + post.getPostName() + "'失败，岗位编码已存在");
-//        }
-//        post.setCreateBy(ShiroUtils.getLoginName());
-        return toAjax(2);
+        room.setStatus("0");
+        room.setCreateBy(ShiroUtils.getLoginName());
+        room.setUpdateBy(ShiroUtils.getLoginName());
+        return toAjax(roomService.insertRoom(room));
     }
 
 
@@ -139,7 +133,7 @@ public class RoomController extends BaseController {
     {
 
         room.setUpdateBy(ShiroUtils.getLoginName());
-        int s=room.getStatus();
+        String s=room.getStatus();
         room.setStatus(s);
         return toAjax(roomService.updateRoom(room));
     }
