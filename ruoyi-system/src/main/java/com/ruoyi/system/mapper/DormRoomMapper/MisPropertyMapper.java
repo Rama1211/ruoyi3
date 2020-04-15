@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 楼栋信息 数据层
+ * 财物信 数据层
  * 
  * @author dg
  */
@@ -16,11 +16,25 @@ import java.util.List;
 public interface MisPropertyMapper
 {
     /**
-     * 查询楼栋信息集合
+     * 查询财物信息集合
      *
-     * @return 楼栋数据集合
+     * @return 财物数据集合
      */
-    public List<MisProperty> selectPropertyList(MisProperty property);
+    public List<MisProperty> selectPropertyList(@Param("dormId")String dormId, @Param("propertyName")String propertyName);
+
+    /**
+     * 根据财物id查询财物信息
+     *
+     * @return 财物数据
+     */
+    public MisProperty selectPropertyById(String propertyId);
 
 
+    /**
+     * 修改财物信息
+     *
+     * @param property 财物信息
+     * @return 结果
+     */
+    public int updateProperty(MisProperty property);
 }

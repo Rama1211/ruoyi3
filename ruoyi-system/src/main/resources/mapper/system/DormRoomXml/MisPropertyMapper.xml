@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DormRoomMapper.MisPropertyMapper">
+
+    <resultMap type="MisProperty" id="MisPropertyResult">
+        <id property="propertyId" column="id"/>
+        <result property="dormRoomId" column="dorm_room_id"/>
+        <result property="propertyName" column="property_name"/>
+        <result property="propertyNum" column="property_num"/>
+        <result property="propertyAmount" column="property_amount"/>
+        <result property="propertyStatus" column="property_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+    <sql id="selectProperty">
+        select *
+        from mis_property
+    </sql>
+
+    <select id="selectPropertyList"  resultMap="MisPropertyResult">
+        <include refid="selectProperty"/>
+        WHERE dorm_room_id=#{dormId}
+        <if test="propertyName != null and propertyName != ''">
+            AND property_name like concat(#{propertyName}, '%')
+        </if>
+    </select>
+
+    <select id="selectPropertyById"  resultMap="MisPropertyResult">
+        <include refid="selectProperty"/>
+        WHERE id=#{propertyId}
+    </select>
+
+
+
+    <!--<select id="checkFloorNameUnique" parameterType="String" resultMap="MisFloorResult">-->
+        <!--<include refid="selectFloorVo"/>-->
+        <!--where floor_name=#{floorName} and campus_id=#{campusId}-->
+    <!--</select>-->
+
+
+
+
+    <!--<insert id="insertFloor" parameterType="MisFloor" useGeneratedKeys="true" keyProperty="id">-->
+        <!--insert into mis_floor(-->
+        <!--<if test="floorName != null and floorName != ''">floor_name,</if>-->
+        <!--<if test="campusId != null and campusId != ''">campus_id,</if>-->
+        <!--<if test="campusName != null and campusName != ''">campus_name,</if>-->
+        <!--<if test="floorLevel != null and floorLevel != ''">floor_level,</if>-->
+        <!--<if test="everyLevelNum != null and everyLevelNum != ''">everyLevel_num,</if>-->
+        <!--<if test="totalNum != null and totalNum != ''">total_num,</if>-->
+        <!--<if test="createBy != null and createBy != ''">createBy,</if>-->
+        <!--createTime-->
+        <!--)values(-->
+        <!--<if test="floorName != null and floorName != ''">  #{floorName},</if>-->
+        <!--<if test="campusId != null and campusId != ''"> #{campusId},</if>-->
+        <!--<if test="campusName != null and campusName != ''"> #{campusName},</if>-->
+        <!--<if test="floorLevel != null and floorLevel != ''">#{floorLevel},</if>-->
+        <!--<if test="everyLevelNum != null and everyLevelNum != ''">#{everyLevelNum},</if>-->
+        <!--<if test="totalNum != null and totalNum != ''">#{totalNum},</if>-->
+        <!--<if test="createBy != null and createBy != ''">#{createBy},</if>-->
+        <!--sysdate()-->
+        <!--)-->
+    <!--</insert>-->
+
+
+    <update id="updateProperty" parameterType="MisProperty">
+        update mis_property
+        <set>
+            <if test="propertyName != null and propertyName != ''">property_name = #{propertyName},</if>
+            <if test="propertyNum != null and propertyNum != ''">property_num = #{propertyNum},</if>
+            <if test="propertyAmount != null and propertyAmount != ''">property_amount = #{propertyAmount},</if>
+            property_status = #{propertyStatus},
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where id=#{propertyId}
+    </update>
+
+    <!--<update id="addOne">-->
+        <!--update mis_campus-->
+        <!--<set>-->
+            <!--floor_num=#{floorNum}+1,-->
+            <!--updateBy=#{updateBy},-->
+            <!--updateTime = sysdate()-->
+        <!--</set>-->
+        <!--where id = #{campusId}-->
+    <!--</update>-->
+
+    <!--<update id="reduceOne">-->
+        <!--update mis_campus-->
+        <!--<set>-->
+            <!--floor_num=#{floorNum}-1,-->
+            <!--updateBy=#{updateBy},-->
+            <!--updateTime = sysdate()-->
+        <!--</set>-->
+        <!--where id = #{campusId}-->
+    <!--</update>-->
+
+    <!--<delete id="deleteFloor" parameterType="String">-->
+        <!--delete-->
+        <!--from mis_floor-->
+        <!--where id = #{floorId}-->
+    <!--</delete>-->
+
+
+    <!--<delete id="deleteFloorBycampuse" parameterType="String">-->
+        <!--delete-->
+        <!--from mis_floor-->
+        <!--where campus_id=#{campusId}-->
+    <!--</delete>-->
+
+
+    <!--<select id="selectFloorByCampus" parameterType="String" resultType="int">-->
+        <!--select floor_num from mis_campus where id =#{campusId}-->
+    <!--</select>-->
+
+    <!--<select id="selectCampusIdByFloorId" parameterType="String" resultType="int">-->
+        <!--select campus_id from mis_floor where id =#{floorId}-->
+    <!--</select>-->
+</mapper> 

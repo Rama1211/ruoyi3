@@ -43,22 +43,43 @@ public class PropertyController extends BaseController {
     /**
      * 跳转财物信息页面
      */
-//    @RequiresPermissions("floor:floorInfo:select")
     @GetMapping("/select/{dormId}")
     public String select(@PathVariable("dormId") Long dormId, ModelMap mmap)
     {
-        mmap.put("campusId",dormId);
+        mmap.put("dormId",dormId);
         mmap.put("user",ShiroUtils.getSysUser());
         return prefix + "/index";
     }
 
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(MisProperty property) {
+    public TableDataInfo list(String dormId,String propertyName) {
         startPage();
-        List<MisProperty> list = peropertyService.selectPropertyList(property);
+        List<MisProperty> list = peropertyService.selectPropertyList(dormId,propertyName);
         return getDataTable(list);
     }
 
+    /**
+     * 修改财物信息
+     */
+    @GetMapping("/edit/{propertyId}")
+    public String edit(@PathVariable("propertyId") String propertyId,ModelMap mmap)
+    {
+        mmap.put("dorm", peropertyService.selectPropertyById(propertyId));
+        mmap.put("propertyId", propertyId);
+        return prefix + "/edit";
+    }
 
+    /**
+     * 修改保存财物信息
+     */
+    @Log(title = "财物信息管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(@Validated MisProperty property)
+    {
+
+        property.setUpdateBy(ShiroUtils.getLoginName());
+        return toAjax(peropertyService.updateProperty(property));
+    }
 }

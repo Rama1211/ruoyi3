@@ -26,7 +26,17 @@ public class MisPropertyServiceImpl implements MisPeropertyService
     private MisPropertyMapper propertyMapper;
 
     @Override
-    public List<MisProperty> selectPropertyList(MisProperty property) {
-        return propertyMapper.selectPropertyList(property);
+    public List<MisProperty> selectPropertyList(String dormId,String propertyName) {
+        return propertyMapper.selectPropertyList(dormId,propertyName);
+    }
+
+    @Override
+    public MisProperty selectPropertyById(String propertyId) {
+        return propertyMapper.selectPropertyById(propertyId);
+    }
+
+    @Override
+    public int updateProperty(MisProperty property) {
+        return propertyMapper.updateProperty(property);
     }
 }
