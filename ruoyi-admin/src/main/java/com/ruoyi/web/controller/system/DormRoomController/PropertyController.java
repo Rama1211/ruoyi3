@@ -82,4 +82,46 @@ public class PropertyController extends BaseController {
         property.setUpdateBy(ShiroUtils.getLoginName());
         return toAjax(peropertyService.updateProperty(property));
     }
+
+    /**
+     * 删除财物信息
+     */
+    @Log(title = "财物管理", businessType = BusinessType.DELETE)
+    @PostMapping("/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        try
+        {
+            return toAjax(peropertyService.deletePropertyByIds(ids));
+        }
+        catch (Exception e)
+        {
+            return error(e.getMessage());
+        }
+    }
+
+    /**
+     * 新增财物
+     */
+    @GetMapping("/add")
+    public String add(String dormId,ModelMap mmap)
+    {
+        mmap.put("dormId",dormId);
+        return prefix + "/add";
+    }
+
+    /**
+     * 新增保存财物
+     */
+    @Log(title = "财物管理", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(@Validated MisProperty property)
+    {
+        property.setCreateBy(ShiroUtils.getLoginName());
+        return toAjax(peropertyService.insertProperty(property));
+    }
+
+
 }

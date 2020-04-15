@@ -1,7 +1,9 @@
 package com.ruoyi.system.mapper.DormRoomMapper;
 
+import com.ruoyi.system.domain.DimProperty;
 import com.ruoyi.system.domain.MisFloor;
 import com.ruoyi.system.domain.MisProperty;
+import com.ruoyi.system.domain.MisRoom;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -37,4 +39,27 @@ public interface MisPropertyMapper
      * @return 结果
      */
     public int updateProperty(MisProperty property);
+
+    /**
+     * 删除财物信息
+     *
+     * @param ids 财物id
+     * @return 结果
+     */
+    public int deletePropertyByIds(String ids);
+
+    /**
+     * 查询财物字典信息集合
+     *
+     * @return 财物字典信息集合
+     */
+    public List<DimProperty> selectDimPropertyAll();
+
+    /**
+     * 新增财物信息
+     *
+     * @param property 财物信息
+     * @return 结果
+     */
+    public int insertProperty(MisProperty property);
 }

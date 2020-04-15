@@ -10,11 +10,9 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.MiScampus;
 import com.ruoyi.system.domain.MisRoom;
-import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.service.DormRoomService.MisCampusService;
 import com.ruoyi.system.service.DormRoomService.MisFloorService;
 import com.ruoyi.system.service.DormRoomService.MisRoomService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -50,7 +48,6 @@ public class RoomController extends BaseController {
         return prefix + "/room";
     }
 
-//    @RequiresPermissions("room:roomInfo:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(String campusId, String floorId) {
@@ -81,6 +78,22 @@ public class RoomController extends BaseController {
             mmap.put("floorId",floorService.selectFloorByCampusId(scampusService.selectMiScampusByName(campusName).getCampusId(),floorName));
         }
         return prefix + "/add";
+    }
+
+    /**
+     * 批量新增房间
+     */
+    @GetMapping("/batchAdd")
+    public String batchAdd(String campusName,String floorName,ModelMap mmap)
+    {
+        mmap.put("campusName",campusName);
+        mmap.put("floorName",floorName);
+        mmap.put("user", ShiroUtils.getSysUser());
+        if (StringUtils.isNotEmpty(campusName)){
+            mmap.put("campusId", scampusService.selectMiScampusByName(campusName).getCampusId());
+            mmap.put("floorId",floorService.selectFloorByCampusId(scampusService.selectMiScampusByName(campusName).getCampusId(),floorName));
+        }
+        return prefix + "/batchAdd";
     }
 
 

@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl.DormRoomServiceImpl;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.DimProperty;
 import com.ruoyi.system.domain.MisFloor;
 import com.ruoyi.system.domain.MisProperty;
 import com.ruoyi.system.mapper.DormRoomMapper.MisFloorMapper;
@@ -38,5 +39,20 @@ public class MisPropertyServiceImpl implements MisPeropertyService
     @Override
     public int updateProperty(MisProperty property) {
         return propertyMapper.updateProperty(property);
+    }
+
+    @Override
+    public int deletePropertyByIds(String ids) {
+        return propertyMapper.deletePropertyByIds(ids);
+    }
+
+    @Override
+    public List<DimProperty> selectDimPropertyAll() {
+        return propertyMapper.selectDimPropertyAll();
+    }
+
+    @Override
+    public int insertProperty(MisProperty property) {
+        return propertyMapper.insertProperty(property);
     }
 }

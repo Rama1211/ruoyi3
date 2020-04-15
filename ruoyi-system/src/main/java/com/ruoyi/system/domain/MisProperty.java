@@ -25,9 +25,7 @@ public class MisProperty extends BaseEntity
     @Excel(name = "物品名称",cellType = ColumnType.STRING)
     private String propertyName;
 
-    /** 物品编号 */
-    @Excel(name = "物品编号",cellType = ColumnType.STRING)
-    private String propertyNum;
+
 
     /** 物品数量 */
     @Excel(name = "物品数量",cellType = ColumnType.NUMERIC)
@@ -65,13 +63,6 @@ public class MisProperty extends BaseEntity
         this.propertyName = propertyName;
     }
 
-    public String getPropertyNum() {
-        return propertyNum;
-    }
-
-    public void setPropertyNum(String propertyNum) {
-        this.propertyNum = propertyNum;
-    }
 
     public String getPropertyAmount() {
         return propertyAmount;

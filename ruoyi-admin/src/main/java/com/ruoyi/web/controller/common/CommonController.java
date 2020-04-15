@@ -3,12 +3,10 @@ package com.ruoyi.web.controller.common;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ruoyi.system.domain.MiScampus;
-import com.ruoyi.system.domain.MisFaculty;
-import com.ruoyi.system.domain.MisFloor;
-import com.ruoyi.system.domain.MisProfession;
+import com.ruoyi.system.domain.*;
 import com.ruoyi.system.service.DormRoomService.MisCampusService;
 import com.ruoyi.system.service.DormRoomService.MisFloorService;
+import com.ruoyi.system.service.DormRoomService.MisPeropertyService;
 import com.ruoyi.system.service.MisStudentFacultyService;
 import com.ruoyi.system.service.MisStudentProfessionService;
 import org.slf4j.Logger;
@@ -55,6 +53,9 @@ public class CommonController
 
     @Autowired
     private MisFloorService misFloorService;
+
+    @Autowired
+    private MisPeropertyService peropertyService;
 
     /**
      * 通用下载请求
@@ -178,6 +179,16 @@ public class CommonController
             campusId="1";
         }
         List<MisFloor> list =misFloorService.selectFloorByCampusId(campusId,"");
+        return list;
+    }
+
+    /**
+     *财物下拉框查询
+     */
+    @GetMapping("/common/property")
+    public @ResponseBody List<DimProperty> property()
+    {
+        List<DimProperty> list =peropertyService.selectDimPropertyAll();
         return list;
     }
 

@@ -35,8 +35,8 @@
 				<a class="btn btn-success" onclick="$.operate.add()">
 	                <i class="fa fa-plus"></i> 新增
 	            </a>
-				<a class="btn btn-primary single disabled" onclick="$.operate.edit()" >
-		            <i class="fa fa-edit"></i> 批量新增
+				<a class="btn btn-success"  id="batchAdd">
+		            <i class="fa fa-plus"></i> 批量新增
 		        </a>
 				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" >
 		            <i class="fa fa-remove"></i> 删除
@@ -70,6 +70,8 @@
 		    var options = {
 		        url: prefix + "/list",
 		        createUrl: prefix + "/add?campusName="+campusName+"&floorName="+floorName,
+                detailUrl: prefix + "/add?campusName="+campusName+"&floorName="+floorName,
+                // detailUrl: prefix + "/batchAdd?campusName="+campusName+"&floorName="+floorName,
 		        updateUrl: prefix + "/edit/{id}",
 		        removeUrl: prefix + "/remove",
 		        exportUrl: prefix + "/export",
@@ -140,9 +142,13 @@
         /* 查看财物信息 */
         function propertyView(dormId) {
             var url = prefix2 + '/select/' + dormId;
-            $.modal.openTab("查看楼栋", url);
+            $.modal.openTab("查看财物", url);
         }
-
+        $("#batchAdd").click(function(){
+            var campusName=$("#campus").val();
+            var floorName=$("#floor").val();
+            $.modal.open('添加用户', prefix + '/batchAdd?campusName='+campusName+'&floorName='+floorName);
+        })
 	</script>
 </body>
 </html>

@@ -8,13 +8,18 @@
         <id property="propertyId" column="id"/>
         <result property="dormRoomId" column="dorm_room_id"/>
         <result property="propertyName" column="property_name"/>
-        <result property="propertyNum" column="property_num"/>
         <result property="propertyAmount" column="property_amount"/>
         <result property="propertyStatus" column="property_status"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="createBy" column="create_by"/>
         <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+    <resultMap type="DimProperty" id="DimPropertyResult">
+        <id property="dimpropertyId" column="id"/>
+        <result property="dimProName" column="dim_pro_name"/>
+        <result property="dimProNum" column="dim_pro_num"/>
     </resultMap>
 
     <sql id="selectProperty">
@@ -36,43 +41,29 @@
     </select>
 
 
-
-    <!--<select id="checkFloorNameUnique" parameterType="String" resultMap="MisFloorResult">-->
-        <!--<include refid="selectFloorVo"/>-->
-        <!--where floor_name=#{floorName} and campus_id=#{campusId}-->
-    <!--</select>-->
-
-
-
-
-    <!--<insert id="insertFloor" parameterType="MisFloor" useGeneratedKeys="true" keyProperty="id">-->
-        <!--insert into mis_floor(-->
-        <!--<if test="floorName != null and floorName != ''">floor_name,</if>-->
-        <!--<if test="campusId != null and campusId != ''">campus_id,</if>-->
-        <!--<if test="campusName != null and campusName != ''">campus_name,</if>-->
-        <!--<if test="floorLevel != null and floorLevel != ''">floor_level,</if>-->
-        <!--<if test="everyLevelNum != null and everyLevelNum != ''">everyLevel_num,</if>-->
-        <!--<if test="totalNum != null and totalNum != ''">total_num,</if>-->
-        <!--<if test="createBy != null and createBy != ''">createBy,</if>-->
-        <!--createTime-->
-        <!--)values(-->
-        <!--<if test="floorName != null and floorName != ''">  #{floorName},</if>-->
-        <!--<if test="campusId != null and campusId != ''"> #{campusId},</if>-->
-        <!--<if test="campusName != null and campusName != ''"> #{campusName},</if>-->
-        <!--<if test="floorLevel != null and floorLevel != ''">#{floorLevel},</if>-->
-        <!--<if test="everyLevelNum != null and everyLevelNum != ''">#{everyLevelNum},</if>-->
-        <!--<if test="totalNum != null and totalNum != ''">#{totalNum},</if>-->
-        <!--<if test="createBy != null and createBy != ''">#{createBy},</if>-->
-        <!--sysdate()-->
-        <!--)-->
-    <!--</insert>-->
+    <insert id="insertProperty" parameterType="MisProperty" useGeneratedKeys="true" keyProperty="id">
+        insert into mis_property(
+        <if test="dormRoomId != null and dormRoomId != ''">dorm_room_id,</if>
+        <if test="propertyName != null and propertyName != ''">property_name,</if>
+        <if test="propertyAmount != null and propertyAmount != ''">property_amount,</if>
+        <if test="propertyStatus != null and propertyStatus != ''">property_status,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="dormRoomId != null and dormRoomId != ''">  #{dormRoomId},</if>
+        <if test="propertyName != null and propertyName != ''"> #{propertyName},</if>
+        <if test="propertyAmount != null and propertyAmount != ''"> #{propertyAmount},</if>
+        <if test="propertyStatus != null and propertyStatus != ''">#{propertyStatus},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
 
 
     <update id="updateProperty" parameterType="MisProperty">
         update mis_property
         <set>
             <if test="propertyName != null and propertyName != ''">property_name = #{propertyName},</if>
-            <if test="propertyNum != null and propertyNum != ''">property_num = #{propertyNum},</if>
             <if test="propertyAmount != null and propertyAmount != ''">property_amount = #{propertyAmount},</if>
             property_status = #{propertyStatus},
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
@@ -108,11 +99,9 @@
     <!--</delete>-->
 
 
-    <!--<delete id="deleteFloorBycampuse" parameterType="String">-->
-        <!--delete-->
-        <!--from mis_floor-->
-        <!--where campus_id=#{campusId}-->
-    <!--</delete>-->
+    <delete id="deletePropertyByIds" parameterType="String">
+        delete from mis_property where id =#{ids}
+    </delete>
 
 
     <!--<select id="selectFloorByCampus" parameterType="String" resultType="int">-->
@@ -122,4 +111,8 @@
     <!--<select id="selectCampusIdByFloorId" parameterType="String" resultType="int">-->
         <!--select campus_id from mis_floor where id =#{floorId}-->
     <!--</select>-->
+
+    <select id="selectDimPropertyAll"  resultMap="DimPropertyResult">
+       select  *from mis_dim_property
+    </select>
 </mapper> 
