@@ -1,9 +1,6 @@
 package com.ruoyi.system.service.DormRoomService;
 
-import com.ruoyi.system.domain.DimProperty;
-import com.ruoyi.system.domain.MiScampus;
-import com.ruoyi.system.domain.MisFloor;
-import com.ruoyi.system.domain.MisProperty;
+import com.ruoyi.system.domain.*;
 
 import java.util.List;
 
@@ -61,6 +58,12 @@ public interface MisPeropertyService
      */
     public int insertProperty(MisProperty property);
 
-
+    /**
+     * 根据财物模板名称查找模板
+     *
+     * @param templateName 模板名称
+     * @return 结果
+     */
+    public List<MisPropertyTemplate> selectPropertyTem(String templateName);
 
 }

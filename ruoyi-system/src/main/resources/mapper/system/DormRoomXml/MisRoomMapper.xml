@@ -46,7 +46,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="floorId != null and floorId != ''">
 				AND floor_id = #{floorId}
 			</if>
-
 		</where>
 	</select>
 
@@ -54,33 +53,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select *
 		from mis_floor	where campus_id=#{campusId} ;
 	</select>
+
+	<select id="selectminNum" resultType="String">
+		select min(dorm_num)
+		from mis_room	where floor_id=#{floorId} and campus_id=#{campusId} and floor_level=#{floorLevel};
+	</select>
 	
-	<!--<select id="selectPostAll" resultMap="SysPostResult">-->
-		<!--<include refid="selectPostVo"/>-->
-	<!--</select>-->
-	<!---->
-	<!--<select id="selectPostsByUserId" parameterType="Long" resultMap="SysPostResult">-->
-		<!--SELECT p.post_id, p.post_name, p.post_code-->
-		<!--FROM sys_user u-->
-			 <!--LEFT JOIN sys_user_post up ON u.user_id = up.user_id-->
-			 <!--LEFT JOIN sys_post p ON up.post_id = p.post_id-->
-		<!--WHERE up.user_id = #{userId}-->
-	<!--</select>-->
-	<!---->
+
 	<select id="selectRoomById" parameterType="Long" resultMap="MisRoomResult">
 		<include refid="selectRoomVo"/>
 		where id = #{dormId}
 	</select>
-	<!---->
-	<!--<select id="checkPostNameUnique" parameterType="String" resultMap="SysPostResult">-->
-		<!--<include refid="selectPostVo"/>-->
-		 <!--where post_name=#{postName}-->
-	<!--</select>-->
-	<!---->
-	<!--<select id="checkPostCodeUnique" parameterType="String" resultMap="SysPostResult">-->
-		<!--<include refid="selectPostVo"/>-->
-		 <!--where post_code=#{postCode}-->
-	<!--</select>-->
+
+	<select id="checkDormmNumUnique"  resultMap="MisRoomResult">
+		<include refid="selectRoomVo"/>
+		 where dorm_num=#{dormNum} and floor_id=#{floorId} and campus_id=#{campusId}
+	</select>
+
+
 
  	<delete id="deleteRoomByIds" parameterType="Long">
  		delete from mis_room where id in
@@ -103,6 +93,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
  	<insert id="insertRoom" parameterType="MisRoom" useGeneratedKeys="true" keyProperty="dormId">
+		<selectKey resultType ="java.lang.Integer" keyProperty= "dormId"
+				   order= "AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey >
  		insert into mis_room(
  			<if test="dormNum != null and dormNum != 0">dorm_num,</if>
  			<if test="dormType != null and dormType != ''">dorm_type,</if>
@@ -131,5 +125,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			sysdate()
  		)
 	</insert>
+
+	<insert id ="insertRoomBatch" parameterType="java.util.List" >
+		<selectKey resultType ="java.lang.Integer" keyProperty= "id"
+				   order= "AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey >
+		insert into mis_room
+		(dorm_num, dorm_type, dorm_actual_people, dorm_should_people,floor_id,campus_id,floor_level,status,create_time,update_time,create_by,update_by)
+		values
+		<foreach collection ="list" item="roomList" index= "index" separator =",">
+			(
+			#{roomList.dormNum}, #{roomList.dormType},
+			#{roomList.dormShouldPeople},
+			#{roomList.dormActualPeople},
+			#{roomList.floorId}, #{roomList.campusId},#{roomList.floorLevel},#{roomList.status},sysdate(),sysdate(),#{roomList.createBy},#{roomList.createBy}
+			)
+		</foreach >
+	</insert >
 
 </mapper> 

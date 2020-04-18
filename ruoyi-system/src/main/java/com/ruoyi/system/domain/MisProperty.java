@@ -25,8 +25,6 @@ public class MisProperty extends BaseEntity
     @Excel(name = "物品名称",cellType = ColumnType.STRING)
     private String propertyName;
 
-
-
     /** 物品数量 */
     @Excel(name = "物品数量",cellType = ColumnType.NUMERIC)
     private String propertyAmount;

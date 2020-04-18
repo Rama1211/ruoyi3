@@ -39,7 +39,6 @@ public class FloorController extends BaseController
     @Autowired
     private MisCampusService scampusService;
     //查询校区楼栋信息
-//    @RequiresPermissions("floor:floorInfo:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(String campusId,@RequestParam(defaultValue = "") String floorId)

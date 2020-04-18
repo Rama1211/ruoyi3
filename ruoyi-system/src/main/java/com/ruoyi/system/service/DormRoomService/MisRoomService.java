@@ -65,20 +65,22 @@ public interface MisRoomService
 //     * @return 结果
 //     */
 //    public int countUserPostById(Long postId);
-//
-//    /**
-//     * 校验岗位名称
-//     *
-//     * @param post 岗位信息
-//     * @return 结果
-//     */
-//    public String checkPostNameUnique(SysPost post);
-//
-//    /**
-//     * 校验岗位编码
-//     *
-//     * @param post 岗位信息
-//     * @return 结果
-//     */
-//    public String checkPostCodeUnique(SysPost post);
+
+    /**
+     * 校验宿舍号
+     *
+     * @param  room 宿舍信息
+     * @return 结果
+     */
+    public String checkDormmNumUnique(MisRoom room);
+
+
+    /**
+     * 批量新增宿舍
+     * @return 结果
+     */
+    int insertRoomBatch(List<MisRoom> roomList);
+
+
+    public String selectminNum(int floorId,int campusId,int floorLevel);
 }

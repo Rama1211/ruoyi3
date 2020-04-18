@@ -43,12 +43,6 @@ public class MisRoom extends BaseEntity {
     private Integer dormActualPeople;
 
     /**
-     * 所在楼栋id
-     */
-    @Excel(name = "所在楼栋id", cellType = ColumnType.NUMERIC)
-    private Integer floorId;
-
-    /**
      * 所在楼层
      */
     @Excel(name = "所在楼层", cellType = ColumnType.NUMERIC)
@@ -59,6 +53,12 @@ public class MisRoom extends BaseEntity {
      */
     @Excel(name = "所在校区id", cellType = ColumnType.NUMERIC)
     private Integer campusId;
+
+    /**
+     * 所在校区id
+     */
+    @Excel(name = "所在校区id", cellType = ColumnType.NUMERIC)
+    private Integer floorId;
 
     /**
      * 状态

@@ -22,6 +22,15 @@
         <result property="dimProNum" column="dim_pro_num"/>
     </resultMap>
 
+    <resultMap type="MisPropertyTemplate" id="MisPropertyTemplateResult">
+        <id property="id" column="id"/>
+        <result property="templateName" column="template_name"/>
+        <result property="proName" column="pro_name"/>
+        <result property="proNum" column="pro_num"/>
+    </resultMap>
+
+
+
     <sql id="selectProperty">
         select *
         from mis_property
@@ -72,47 +81,18 @@
         where id=#{propertyId}
     </update>
 
-    <!--<update id="addOne">-->
-        <!--update mis_campus-->
-        <!--<set>-->
-            <!--floor_num=#{floorNum}+1,-->
-            <!--updateBy=#{updateBy},-->
-            <!--updateTime = sysdate()-->
-        <!--</set>-->
-        <!--where id = #{campusId}-->
-    <!--</update>-->
-
-    <!--<update id="reduceOne">-->
-        <!--update mis_campus-->
-        <!--<set>-->
-            <!--floor_num=#{floorNum}-1,-->
-            <!--updateBy=#{updateBy},-->
-            <!--updateTime = sysdate()-->
-        <!--</set>-->
-        <!--where id = #{campusId}-->
-    <!--</update>-->
-
-    <!--<delete id="deleteFloor" parameterType="String">-->
-        <!--delete-->
-        <!--from mis_floor-->
-        <!--where id = #{floorId}-->
-    <!--</delete>-->
-
 
     <delete id="deletePropertyByIds" parameterType="String">
         delete from mis_property where id =#{ids}
     </delete>
 
 
-    <!--<select id="selectFloorByCampus" parameterType="String" resultType="int">-->
-        <!--select floor_num from mis_campus where id =#{campusId}-->
-    <!--</select>-->
-
-    <!--<select id="selectCampusIdByFloorId" parameterType="String" resultType="int">-->
-        <!--select campus_id from mis_floor where id =#{floorId}-->
-    <!--</select>-->
-
     <select id="selectDimPropertyAll"  resultMap="DimPropertyResult">
        select  *from mis_dim_property
+    </select>
+        <!--================财物模板=====================-->
+    <select id="selectPropertyTem"  resultMap="MisPropertyTemplateResult">
+        select *from  property_template
+        WHERE template_name=#{modelName}
     </select>
 </mapper> 

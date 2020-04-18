@@ -71,7 +71,6 @@
 		        url: prefix + "/list",
 		        createUrl: prefix + "/add?campusName="+campusName+"&floorName="+floorName,
                 detailUrl: prefix + "/add?campusName="+campusName+"&floorName="+floorName,
-                // detailUrl: prefix + "/batchAdd?campusName="+campusName+"&floorName="+floorName,
 		        updateUrl: prefix + "/edit/{id}",
 		        removeUrl: prefix + "/remove",
 		        exportUrl: prefix + "/export",
@@ -147,7 +146,7 @@
         $("#batchAdd").click(function(){
             var campusName=$("#campus").val();
             var floorName=$("#floor").val();
-            $.modal.open('添加用户', prefix + '/batchAdd?campusName='+campusName+'&floorName='+floorName);
+            $.modal.open('批量新增宿舍', prefix + '/batchAdd?campusName='+campusName+'&floorName='+floorName);
         })
 	</script>
 </body>

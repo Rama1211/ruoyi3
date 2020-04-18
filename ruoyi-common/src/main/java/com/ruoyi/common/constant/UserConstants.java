@@ -19,6 +19,10 @@ public class UserConstants
     /** 楼栋名称是否唯一的返回结果码 */
     public final static String FLOOR_NAME_UNIQUE = "0";
     public final static String FLOOR_NAME_NOT_UNIQUE = "1";
+
+    /** 宿舍号是否唯一的返回结果码 */
+    public final static String ROOM_CODE_UNIQUE = "0";
+    public final static String ROOM_CODE_NOT_UNIQUE = "1";
     /**
      * 平台内系统用户的唯一标志
      */

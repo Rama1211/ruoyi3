@@ -1,9 +1,6 @@
 package com.ruoyi.system.mapper.DormRoomMapper;
 
-import com.ruoyi.system.domain.DimProperty;
-import com.ruoyi.system.domain.MisFloor;
-import com.ruoyi.system.domain.MisProperty;
-import com.ruoyi.system.domain.MisRoom;
+import com.ruoyi.system.domain.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -62,4 +59,12 @@ public interface MisPropertyMapper
      * @return 结果
      */
     public int insertProperty(MisProperty property);
+
+    /**
+     * 根据财物模板名称查找模板
+     *
+     * @param templateName 模板名称
+     * @return 结果
+     */
+    public List<MisPropertyTemplate> selectPropertyTem(String templateName);
 }

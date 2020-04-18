@@ -1,7 +1,9 @@
 package com.ruoyi.system.service.impl.DormRoomServiceImpl;
 
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.BusinessException;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.MiScampus;
 import com.ruoyi.system.domain.MisFloor;
 import com.ruoyi.system.domain.MisRoom;
@@ -101,23 +103,32 @@ public class MisRoomServiceImpl implements MisRoomService
 //        return userPostMapper.countUserPostById(postId);
 //    }
 //
-//    /**
-//     * 校验岗位名称是否唯一
-//     *
-//     * @param post 岗位信息
-//     * @return 结果
-//     */
-//    @Override
-//    public String checkPostNameUnique(SysPost post)
-//    {
-//        Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
-//        SysPost info = postMapper.checkPostNameUnique(post.getPostName());
-//        if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue())
-//        {
-//            return UserConstants.POST_NAME_NOT_UNIQUE;
-//        }
-//        return UserConstants.POST_NAME_UNIQUE;
-//    }
+    /**
+     * 校验宿舍号是否唯一
+     *
+     * @param room 宿舍信息
+     * @return 结果
+     */
+    @Override
+    public String checkDormmNumUnique(MisRoom room)
+    {
+        MisRoom info = roomMapper.checkDormmNumUnique(room.getDormNum(),room.getFloorId(),room.getCampusId());
+        if (StringUtils.isNotNull(info))
+        {
+            return UserConstants.ROOM_CODE_NOT_UNIQUE;
+        }
+        return UserConstants.ROOM_CODE_UNIQUE;
+    }
+
+    @Override
+    public int insertRoomBatch(List<MisRoom> roomList) {
+        return roomMapper.insertRoomBatch(roomList);
+    }
+
+    @Override
+    public String selectminNum(int floorId,int campusId,int floorLevel) {
+        return roomMapper.selectminNum(floorId,campusId,floorLevel);
+    }
 //
 //    /**
 //     * 校验岗位编码是否唯一

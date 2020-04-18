@@ -61,4 +61,21 @@ public interface MisRoomMapper {
      */
     public int insertRoom(MisRoom room);
 
+    /**
+     * 检查宿舍号是否唯一
+     *
+     * @param dormNum 宿舍号
+     * @return 结果
+     */
+    public MisRoom checkDormmNumUnique(@Param("dormNum") String dormNum, @Param("floorId") Integer floorId, @Param("campusId") int campusId);
+
+    /**
+     * 批量新增宿舍
+     *
+     * @return 结果
+     */
+    public int insertRoomBatch(List<MisRoom> roomList);
+
+
+    public String selectminNum(@Param("floorId") int floorId, @Param("campusId") int campusId, @Param("floorLevel") int floorLevel);
 }
