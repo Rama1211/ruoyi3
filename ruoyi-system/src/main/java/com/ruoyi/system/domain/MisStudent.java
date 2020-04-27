@@ -46,11 +46,6 @@ public class MisStudent extends BaseEntity
     @Excel(name = "入学年份",  cellType = ColumnType.STRING)
     private String studentYear;
 
-    /**入住日期 */
-    @Excel(name = "入住日期",  cellType = ColumnType.STRING)
-    private String time;
-
-
     /**性别 */
     @Excel(name = "性别",  cellType = ColumnType.STRING)
     private String gender;
@@ -77,7 +72,6 @@ public class MisStudent extends BaseEntity
                 ", studentClass='" + studentClass + '\'' +
                 ", apartmentId='" + apartmentId + '\'' +
                 ", studentYear='" + studentYear + '\'' +
-                ", time='" + time + '\'' +
                 ", gender='" + gender + '\'' +
                 ", address='" + address + '\'' +
                 ", floorId='" + floorId + '\'' +
@@ -152,13 +146,6 @@ public class MisStudent extends BaseEntity
         this.studentYear = studentYear;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public String getGender() {
         return gender;

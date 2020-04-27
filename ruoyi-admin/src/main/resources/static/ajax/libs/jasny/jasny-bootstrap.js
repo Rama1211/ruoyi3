@@ -503,7 +503,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
     this.init()
     this.listen()
         
-    this.checkVal() //Perform initial check for existing values
+    this.checkVal() //Perform initial checkIn for existing values
   }
 
   Inputmask.DEFAULTS = {

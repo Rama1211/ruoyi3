@@ -43,6 +43,13 @@ public class MisRoom extends BaseEntity {
     private Integer dormActualPeople;
 
     /**
+     * 预入住人数
+     */
+    @Excel(name = "预入住人数", cellType = ColumnType.NUMERIC)
+    private Integer earlyCheckIn;
+
+
+    /**
      * 所在楼层
      */
     @Excel(name = "所在楼层", cellType = ColumnType.NUMERIC)
@@ -55,9 +62,9 @@ public class MisRoom extends BaseEntity {
     private Integer campusId;
 
     /**
-     * 所在校区id
+     * 所在楼栋id
      */
-    @Excel(name = "所在校区id", cellType = ColumnType.NUMERIC)
+    @Excel(name = "所在楼栋id", cellType = ColumnType.NUMERIC)
     private Integer floorId;
 
     /**
@@ -140,5 +147,13 @@ public class MisRoom extends BaseEntity {
 
     public void setCampusId(Integer campusId) {
         this.campusId = campusId;
+    }
+
+    public Integer getEarlyCheckIn() {
+        return earlyCheckIn;
+    }
+
+    public void setEarlyCheckIn(Integer earlyCheckIn) {
+        this.earlyCheckIn = earlyCheckIn;
     }
 }

@@ -24,7 +24,7 @@ $(function() {
 	
 	// iCheck单选框及复选框事件绑定
 	if ($.fn.iCheck !== undefined) {
-		$(".check-box:not(.noicheck),.radio-box:not(.noicheck)").each(function() {
+		$(".checkIn-box:not(.noicheck),.radio-box:not(.noicheck)").each(function() {
             $(this).iCheck({
                 checkboxClass: 'icheckbox-blue',
                 radioClass: 'iradio-blue',

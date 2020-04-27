@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.baseInfo.MisAccommodationMapper">
+
+	<resultMap type="MisAccommodation" id="MisAccommodationResult">
+		<id property="id" column="id"/>
+		<result property="roomId" column="room_id"/>
+		<result property="studentNum" column="student_num"/>
+		<result property="checkInStatus" column="checkIn_status"/>
+		<result property="checkInTime" column="checkIn_time"/>
+		<result property="checkoutTime" column="checkout_time"/>
+	</resultMap>
+
+	<sql id="selectAccommodationVo">
+		select * from mis_accommodation
+	</sql>
+
+	<select id="selectAccommodationById" resultMap="MisAccommodationResult">
+		<include refid="selectAccommodationVo"/>
+		where student_num=#{studentId}
+	</select>
+
+
+	<insert id ="insertAccommodation" parameterType="MisAccommodation" >
+		insert into mis_accommodation
+		(student_num, room_id, checkIn_status)
+		values(#{studentNum},#{roomId},#{checkInStatus})
+	</insert >
+
+
+	<update id="checnkIn" parameterType="Long">
+		update mis_accommodation
+		<set>
+			checkIn_status='1',
+			checkIn_time= sysdate()
+		</set>
+		where student_num = #{studentId}
+	</update>
+
+	<update id="checnkOut" parameterType="Long">
+		update mis_accommodation
+		<set>
+			checkIn_status='2',
+			checkout_time= sysdate()
+		</set>
+		where student_num = #{studentId}
+	</update>
+
+</mapper> 

@@ -2026,7 +2026,7 @@ S2.define('select2/selection/search',[
 
     // Try to detect the IE version should the `documentMode` property that
     // is stored on the document. This is only implemented in IE and is
-    // slightly cleaner than doing a user agent check.
+    // slightly cleaner than doing a user agent checkIn.
     // This property is not available in Edge, but Edge also doesn't have
     // this bug.
     var msie = document.documentMode;
@@ -4896,7 +4896,7 @@ S2.define('select2/defaults',[
           language = Translation.loadPath(name);
         } catch (e) {
           try {
-            // If we couldn't load it, check if it wasn't the full path
+            // If we couldn't load it, checkIn if it wasn't the full path
             name = this.defaults.amdLanguageBase + name;
             language = Translation.loadPath(name);
           } catch (ex) {
@@ -4948,7 +4948,7 @@ S2.define('select2/defaults',[
         return data;
       }
 
-      // Do a recursive check for options with children
+      // Do a recursive checkIn for options with children
       if (data.children && data.children.length > 0) {
         // Clone the data object if there are children
         // This is required as we modify the object to remove any non-matches
@@ -4971,7 +4971,7 @@ S2.define('select2/defaults',[
           return match;
         }
 
-        // If there were no matching children, check just the plain object
+        // If there were no matching children, checkIn just the plain object
         return matcher(params, match);
       }
 

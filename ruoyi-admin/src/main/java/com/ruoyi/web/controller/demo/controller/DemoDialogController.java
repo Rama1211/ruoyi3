@@ -57,7 +57,7 @@ public class DemoDialogController
     @GetMapping("/check")
     public String check()
     {
-        return prefix + "/table/check";
+        return prefix + "/table/checkIn";
     }
 
     /**

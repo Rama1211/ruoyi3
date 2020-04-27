@@ -37,6 +37,10 @@ public class MisFloor extends BaseEntity
     @Excel(name = "每层宿舍数量",cellType = ColumnType.NUMERIC)
     private String everyLevelNum;
 
+    /** 楼栋类型 */
+    @Excel(name = "楼栋类型",cellType = ColumnType.STRING)
+    private String floorType;
+
     /** 总宿舍数量 */
     @Excel(name = "总宿舍数量",cellType = ColumnType.NUMERIC)
     private String totalNum;
@@ -53,7 +57,13 @@ public class MisFloor extends BaseEntity
         this.campusName = campusName;
     }
 
+    public String getFloorType() {
+        return floorType;
+    }
 
+    public void setFloorType(String floorType) {
+        this.floorType = floorType;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

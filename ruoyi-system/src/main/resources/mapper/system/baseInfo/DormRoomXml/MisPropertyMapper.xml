@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.baseInfo.DormRoomMapper.MisPropertyMapper">
+
+    <resultMap type="MisProperty" id="MisPropertyResult">
+        <id property="propertyId" column="id"/>
+        <result property="dormRoomId" column="dorm_room_id"/>
+        <result property="propertyName" column="property_name"/>
+        <result property="propertyAmount" column="property_amount"/>
+        <result property="propertyStatus" column="property_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+    <resultMap type="DimProperty" id="DimPropertyResult">
+        <id property="dimpropertyId" column="id"/>
+        <result property="dimProName" column="dim_pro_name"/>
+        <result property="dimProNum" column="dim_pro_num"/>
+    </resultMap>
+
+    <resultMap type="MisPropertyTemplate" id="MisPropertyTemplateResult">
+        <id property="id" column="id"/>
+        <result property="templateName" column="template_name"/>
+        <result property="proName" column="pro_name"/>
+        <result property="proNum" column="pro_num"/>
+    </resultMap>
+
+
+
+    <sql id="selectProperty">
+        select *
+        from mis_property
+    </sql>
+
+    <select id="selectPropertyList"  resultMap="MisPropertyResult">
+        <include refid="selectProperty"/>
+        WHERE dorm_room_id=#{dormId}
+        <if test="propertyName != null and propertyName != ''">
+            AND property_name like concat(#{propertyName}, '%')
+        </if>
+    </select>
+
+    <select id="selectPropertyById"  resultMap="MisPropertyResult">
+        <include refid="selectProperty"/>
+        WHERE id=#{propertyId}
+    </select>
+
+
+    <insert id="insertProperty" parameterType="MisProperty" useGeneratedKeys="true" keyProperty="id">
+        insert into mis_property(
+        <if test="dormRoomId != null and dormRoomId != ''">dorm_room_id,</if>
+        <if test="propertyName != null and propertyName != ''">property_name,</if>
+        <if test="propertyAmount != null and propertyAmount != ''">property_amount,</if>
+        <if test="propertyStatus != null and propertyStatus != ''">property_status,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="dormRoomId != null and dormRoomId != ''">  #{dormRoomId},</if>
+        <if test="propertyName != null and propertyName != ''"> #{propertyName},</if>
+        <if test="propertyAmount != null and propertyAmount != ''"> #{propertyAmount},</if>
+        <if test="propertyStatus != null and propertyStatus != ''">#{propertyStatus},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
+
+    <update id="updateProperty" parameterType="MisProperty">
+        update mis_property
+        <set>
+            <if test="propertyName != null and propertyName != ''">property_name = #{propertyName},</if>
+            <if test="propertyAmount != null and propertyAmount != ''">property_amount = #{propertyAmount},</if>
+            property_status = #{propertyStatus},
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where id=#{propertyId}
+    </update>
+
+
+    <delete id="deletePropertyByIds" parameterType="String">
+        delete from mis_property where id =#{ids}
+    </delete>
+
+
+    <select id="selectDimPropertyAll"  resultMap="DimPropertyResult">
+       select  *from mis_dim_property
+    </select>
+        <!--================财物模板=====================-->
+    <select id="selectPropertyTem"  resultMap="MisPropertyTemplateResult">
+        select *from  property_template
+        WHERE template_name=#{modelName}
+    </select>
+</mapper> 

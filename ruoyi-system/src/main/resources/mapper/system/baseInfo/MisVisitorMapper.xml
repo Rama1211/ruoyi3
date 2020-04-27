@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.baseInfo.MisVisitorMapper">
+
+    <resultMap type="MisVisitor" id="MisVisitorResult">
+        <id property="Id" column="id"/>
+        <result property="visitorNmae" column="visitorNmae"/>
+        <result property="studentName" column="studentName"/>
+        <result property="studentNum" column="studentNum"/>
+        <result property="relationship" column="relationship"/>
+        <result property="campusId" column="campusId"/>
+        <result property="floorId" column="floorId"/>
+        <result property="roomId" column="roomId"/>
+        <result property="relationship" column="relationship"/>
+    </resultMap>
+
+    <sql id="selectVisitorVo">
+        select *from mis_visitor
+    </sql>
+
+    <select id="selectVisitorList" parameterType="MisVisitor" resultMap="MisVisitorResult">
+        <include refid="selectVisitorVo"/>
+        <where>
+            <if test="campusId != null and campusId != ''">
+                AND campusId like concat('%', #{campusId}, '%')
+            </if>
+            <if test="floorId != null and floorId != ''">
+                AND floorId like concat('%', #{floorId}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper> 

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增用户')" />
+</head>
+<body>
+    <div class="main-content">
+        <form id="form-user-add" class="form-horizontal">
+            <input id="studentId" name="studentId" type="hidden" th:value="${studentId}"/>
+            <input id="gender" name="gender" type="hidden" th:value="${gender}"/>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">校区：</label>
+                <div class="col-sm-8">
+                    <select id="campus" name="campusId" class="form-control" onclick="selectCam()" title="请选择"
+                            style="width: 400px">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">楼栋：</label>
+                <div class="col-sm-8">
+                    <select id="floor" name="floorId" class="form-control" title="请选择" style="width: 400px">
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+	<th:block th:include="include :: footer" />
+<script>
+    $(function(){
+        // //初始化下一级下拉框
+        // //动态加载
+        $.ajax({
+            type: 'get',
+            url: ctx + "common/studentScampus",
+            dataType: "json",
+            success: function (data) {
+                for(var i=0;i<data.length;i++){
+                    $("#campus").append("<option value='"+data[i].campusId+"'>"+data[i].campusName+"</option>");
+                }
+                $("#campus").selectpicker("refresh");
+            }
+        });
+        $.ajax({
+            type: 'get',
+            url: ctx + "common/studentfloor?campusId="+$("#campus").val(),
+            dataType: "json",
+            success: function (data) {
+                for(var i=0;i<data.length;i++){
+                    $("#floor").append("<option value='"+data[i].floorName+"'>"+data[i].floorName+"</option>");
+                }
+                $("#floor").selectpicker("refresh");
+            }
+        });
+
+        二级下拉框的选项随一级下拉框的值而改变
+        $("#campus").change(function(){
+            //根据bUnit去获取Division
+            $.ajax({
+                type: 'get',
+                url: ctx + "common/studentfloor?campusId="+$("#campus").val(),
+                dataType: "json",
+                success: function (data) {
+                    if(data.length == 0){
+                        //如果一级没有对应的二级 则清空二级并 不往下执行
+                        $("#floor").empty();
+                        $("#floor").selectpicker("refresh");
+                        return ;
+                    }
+                    //如果一级有对应的二级 则进行拼接
+                    //每次拼接前都进行清空
+                    $("#floor").empty();
+                    for(var i=0;i<data.length;i++){
+                        $("#floor").append("<option value='"+data[i].floorName+"'>"+data[i].floorName+"</option>");
+                    }
+                    //这里千万别忘记了
+                    $("#floor").selectpicker("refresh");
+                }
+            });
+        });
+    });
+    function submitHandler() {
+        var gender=$("#gender").val();
+        $.ajax({
+            type: 'post',
+            url: ctx + "floor/floorInfo/floorType?campusId="+$("#campus").val()+"&floorId="+$("#floor").val(),
+            dataType: "json",
+            success: function (data) {
+                for(var i=0;i<data.length;i++){
+                    if (gender!=data[i].floorType) {
+                        $.modal.confirm("所选学生性别与楼栋不符，确认分配？", function() {
+                            $.ajax({
+                                type: 'post',
+                                url: ctx + "accommodation/distributionInfo/distribution?campusId="+$("#campus").val()+"&floorId="+$("#floor").val()+"&studentId="+$("#studentId").val(),
+                                dataType: "json",
+                                success: function (data) {
+                                   alert("分配成功");
+                                    window.location.reload();
+                                }
+                            });
+                            });
+                    }else {
+                        $.ajax({
+                            type: 'post',
+                            url: ctx + "accommodation/distributionInfo/distribution?campusId="+$("#campus").val()+"&floorId="+$("#floor").val()+"&studentId="+$("#studentId").val(),
+                            dataType: "json",
+                            success: function (data) {
+                                alert("分配成功");
+                                window.location.reload();
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+    }
+</script>
+</body>
+</html>

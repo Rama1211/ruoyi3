@@ -43,7 +43,7 @@ public class SysCaptchaController extends BaseController
             HttpSession session = request.getSession();
             response.setDateHeader("Expires", 0);
             response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-            response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+            response.addHeader("Cache-Control", "post-checkIn=0, pre-checkIn=0");
             response.setHeader("Pragma", "no-cache");
             response.setContentType("image/jpeg");
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('访客列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<input id="level" name="level" type="hidden" th:value="${user.level}"/>
+				<form id="post-form">
+					<div class="select-list">
+						<ul>
+							<li>院系：
+								<select id="sel_bizUnit" name="studentFaculty" title="请选择"></select>
+							</li>
+							<li>
+								校区：<input  type="text" name="campus" id="campus"/>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="ibox float-e-margins" style="width: 2000px;height: 300px">
+					<div class="ibox-title">
+						<h5>柱状图</h5>
+						<div class="ibox-tools">
+							<a class="collapse-link">
+								<i class="fa fa-chevron-up"></i>
+							</a>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+								<i class="fa fa-wrench"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-user">
+								<li><a href="graph_flot.html#">选项1</a>
+								</li>
+								<li><a href="graph_flot.html#">选项2</a>
+								</li>
+							</ul>
+							<a class="close-link">
+								<i class="fa fa-times"></i>
+							</a>
+						</div>
+					</div>
+					<div class="ibox-content">
+						<div class="echarts" id="echarts-bar-chart"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer"/>
+	<th:block th:include="include :: echarts-js" />
+	<script th:inline="javascript">
+        $(function () {
+            $.ajax({
+                type: 'get',
+                url: ctx + "common/studentFaculty",
+                dataType: "json",
+                success: function (data) {
+                    for(var i=0;i<data.length;i++){
+                        $("#sel_bizUnit").append("<option value='"+data[i].facultyId+"'>"+data[i].facultyName+"</option>");
+                    }
+                    $("#sel_bizUnit").selectpicker("refresh");
+                }
+            });
+            var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
+            var option = {
+                tooltip: {
+                    show: true
+                },
+                legend: {
+                    data:['人数']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ["1号楼","2号楼","3号楼","4号楼","5号楼","6号楼"]
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                grid: {
+					height:150
+                },
+                series : [
+                    {
+                        "name":"人数",
+                        "type":"bar",
+                        "data":[5, 20, 40, 10, 10, 20]
+                    }
+                ]
+            };
+            barChart.setOption(option);
+            $(window).resize(gaugeChart.resize);
+		});
+		</script>
+</body>
+</html>

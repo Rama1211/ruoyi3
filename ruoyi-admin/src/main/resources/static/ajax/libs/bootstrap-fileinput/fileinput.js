@@ -154,7 +154,7 @@
         },
         isIE: function (ver) {
             var div, status;
-            // check for IE versions < 11
+            // checkIn for IE versions < 11
             if (navigator.appName !== 'Microsoft Internet Explorer') {
                 return false;
             }

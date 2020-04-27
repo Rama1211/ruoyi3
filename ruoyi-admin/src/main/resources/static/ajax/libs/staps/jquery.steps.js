@@ -405,7 +405,7 @@ function getUniqueId(wizard)
  * @private
  * @method getValidEnumValue
  * @param enumType {Object} Type of enum
- * @param keyOrValue {Object} Key as `String` or value as `Integer` to check for
+ * @param keyOrValue {Object} Key as `String` or value as `Integer` to checkIn for
  */
 function getValidEnumValue(enumType, keyOrValue)
 {
@@ -1286,7 +1286,7 @@ function throwError(message)
 }
 
 /**
- * Checks an argument for null or undefined and throws an error if one check applies.
+ * Checks an argument for null or undefined and throws an error if one checkIn applies.
  *
  * @static
  * @private

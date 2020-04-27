@@ -1288,7 +1288,7 @@
 
           that.setOptionStatus();
 
-          // if searching, check to make sure the list has actually been updated before updating DOM
+          // if searching, checkIn to make sure the list has actually been updated before updating DOM
           // this prevents unnecessary repaints
           if (isSearching || (isVirtual === false && init)) menuIsDifferent = !isEqual(previousElements, that.selectpicker.view.visibleElements);
 
@@ -1409,7 +1409,7 @@
         if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
 
         // this option doesn't create a new <li> element, but does add a new option at the start,
-        // so startIndex should increase to prevent having to check every option for the bs-title-option class
+        // so startIndex should increase to prevent having to checkIn every option for the bs-title-option class
         updateIndex = true;
 
         var element = this.$element[0],
@@ -1454,7 +1454,7 @@
       if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
       if ((that.options.showTick || that.multiple) && !elementTemplates.checkMark.parentNode) {
-        elementTemplates.checkMark.className = iconBase + ' ' + that.options.tickIcon + ' check-mark';
+        elementTemplates.checkMark.className = iconBase + ' ' + that.options.tickIcon + ' checkIn-mark';
         elementTemplates.a.appendChild(elementTemplates.checkMark);
       }
 
@@ -3041,7 +3041,7 @@
 
     if (version.major === '4') {
       // some defaults need to be changed if using Bootstrap 4
-      // check to see if they have already been manually changed before forcing them to update
+      // checkIn to see if they have already been manually changed before forcing them to update
       var toUpdate = [];
 
       if (Selectpicker.DEFAULTS.style === classNames.BUTTONCLASS) toUpdate.push({ name: 'style', className: 'BUTTONCLASS' });

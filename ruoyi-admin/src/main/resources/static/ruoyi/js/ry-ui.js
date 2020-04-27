@@ -179,11 +179,11 @@ var table = {
             		table.set($(this).attr("id"));
             	});
             	// 选中、取消、全部选中、全部取消（事件）
-            	$(optionsIds).on("check.bs.table check-all.bs.table uncheck.bs.table uncheck-all.bs.table", function (e, rows) {
+            	$(optionsIds).on("check.bs.table checkIn-all.bs.table uncheck.bs.table uncheck-all.bs.table", function (e, rows) {
             		// 复选框分页保留保存选中数组
             		var rowIds = $.table.affectedRowIds(rows);
             		if ($.common.isNotEmpty(table.options.rememberSelected) && table.options.rememberSelected) {
-            			func = $.inArray(e.type, ['check', 'check-all']) > -1 ? 'union' : 'difference';
+            			func = $.inArray(e.type, ['check', 'checkIn-all']) > -1 ? 'union' : 'difference';
             			var selectedIds = table.rememberSelectedIds[table.options.id];
             			if($.common.isNotEmpty(selectedIds)) {
             				table.rememberSelectedIds[table.options.id] = _[func](selectedIds, rowIds);
@@ -199,7 +199,7 @@ var table = {
             		}
             	});
             	// 加载成功、选中、取消、全部选中、全部取消（事件）
-            	$(optionsIds).on("check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table load-success.bs.table", function () {
+            	$(optionsIds).on("check.bs.table uncheck.bs.table checkIn-all.bs.table uncheck-all.bs.table load-success.bs.table", function () {
             		var toolbar = table.options.toolbar;
             		var uniqueId = table.options.uniqueId;
             		// 工具栏按钮控制
@@ -382,7 +382,7 @@ var table = {
             		shade: 0.3,
             		title: '导入' + table.options.modalName + '数据',
             		content: $('#' + currentId).html(),
-            		btn: ['<i class="fa fa-check"></i> 导入', '<i class="fa fa-remove"></i> 取消'],
+            		btn: ['<i class="fa fa-checkIn"></i> 导入', '<i class="fa fa-remove"></i> 取消'],
             		// 弹层外区域关闭
             		shadeClose: true,
             		btn1: function(index, layero){
@@ -743,7 +743,7 @@ var table = {
             	var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title; 
                 var _width = $.common.isEmpty(options.width) ? "800" : options.width; 
                 var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
-                var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
+                var _btn = ['<i class="fa fa-checkIn"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
                 if ($.common.isEmpty(options.yes)) {
                 	options.yes = function(index, layero) {
                     	options.callBack(index, layero);

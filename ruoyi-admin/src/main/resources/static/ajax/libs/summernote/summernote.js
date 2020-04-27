@@ -105,7 +105,7 @@
   var dropdownButtonContents = function (contents, options) {
       return contents + ' ' + icon(options.icons.caret, 'span');
   };
-  var dropdownCheck = renderer.create('<ul class="dropdown-menu note-check" role="list">', function ($node, options) {
+  var dropdownCheck = renderer.create('<ul class="dropdown-menu note-checkIn" role="list">', function ($node, options) {
       var markup = Array.isArray(options.items) ? options.items.map(function (item) {
           var value = (typeof item === 'string') ? item : (item.value || '');
           var content = options.template ? options.template(item) : item;
@@ -479,7 +479,7 @@
   /**
    * @class core.env
    *
-   * Object which check platform and agent
+   * Object which checkIn platform and agent
    *
    * @singleton
    * @alternateClassName env
@@ -6431,7 +6431,7 @@
           var editorWidth = this.$editor.width();
           var toolbarHeight = this.$toolbar.height();
           var statusbarHeight = this.$statusbar.height();
-          // check if the web app is currently using another static bar
+          // checkIn if the web app is currently using another static bar
           var otherBarHeight = 0;
           if (this.options.otherStaticBar) {
               otherBarHeight = $$1(this.options.otherStaticBar).outerHeight();
@@ -7732,7 +7732,7 @@
               'link': 'note-icon-link',
               'unlink': 'note-icon-chain-broken',
               'magic': 'note-icon-magic',
-              'menuCheck': 'note-icon-menu-check',
+              'menuCheck': 'note-icon-menu-checkIn',
               'minus': 'note-icon-minus',
               'orderedlist': 'note-icon-orderedlist',
               'pencil': 'note-icon-pencil',

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('物品信息管理')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="form-post-add">
+					<div class="select-list">
+							<li>
+								<input type="text" hidden name="dormRoomId" id="dormRoomId" th:value="${roomId}"/>
+							</li>
+						<li>
+							<input type="text" hidden name="studentId" id="studentId" th:value="${studentId}"/>
+						</li>
+					</div>
+				</form>
+			</div>
+	        <div class="col-sm-12 select-table table-striped">
+			    <table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag ="";
+        var removeFlag = "";
+		var datas = [[${@dict.getType('sys_normal_disable')}]];
+		var prefix = ctx + "accommodation/checkOutInfo";
+        var dormId=$("#dormId").val();
+		$(function() {
+		    var options = {
+                url: prefix + "/list2",
+		        createUrl: prefix + "/add?dormId="+dormId,
+                updateUrl: prefix + "/edit/{id}",
+		        removeUrl: prefix + "/remove",
+		        exportUrl: prefix + "/export",
+                importUrl: prefix + "/importData",
+                importTemplateUrl: prefix + "/importTemplate",
+		        modalName: "财物信息",
+		        columns: [{
+		            checkbox: true
+		        },
+                    {
+                        field: 'propertyId',
+                        title: '财物id',
+                        visible:false
+                    },
+		        {
+		            field: 'propertyName',
+		            title: '物品名称'
+		        },
+		        {
+		            field: 'propertyAmount',
+		            title: '物品数量',
+		            sortable: true
+		        },
+                    {
+                        field: 'propertyStatus',
+                        title: '状态',
+                        align: 'center',
+                        formatter: function(value, row, index) {
+                            return $.table.selectDictLabel(datas, value);
+                        }
+                    },
+				]
+		    };
+		    $.table.init(options);
+		});
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/checkOut", $('#form-post-add').serialize());
+            }
+        }
+	</script>
+</body>
+
+</html>

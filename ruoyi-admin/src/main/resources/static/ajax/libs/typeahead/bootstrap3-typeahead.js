@@ -93,7 +93,7 @@
             if (this.autoSelect || val) {
                 var newVal = this.updater(val);
                 // Updater can be set to any random functions via "options" parameter in constructor above.
-                // Add null check for cases when updater returns void or undefined.
+                // Add null checkIn for cases when updater returns void or undefined.
                 if (!newVal) {
                     newVal = '';
                 }
@@ -113,7 +113,7 @@
             if (this.autoSelect || val) {
                 var newVal = this.updater(val);
                 // Updater can be set to any random functions via "options" parameter in constructor above.
-                // Add null check for cases when updater returns void or undefined.
+                // Add null checkIn for cases when updater returns void or undefined.
                 if (!newVal) {
                     newVal = '';
                 }

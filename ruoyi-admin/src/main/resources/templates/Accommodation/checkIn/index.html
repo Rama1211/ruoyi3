@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('未入住学生列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<input id="level" name="level" type="hidden" th:value="${user.level}"/>
+				<form id="post-form">
+					<div class="select-list">
+						<ul>
+							<li>校区：<input th:if="${user.level} eq floor" type="text" name="campusName" id="campus" th:value="${user.campus}"/>
+								<input th:if="${user.level} eq school" type="text" name="campusName" id="campus" />
+								<input th:if="${user.level} eq county" type="text" name="campusName" id="campus"  th:value="${user.campus}"/>
+							</li>
+
+							<li>
+								楼栋：<input th:if="${user.level} eq floor" type="text" name="floorId" id="floor" th:value="${user.floor}"/>
+								<input th:if="${user.level} eq school" type="text" name="floorId" id="floor"/>
+								<input th:if="${user.level} eq county" type="text" name="floorId" id="floor"/>
+							</li>
+							<li>
+								姓名：<input type="text" name="studentName"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+							    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" >
+		            <i class="fa fa-download"></i> 导出
+		        </a>
+	        </div>
+	        
+	        <div class="col-sm-12 select-table table-striped">
+			    <table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer"/>
+	<script th:inline="javascript">
+        var editFlag ="";
+		var removeFlag = "";
+		var datas = [[${@dict.getType('sys_normal_disable')}]];
+		var prefix = ctx + "accommodation/checkInfo";
+        var campusName=$("#campus").val();
+        var floorName=$("#floor").val();
+		$(function() {
+            if ($(" input[ name='level' ] ").val()=="floor" || $(" input[ name='level' ] ").val()=="county") {
+                $("#campus").attr("readonly",true);
+            }
+            if ($(" input[ name='level' ] ").val()=="floor") {
+                $("#floor").attr("readonly",true);
+            }
+		    var options = {
+		        url: prefix + "/list",
+		        createUrl: prefix + "/add?campusName="+campusName+"&floorName="+floorName,
+                detailUrl: prefix + "/add?campusName="+campusName+"&floorName="+floorName,
+		        updateUrl: prefix + "/edit/{id}",
+		        removeUrl: prefix + "/remove",
+		        exportUrl: prefix + "/export",
+				// sortName: "createTime",
+		        modalName: "房间",
+                // sortOrder: "desc",
+		        columns: [{
+		            checkbox: true
+		        },
+                    {
+                        field: 'studentId',
+                        title: '学号',
+                    },
+		        {
+		            field: 'studentName',
+		            title: '姓名'
+		        },
+		        {
+		            field: 'studentFaculty',
+		            title: '院系',
+		        },
+		        {
+		            field: 'studentProfession',
+		            title: '专业',
+		        },
+                    {
+                        field: 'apartmentId',
+                        title: '宿舍号',
+                    },
+
+                    {
+                        field: 'gender',
+                        title: '性别',
+                    },
+                    {
+                        field: 'studentYear',
+                        title: '入学年份',
+                    },
+		        {
+		            field: 'createTime',
+		            title: '创建时间',
+		            // sortable: true
+		        },
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		                var actions = [];
+		                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="checkIn(\'' + row.studentId + '\')"><i class="fa fa-edit"></i>确认入住</a> ');
+                        return actions.join('');
+		            }
+		        }]
+		    };
+		    $.table.init(options);
+		});
+
+        function checkIn(studentId) {
+            $.ajax({
+                type: 'get',
+                url: prefix + "/checkIn?studentId="+studentId,
+                dataType: "json",
+                success: function (data) {
+					alert("入住成功");
+					location.reload();
+                }
+            });
+        }
+
+	</script>
+</body>
+</html>

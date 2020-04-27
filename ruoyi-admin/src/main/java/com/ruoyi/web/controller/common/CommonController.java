@@ -4,18 +4,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.system.domain.*;
-import com.ruoyi.system.service.DormRoomService.MisCampusService;
-import com.ruoyi.system.service.DormRoomService.MisFloorService;
-import com.ruoyi.system.service.DormRoomService.MisPeropertyService;
-import com.ruoyi.system.service.MisStudentFacultyService;
-import com.ruoyi.system.service.MisStudentProfessionService;
+import com.ruoyi.system.service.baseInfo.DormRoomService.MisCampusService;
+import com.ruoyi.system.service.baseInfo.DormRoomService.MisFloorService;
+import com.ruoyi.system.service.baseInfo.DormRoomService.MisPeropertyService;
+import com.ruoyi.system.service.baseInfo.student.MisStudentFacultyService;
+import com.ruoyi.system.service.baseInfo.student.MisStudentProfessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.config.Global;
@@ -26,7 +25,6 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
