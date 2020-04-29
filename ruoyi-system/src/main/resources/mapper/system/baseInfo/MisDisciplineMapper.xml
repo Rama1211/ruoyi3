@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.baseInfo.MisDisciplineMapper">
+
+    <resultMap type="MisDiscipline" id="MisDisciplineResult">
+        <id property="disciplineId" column="id"/>
+        <result property="disciplineStudentName" column="discipline_student_name"/>
+        <result property="disciplineStudentNum" column="discipline_student_num"/>
+        <result property="disciplineCampus" column="discipline_campus"/>
+        <result property="disciplineFloor" column="discipline_floor"/>
+        <result property="disciplineDorm" column="discipline_dorm"/>
+        <result property="disciplineTime" column="discipline_time"/>
+        <result property="disciplineType" column="discipline_type"/>
+        <result property="disciplineReason" column="discipline_reason"/>
+    </resultMap>
+
+    <sql id="selectDisciplineVo">
+        select *from mis_discipline
+    </sql>
+
+    <select id="selectDisciplineList" parameterType="MisDiscipline" resultMap="MisDisciplineResult">
+        <include refid="selectDisciplineVo"/>
+        <where>
+            <if test="disciplineCampus != null and disciplineCampus != ''">
+                AND discipline_campus like concat('%', #{disciplineCampus}, '%')
+            </if>
+            <if test="disciplineFloor != null and disciplineFloor != ''">
+                AND discipline_floor like concat('%', #{disciplineFloor}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper> 

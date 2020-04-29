@@ -33,4 +33,29 @@ public class MisVisitorServiceImpl implements MisVusitorService
     public List<MisVisitor> selectVisitorList(MisVisitor visitor) {
         return visitorMapper.selectVisitorList(visitor);
     }
+
+    @Override
+    public int selectVisitorInfo(MisVisitor visitor) {
+        return visitorMapper.selectVisitorInfo(visitor);
+    }
+
+    @Override
+    public int insertVisitor(MisVisitor visitor) {
+        return visitorMapper.insertVisitor(visitor);
+    }
+
+    @Override
+    public MisVisitor selectVisitorById(String id) {
+        return visitorMapper.selectVisitorById(id);
+    }
+
+    @Override
+    public int updateVisitor(MisVisitor visitor) {
+        return visitorMapper.updateVisitor(visitor);
+    }
+
+    @Override
+    public int deleteVisitorByIds(String ids) {
+        return visitorMapper.deleteVisitorByIds(ids);
+    }
 }

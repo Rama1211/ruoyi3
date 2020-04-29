@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('修改访客信息')"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <input id="relationshipp" name="relationshipp" type="hidden" th:field="${visitor.relationship}"/>
+    <form class="form-horizontal m" id="form-dorm-edit" th:object="${visitor}">
+        <input id="visitorId" name="visitorId" type="hidden" th:field="*{visitorId}"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">受访学生姓名：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="studentName" readonly id="studentName"
+                       th:field="*{studentName}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">受访学生学号：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="studentNum" readonly id="studentNum"
+                       th:field="*{studentNum}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">所在校区名称：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="campusName" readonly id="campusName"
+                       th:field="*{campusName}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">所在楼栋名称：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="floorName" readonly id="floorName" th:field="*{floorName}"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">所在宿舍号：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="roomNum" readonly id="roomNum" th:field="*{roomNum}"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">访客姓名：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="visitorNmae" id="visitorNmae" th:field="*{visitorNmae}"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">访客关系：</label>
+            <div class="col-sm-8">
+                <select id="relationship" name="relationship" class="form-control" title="请选择">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">来访日期：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="visitorTime" readonly id="visitorTime"
+                       th:field="*{visitorTime}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">手机号：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="phone" id="phone" th:field="*{phone}" required>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer"/>
+<script type="text/javascript">
+    $("#form-dorm-edit").validate({
+        rules: {
+            phone:{
+                isPhone:true
+            }
+        },
+        messages: {
+            phone: {
+                isPhone:"请输入正确的手机号"
+            }
+
+        }
+    });
+    $(function () {
+        $.ajax({
+            type: 'get',
+            url: ctx + "common/relationship",
+            dataType: "json",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].relationship == $("#relationshipp").val()) {
+                        $("#relationship").append("<option value='" + data[i].relationship + "' selected='selected'>" + data[i].relationship + "</option>");
+                    }else {
+                        $("#relationship").append("<option value='" + data[i].relationship + "'>" + data[i].relationship + "</option>");
+                    }
+                }
+                $("#relationship").selectpicker("refresh");
+            }
+        });
+    })
+
+    var prefix = ctx + "visitors/visitorsInfo";
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-dorm-edit').serialize());
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,21 +1,26 @@
 package com.ruoyi.web.controller.common;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.ruoyi.system.domain.*;
+import com.ruoyi.system.service.DailyOperation.MisRelationshipService;
 import com.ruoyi.system.service.baseInfo.DormRoomService.MisCampusService;
 import com.ruoyi.system.service.baseInfo.DormRoomService.MisFloorService;
 import com.ruoyi.system.service.baseInfo.DormRoomService.MisPeropertyService;
 import com.ruoyi.system.service.baseInfo.student.MisStudentFacultyService;
 import com.ruoyi.system.service.baseInfo.student.MisStudentProfessionService;
+import com.ruoyi.web.controller.tool.QRCodeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.ruoyi.common.config.Global;
 import com.ruoyi.common.config.ServerConfig;
@@ -25,16 +30,18 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 通用请求处理
- * 
+ *
  * @author ruoyi
  */
 @Controller
-public class CommonController
-{
+public class CommonController {
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
     @Autowired
@@ -53,21 +60,21 @@ public class CommonController
     private MisFloorService misFloorService;
 
     @Autowired
+    private MisRelationshipService misRelationshipService;
+
+    @Autowired
     private MisPeropertyService peropertyService;
 
     /**
      * 通用下载请求
      *
      * @param fileName 文件名称
-     * @param delete 是否删除
+     * @param delete   是否删除
      */
     @GetMapping("common/download")
-    public void fileDownload(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request)
-    {
-        try
-        {
-            if (!FileUtils.isValidFilename(fileName))
-            {
+    public void fileDownload(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request) {
+        try {
+            if (!FileUtils.isValidFilename(fileName)) {
                 throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
             }
             String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
@@ -78,13 +85,10 @@ public class CommonController
             response.setHeader("Content-Disposition",
                     "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
             FileUtils.writeBytes(filePath, response.getOutputStream());
-            if (delete)
-            {
+            if (delete) {
                 FileUtils.deleteFile(filePath);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error("下载文件失败", e);
         }
     }
@@ -94,10 +98,8 @@ public class CommonController
      */
     @PostMapping("/common/upload")
     @ResponseBody
-    public AjaxResult uploadFile(MultipartFile file) throws Exception
-    {
-        try
-        {
+    public AjaxResult uploadFile(MultipartFile file) throws Exception {
+        try {
             // 上传文件路径
             String filePath = Global.getUploadPath();
             // 上传并返回新文件名称
@@ -107,9 +109,7 @@ public class CommonController
             ajax.put("fileName", fileName);
             ajax.put("url", url);
             return ajax;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return AjaxResult.error(e.getMessage());
         }
     }
@@ -119,8 +119,7 @@ public class CommonController
      */
     @GetMapping("/common/download/resource")
     public void resourceDownload(String resource, HttpServletRequest request, HttpServletResponse response)
-            throws Exception
-    {
+            throws Exception {
         // 本地资源路径
         String localPath = Global.getProfile();
         // 数据库资源地址
@@ -135,61 +134,116 @@ public class CommonController
     }
 
     /**
-     *院系下拉框查询
+     * 院系下拉框查询
      */
     @GetMapping("/common/studentFaculty")
-    public @ResponseBody List<MisFaculty> studentFaculty()
-    {
+    public @ResponseBody
+    List<MisFaculty> studentFaculty() {
         List<MisFaculty> list = facultyService.selectFacultyList();
-        return list ;
+        return list;
     }
 
     /**
-     *专业下拉框查询
+     * 专业下拉框查询
      */
     @GetMapping("/common/studentProfession")
-    public @ResponseBody List<MisProfession> studentProfession(String facultyId)
-    {
-            if(facultyId.equals("null")){
-                facultyId="1";
-            }
-        List<MisProfession> list =professionService.selectProfessionList(facultyId);
-        return list ;
+    public @ResponseBody
+    List<MisProfession> studentProfession(String facultyId) {
+        if (facultyId.equals("null")) {
+            facultyId = "1";
+        }
+        List<MisProfession> list = professionService.selectProfessionList(facultyId);
+        return list;
     }
+
     /**
-     *校区下拉框查询
+     * 校区下拉框查询
      */
     @GetMapping("/common/studentScampus")
-    public @ResponseBody List<MiScampus> MiScampusFaculty()
-    {
-        MiScampus miScampus=new MiScampus();
+    public @ResponseBody
+    List<MiScampus> MiScampusFaculty() {
+        MiScampus miScampus = new MiScampus();
         List<MiScampus> list = misCampusService.selectScampusList(miScampus);
         return list;
     }
 
     /**
-     *楼栋下拉框查询
+     * 楼栋下拉框查询
      */
     @GetMapping("/common/studentfloor")
-    public @ResponseBody List<MisFloor> studentfloor(String campusId)
-    {
-        if(campusId.equals("null")){
-            campusId="1";
+    public @ResponseBody
+    List<MisFloor> studentfloor(String campusId) {
+        System.out.println(campusId+"----");
+        if (campusId.equals("null")) {
+            campusId = "1";
         }
-        List<MisFloor> list =misFloorService.selectFloorByCampusId(campusId,"");
+        List<MisFloor> list = misFloorService.selectFloorByCampusId(campusId, "");
+        System.out.println(list.size());
         return list;
     }
 
     /**
-     *财物下拉框查询
+     * 财物下拉框查询
      */
     @GetMapping("/common/property")
-    public @ResponseBody List<DimProperty> property()
-    {
-        List<DimProperty> list =peropertyService.selectDimPropertyAll();
+    public @ResponseBody
+    List<DimProperty> property() {
+        List<DimProperty> list = peropertyService.selectDimPropertyAll();
         return list;
     }
 
+    /**
+     * 访客关系下拉框查询
+     */
+    @GetMapping("/common/relationship")
+    public @ResponseBody
+    List<MisRelationship> relationships() {
+        List<MisRelationship> list = misRelationshipService.selectRelationshipList();
+        return list;
+    }
 
+    /**
+     * 根据 url 生成 带有logo二维码
+     */
+    @RequestMapping(value = "/common/createLogoQRCode")
+    public void createLogoQRCode(HttpServletResponse response) throws Exception {
+        String url="http://localhost:8080/repair/repairInfo/add";
+        ServletOutputStream stream = null;
+        try {
+            stream = response.getOutputStream();
+            String logoPath = Thread.currentThread().getContextClassLoader().getResource("").getPath()
+                    + "templates" + File.separator + "pzh2.png";
+            //使用工具类生成二维码
+            QRCodeUtil.encode(url, logoPath, stream, true);
+        } catch (Exception e) {
+            e.getStackTrace();
+        } finally {
+            if (stream != null) {
+                stream.flush();
+                stream.close();
+            }
+        }
+    }
+
+    /**
+     * 根据 url 生成 普通二维码
+     */
+    @RequestMapping(value = "/common/createCommonQRCode")
+    public void createCommonQRCode(HttpServletResponse response) throws Exception {
+        String url="http://localhost:8080/repair/repairInfo/add";
+        ServletOutputStream stream = null;
+        try {
+            stream = response.getOutputStream();
+            //使用工具类生成二维码
+            QRCodeUtil.encode(url, stream);
+        } catch (Exception e) {
+            e.getStackTrace();
+        } finally {
+            if (stream != null) {
+                stream.flush();
+                stream.close();
+            }
+        }
+    }
 
 }

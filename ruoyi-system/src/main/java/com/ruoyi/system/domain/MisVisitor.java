@@ -16,13 +16,8 @@ public class MisVisitor extends BaseEntity {
      * ID
      */
     @Excel(name = "ID", cellType = ColumnType.NUMERIC)
-    private Integer Id;
+    private Integer visitorId;
 
-    /**
-     * 访客姓名
-     */
-    @Excel(name = "访客姓名", cellType = ColumnType.STRING)
-    private String visitorNmae;
 
     /**
      * 受访学生姓名
@@ -36,66 +31,86 @@ public class MisVisitor extends BaseEntity {
     @Excel(name = "受访学生学号", cellType = ColumnType.STRING)
     private String studentNum;
     /**
-     * 所在校区id
+     * 所在校区名称
      */
-    @Excel(name = "所在校区id", cellType = ColumnType.NUMERIC)
-    private Integer campusId;
+    @Excel(name = "所在校区名称", cellType = ColumnType.NUMERIC)
+    private String campusName;
 
     /**
-     * 所在楼栋id
+     * 所在楼栋名称
      */
-    @Excel(name = "所在楼栋id", cellType = ColumnType.NUMERIC)
-    private Integer floorId;
+    @Excel(name = "所在楼栋名称", cellType = ColumnType.NUMERIC)
+    private String floorName;
 
     /**
      * 所在宿舍号
      */
     @Excel(name = "所在宿舍号", cellType = ColumnType.NUMERIC)
-    private Integer roomId;
+    private Integer roomNum;
+
+
+    /**
+     * 访客姓名
+     */
+    @Excel(name = "访客姓名", cellType = ColumnType.STRING)
+    private String visitorNmae;
+
     /**
      * 访客关系
      */
     @Excel(name = "访客关系", cellType = ColumnType.STRING)
     private String relationship;
 
+    /**
+     * 来访日期
+     */
+    @Excel(name = "来访日期", cellType = ColumnType.STRING)
+    private String visitorTime;
+
+    /**
+     * 手机号
+     */
+    @Excel(name = "手机号", cellType = ColumnType.STRING)
+    private String phone;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public Integer getId() {
-        return Id;
+    public Integer getVisitorId() {
+        return visitorId;
     }
 
-    public void setId(Integer id) {
-        Id = id;
+    public void setVisitorId(Integer visitorId) {
+        this.visitorId = visitorId;
     }
 
     public String getVisitorNmae() {
         return visitorNmae;
     }
 
-    public Integer getCampusId() {
-        return campusId;
+    public String getCampusName() {
+        return campusName;
     }
 
-    public void setCampusId(Integer campusId) {
-        this.campusId = campusId;
+    public void setCampusName(String campusName) {
+        this.campusName = campusName;
     }
 
-    public Integer getFloorId() {
-        return floorId;
+    public String getFloorName() {
+        return floorName;
     }
 
-    public void setFloorId(Integer floorId) {
-        this.floorId = floorId;
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
     }
 
-    public Integer getRoomId() {
-        return roomId;
+    public Integer getRoomNum() {
+        return roomNum;
     }
 
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
+    public void setRoomNum(Integer roomNum) {
+        this.roomNum = roomNum;
     }
 
     public void setVisitorNmae(String visitorNmae) {
@@ -124,5 +139,21 @@ public class MisVisitor extends BaseEntity {
 
     public void setRelationship(String relationship) {
         this.relationship = relationship;
+    }
+
+    public String getVisitorTime() {
+        return visitorTime;
+    }
+
+    public void setVisitorTime(String visitorTime) {
+        this.visitorTime = visitorTime;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

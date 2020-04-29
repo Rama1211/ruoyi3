@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.baseInfo.MisRepairMapper">
+
+    <resultMap type="MisRepair" id="MisRepairResult">
+        <id property="repairId" column="id"/>
+        <result property="repairDormId" column="repair_dorm_id"/>
+        <result property="repairRemark" column="repair_remark"/>
+        <result property="repairStudentName" column="repair_student_name"/>
+        <result property="repairDeclareTime" column="repair_declare_time"/>
+        <result property="repairStudentPhone" column="repair_student_phone"/>
+        <result property="repairCompleteTime" column="repair_complete_time"/>
+        <result property="status" column="status"/>
+        <result property="repairCampus" column="repair_campus"/>
+        <result property="repairFloor" column="repair_floor"/>
+        <result property="repairStudentNum" column="repair_student_num"/>
+        <result property="repairResult" column="repair_result"/>
+    </resultMap>
+
+    <sql id="selectRepairVo">
+        select *
+        from mis_repair
+    </sql>
+
+    <select id="selectRepairList" parameterType="MisRepair" resultMap="MisRepairResult">
+        <include refid="selectRepairVo"/>
+        <where>
+            <if test="repairCampus != null and repairCampus != ''">
+                AND repair_campus like concat('%', #{repairCampus}, '%')
+            </if>
+            <if test="repairFloor != null and repairFloor != ''">
+                AND repair_floor like concat('%', #{repairFloor}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status like concat('%', #{status}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRepairById" parameterType="String" resultMap="MisRepairResult">
+        <include refid="selectRepairVo"/>
+        where id=#{id}
+    </select>
+
+    <update id="updateRepair" parameterType="MisRepair">
+        update mis_repair
+        <set>
+            repair_result=#{repairResult},
+            repair_complete_time=#{repairCompleteTime},
+            updateTime = sysdate(),
+            updateBy = #{updateBy}
+        </set>
+        where id = #{repairId}
+    </update>
+
+
+    <delete id="deleteRepairByIds" parameterType="String">
+        delete
+        from mis_repair
+        where id = #{ids}
+    </delete>
+
+    <insert id="insertRepair" parameterType="MisRepair" useGeneratedKeys="true" keyProperty="id">
+        insert into mis_repair(repair_dorm_id,
+                               repair_remark,
+                               repair_student_name,
+                               repair_declare_time,
+                               repair_student_phone,
+                               status,
+                               repair_student_num,
+                               repair_floor,
+                               repair_campus)
+        values (#{repairDormId},
+                #{repairRemark},
+                #{repairStudentName},
+                sysdate(),
+                #{repairStudentPhone},
+                #{status},
+                #{repairStudentNum},
+                #{repairFloor},
+                #{repairCampus})
+    </insert>
+
+</mapper> 

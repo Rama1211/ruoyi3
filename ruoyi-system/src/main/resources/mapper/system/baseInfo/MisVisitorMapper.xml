@@ -5,15 +5,16 @@
 <mapper namespace="com.ruoyi.system.mapper.baseInfo.MisVisitorMapper">
 
     <resultMap type="MisVisitor" id="MisVisitorResult">
-        <id property="Id" column="id"/>
+        <id property="visitorId" column="id"/>
         <result property="visitorNmae" column="visitorNmae"/>
         <result property="studentName" column="studentName"/>
         <result property="studentNum" column="studentNum"/>
         <result property="relationship" column="relationship"/>
-        <result property="campusId" column="campusId"/>
-        <result property="floorId" column="floorId"/>
-        <result property="roomId" column="roomId"/>
+        <result property="campusName" column="campusName"/>
+        <result property="floorName" column="floorName"/>
+        <result property="roomNum" column="roomNum"/>
         <result property="relationship" column="relationship"/>
+        <result property="phone" column="phone"/>
     </resultMap>
 
     <sql id="selectVisitorVo">
@@ -23,14 +24,67 @@
     <select id="selectVisitorList" parameterType="MisVisitor" resultMap="MisVisitorResult">
         <include refid="selectVisitorVo"/>
         <where>
-            <if test="campusId != null and campusId != ''">
-                AND campusId like concat('%', #{campusId}, '%')
+            <if test="campusName != null and campusName != ''">
+                AND campusName like concat('%', #{campusName}, '%')
             </if>
-            <if test="floorId != null and floorId != ''">
-                AND floorId like concat('%', #{floorId}, '%')
+            <if test="floorName != null and floorName != ''">
+                AND floorName like concat('%', #{floorName}, '%')
             </if>
         </where>
     </select>
 
+    <select id="selectVisitorInfo" parameterType="MisVisitor" resultType="Integer">
+          select count(1) from mis_accommodation acc join mis_room room on acc.room_id=room.id  and acc.student_num=#{studentNum} and
+                                                                           room.floor_id=#{floorName} and room.campus_id=#{campusName} and room.dorm_num=#{roomNum}
+    </select>
+
+    <select id="selectVisitorById" parameterType="String" resultMap="MisVisitorResult">
+        <include refid="selectVisitorVo"/>
+      where id=#{id}
+    </select>
+
+    <insert id="insertVisitor" parameterType="MisVisitor" useGeneratedKeys="true" keyProperty="id">
+        insert into mis_visitor(
+        <if test="visitorNmae != null and visitorNmae != ''">visitorNmae,</if>
+        <if test="studentName != null and studentName != ''">studentName,</if>
+        <if test="studentNum != null and studentNum != ''">studentNum,</if>
+        <if test="campusName != null and campusName != ''">campusName,</if>
+        <if test="floorName != null and floorName != ''">floorName,</if>
+        <if test="roomNum != null and roomNum != ''">roomNum,</if>
+        <if test="relationship != null and relationship != ''">relationship,</if>
+        <if test="visitorTime != null and visitorTime != ''">visitorTime,</if>
+        <if test="phone != null and phone != ''">phone</if>
+        )values(
+        <if test="visitorNmae != null and visitorNmae != ''"> #{visitorNmae},</if>
+        <if test="studentName != null and studentName != ''"> #{studentName},</if>
+        <if test="studentNum != null and studentNum != ''"> #{studentNum},</if>
+        <if test="campusName != null and campusName != ''"> #{campusName},</if>
+        <if test="floorName != null and floorName != ''"> #{floorName},</if>
+        <if test="roomNum != null and roomNum != ''"> #{roomNum},</if>
+        <if test="relationship != null and relationship != ''"> #{relationship},</if>
+        <if test="visitorTime != null and visitorTime != ''"> #{visitorTime},</if>
+        <if test="phone != null and phone != ''"> #{phone}</if>
+        )
+    </insert>
+
+    <update id="updateVisitor" parameterType="MisVisitor">
+        update mis_visitor
+        <set>
+            <if test="studentName != null and studentName != ''">studentName = #{studentName},</if>
+            <if test="studentNum != null and studentNum != ''">studentNum = #{studentNum},</if>
+            <if test="campusName != null and campusName != ''">campusName = #{campusName},</if>
+            <if test="floorName != null and floorName != ''">floorName = #{floorName},</if>
+            <if test="roomNum != null and roomNum != ''">roomNum = #{roomNum},</if>
+            <if test="visitorNmae != null and visitorNmae != ''">visitorNmae = #{visitorNmae},</if>
+            <if test="relationship != null and relationship != ''">relationship = #{relationship},</if>
+            <if test="visitorTime != null and visitorTime != ''">visitorTime = #{visitorTime},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+          </set>
+        where id = #{visitorId}
+    </update>
+
+    <delete id="deleteVisitorByIds" parameterType="String">
+        delete from mis_visitor where id=#{ids}
+    </delete>
 
 </mapper> 
