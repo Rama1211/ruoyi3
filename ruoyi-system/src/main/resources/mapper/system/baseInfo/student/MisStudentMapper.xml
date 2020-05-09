@@ -109,12 +109,14 @@
         <if test="campusName != null and campusName != ''">AND mis_student.campus_name like concat('%', #{campusName}, '%')</if>
         <if test="campusName != null and campusName != ''">AND mis_student.campus_name like concat('%', #{campusName}, '%')</if>
         and mis_accommodation.checkIn_status='0'
+        and mis_accommodation.data_status='new'
         <if test="studentName != null and studentName != ''">AND mis_student.student_name like concat('%', #{studentName}, '%')</if>
     </select>
 
     <select id="selectStudentListOnCheckOut" parameterType="MisStudent" resultMap="MisStudentResult">
         <include refid="selectStudentVo"/>
         join mis_accommodation on mis_student.student_id=mis_accommodation.student_num  where mis_accommodation.checkIn_status='1'
+        and mis_accommodation.data_status='new'
         <if test="floorId != null and floorId != ''">AND mis_student.floor_id like concat('%', #{floorId}, '%')</if>
         <if test="campusName != null and campusName != ''">AND mis_student.campus_name like concat('%', #{campusName}, '%')</if>
         <if test="studentName != null and studentName != ''">AND mis_student.student_name like concat('%', #{studentName}, '%')</if>

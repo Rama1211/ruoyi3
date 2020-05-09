@@ -35,7 +35,7 @@ import java.util.List;
 @RequestMapping("/student/studentInfo")
 public class StudentInfoController extends BaseController
 {
-    private String prefix = "baseInfo//student/studentInfo";
+    private String prefix = "baseInfo/student/studentInfo";
 
     @Autowired
     private MisStudentFacultyService facultyService;
@@ -114,7 +114,6 @@ public class StudentInfoController extends BaseController
     }
 
     @Log(title = "学生信息管理", businessType = BusinessType.EXPORT)
-//    @RequiresPermissions("student:studentInfo:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(MisStudent student)
@@ -125,7 +124,6 @@ public class StudentInfoController extends BaseController
     }
 
     //下载导入模板
-//    @RequiresPermissions("student:studentInfo:view")
     @GetMapping("/importTemplate")
     @ResponseBody
     public AjaxResult importTemplate()
@@ -136,7 +134,6 @@ public class StudentInfoController extends BaseController
 
     //导入学生信息
     @Log(title = "学生信息管理", businessType = BusinessType.IMPORT)
-//    @RequiresPermissions("student:studentInfo:import")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception

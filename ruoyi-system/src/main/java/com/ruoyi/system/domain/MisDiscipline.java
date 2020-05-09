@@ -4,10 +4,10 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
- * 访客信息表
+ * 违纪信息表
  *
  * @author dg
  */

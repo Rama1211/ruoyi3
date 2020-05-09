@@ -11,15 +11,15 @@
 				<form id="post-form">
 					<div class="select-list">
 						<ul>
-							<li>校区：<input th:if="${user.level} eq floor" type="text" name="campusId" id="campus" th:value="${user.campus}"/>
-								<input th:if="${user.level} eq school" type="text" name="campusId" id="campus" />
-								<input th:if="${user.level} eq county" type="text" name="campusId" id="campus"  th:value="${user.campus}"/>
+							<li>校区：<input th:if="${user.level} eq floor" type="text" name="repairCampus" id="campus" th:value="${user.campus}"/>
+								<input th:if="${user.level} eq school" type="text" name="repairCampus" id="campus" />
+								<input th:if="${user.level} eq county" type="text" name="repairCampus" id="campus"  th:value="${user.campus}"/>
 							</li>
 
 							<li>
-								楼栋：<input th:if="${user.level} eq floor" type="text" name="floorId" id="floor" th:value="${user.floor}"/>
-								<input th:if="${user.level} eq school" type="text" name="floorId" id="floor"/>
-								<input th:if="${user.level} eq county" type="text" name="floorId" id="floor"/>
+								楼栋：<input th:if="${user.level} eq floor" type="text" name="repairFloor" id="floor" th:value="${user.floor}"/>
+								<input th:if="${user.level} eq school" type="text" name="repairFloor" id="floor"/>
+								<input th:if="${user.level} eq county" type="text" name="repairFloor" id="floor"/>
 							</li>
 
 							<li>

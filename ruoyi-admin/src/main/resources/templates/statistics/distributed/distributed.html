@@ -12,7 +12,7 @@
 					<div class="select-list">
 						<ul>
 							<li>院系：
-								<select id="sel_bizUnit" name="studentFaculty" title="请选择"></select>
+								<select id="studentFaculty" name="studentFaculty" title="请选择"></select>
 							</li>
 							<li>
 								校区：<input  type="text" name="campus" id="campus"/>
@@ -27,7 +27,7 @@
 			</div>
 
 			<div class="col-sm-6">
-				<div class="ibox float-e-margins" style="width: 2000px;height: 300px">
+				<div class="ibox float-e-margins" style="width: 1500px;height: 300px">
 					<div class="ibox-title">
 						<h5>柱状图</h5>
 						<div class="ibox-tools">
@@ -48,8 +48,8 @@
 							</a>
 						</div>
 					</div>
-					<div class="ibox-content">
-						<div class="echarts" id="echarts-bar-chart"></div>
+					<div class="ibox-content" >
+						<div class="echarts" id="echarts-bar-chart" align="middle"></div>
 					</div>
 				</div>
 			</div>
@@ -70,39 +70,55 @@
                     $("#sel_bizUnit").selectpicker("refresh");
                 }
             });
-            var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
-            var option = {
-                tooltip: {
-                    show: true
-                },
-                legend: {
-                    data:['人数']
-                },
-                xAxis : [
-                    {
-                        type : 'category',
-                        data : ["1号楼","2号楼","3号楼","4号楼","5号楼","6号楼"]
+                var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
+                barChart.setOption({
+                    title:{text:'院系学生分布'},
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['人数']
+                    },
+                    xAxis : {data:[]},
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    grid: {
+                        height:150
+                    },
+                    series : [{name:'人数',type:'bar',data:[]}]
+                });
+                $(window).resize(gaugeChart.resize);
+                $.ajax({
+                    type: 'get',
+                    url: ctx + "statistics/statisticsInfo?studentFaculty="+$("#studentFaculty").val()+"&campus="+$("#campus").val(),
+                    dataType: "json",
+                    async:false,
+                    cache:false,
+                    success: function (data) {
+                        barChart.setOption({
+                            xAxis:{data:data.floor},
+                            series:[{name:'人数',data:data.data}]
+                        });
                     }
-                ],
-                yAxis : [
-                    {
-                        type : 'value'
-                    }
-                ],
-                grid: {
-					height:150
-                },
-                series : [
-                    {
-                        "name":"人数",
-                        "type":"bar",
-                        "data":[5, 20, 40, 10, 10, 20]
-                    }
-                ]
-            };
-            barChart.setOption(option);
-            $(window).resize(gaugeChart.resize);
-		});
+                });
+            });
 		</script>
+
+	<!--series : [-->
+	<!--{-->
+	<!--"name":"人数",-->
+	<!--"type":"bar",-->
+	<!--"data":[100, 0, 0, 50, 0, 90,150,0,0,600,270]-->
+	<!--}-->
+	<!--]-->
+	<!--xAxis : [-->
+	<!--{-->
+	<!--type : 'category',-->
+	<!--data : ["1号楼","2号楼","3号楼","4号楼","5号楼","6号楼","7号楼","8号楼","9号楼","10号楼","11号楼"]-->
+	<!--}-->
+	<!--],-->
 </body>
 </html>

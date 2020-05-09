@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
 
@@ -27,7 +28,7 @@ public class QRCodeUtil {
     // LOGO高度
     private static final int HEIGHT = 60;
 
-    private static BufferedImage createImage(String content, String imgPath, boolean needCompress) throws Exception {
+    private static BufferedImage createImage(String content, InputStream imgPath, boolean needCompress) throws Exception {
         Hashtable hints = new Hashtable();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
@@ -50,13 +51,13 @@ public class QRCodeUtil {
         return image;
     }
 
-    private static void insertImage(BufferedImage source, String imgPath, boolean needCompress) throws Exception {
-        File file = new File(imgPath);
-        if (!file.exists()) {
+    private static void insertImage(BufferedImage source, InputStream imgPath, boolean needCompress) throws Exception {
+//        File file = new File(imgPath);
+        if (imgPath==null) {
             System.err.println("" + imgPath + "   该文件不存在！");
             return;
         }
-        Image src = ImageIO.read(new File(imgPath));
+        Image src = ImageIO.read(imgPath);
         int width = src.getWidth(null);
         int height = src.getHeight(null);
         if (needCompress) { // 压缩LOGO
@@ -84,16 +85,16 @@ public class QRCodeUtil {
         graph.dispose();
     }
 
-    public static void encode(String content, String imgPath, String destPath, boolean needCompress) throws Exception {
-        BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
-        mkdirs(destPath);
-        ImageIO.write(image, FORMAT_NAME, new File(destPath));
-    }
-
-    public static BufferedImage encode(String content, String imgPath, boolean needCompress) throws Exception {
-        BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
-        return image;
-    }
+//    public static void encode(String content, String imgPath, String destPath, boolean needCompress) throws Exception {
+//        BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
+//        mkdirs(destPath);
+//        ImageIO.write(image, FORMAT_NAME, new File(destPath));
+//    }
+//
+//    public static BufferedImage encode(String content, String imgPath, boolean needCompress) throws Exception {
+//        BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
+//        return image;
+//    }
 
     public static void mkdirs(String destPath) {
         File file = new File(destPath);
@@ -102,8 +103,7 @@ public class QRCodeUtil {
             file.mkdirs();
         }
     }
-
-    public static void encode(String content, String imgPath, OutputStream output, boolean needCompress)
+    public static void encode(String content, InputStream imgPath, OutputStream output, boolean needCompress)
             throws Exception {
         BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
         ImageIO.write(image, FORMAT_NAME, output);

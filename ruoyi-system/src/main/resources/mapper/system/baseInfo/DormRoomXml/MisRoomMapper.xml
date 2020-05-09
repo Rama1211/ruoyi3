@@ -92,9 +92,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		update mis_room
  		<set>
  			<if test="dormType != null and dormType != ''">dorm_type = #{dormType},</if>
- 			<if test="dormShouldPeople != null and dormShouldPeople != ''">dorm_should_people = #{dormShouldPeople},</if>
- 			<if test="dormActualPeople != null and dormActualPeople != ''">dorm_actual_people = #{dormActualPeople},</if>
+ 			dorm_should_people = #{dormShouldPeople},
+ 			dorm_actual_people = #{dormActualPeople},
  			status = #{status},
+			early_checkIn=#{earlyCheckIn},
  			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
 			update_time = sysdate()
  		</set>

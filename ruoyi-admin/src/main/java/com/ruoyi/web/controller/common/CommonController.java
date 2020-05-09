@@ -4,11 +4,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 import com.ruoyi.system.domain.*;
+import com.ruoyi.system.service.DailyOperation.MisDimDisciplineService;
 import com.ruoyi.system.service.DailyOperation.MisRelationshipService;
 import com.ruoyi.system.service.baseInfo.DormRoomService.MisCampusService;
 import com.ruoyi.system.service.baseInfo.DormRoomService.MisFloorService;
@@ -19,6 +16,7 @@ import com.ruoyi.web.controller.tool.QRCodeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,9 +28,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -64,6 +60,9 @@ public class CommonController {
 
     @Autowired
     private MisPeropertyService peropertyService;
+
+    @Autowired
+    private MisDimDisciplineService dimDisciplineService;
 
     /**
      * 通用下载请求
@@ -193,6 +192,16 @@ public class CommonController {
     }
 
     /**
+     * 违纪类别查询
+     */
+    @GetMapping("/common/discipline")
+    public @ResponseBody
+    List<DimDiscipline> discipline() {
+        List<DimDiscipline> list = dimDisciplineService.selectDimDisciplineList();
+        return list;
+    }
+
+    /**
      * 访客关系下拉框查询
      */
     @GetMapping("/common/relationship")
@@ -207,14 +216,14 @@ public class CommonController {
      */
     @RequestMapping(value = "/common/createLogoQRCode")
     public void createLogoQRCode(HttpServletResponse response) throws Exception {
-        String url="http://localhost:8080/repair/repairInfo/add";
+        String url="http://114.116.230.130:8080/repair/repairInfo/add";
         ServletOutputStream stream = null;
         try {
             stream = response.getOutputStream();
-            String logoPath = Thread.currentThread().getContextClassLoader().getResource("").getPath()
-                    + "templates" + File.separator + "pzh2.png";
+            ClassPathResource classPathResource = new ClassPathResource("static/pzh2.png");
+            InputStream inputStream = classPathResource.getInputStream();
             //使用工具类生成二维码
-            QRCodeUtil.encode(url, logoPath, stream, true);
+            QRCodeUtil.encode(url, inputStream, stream, true);
         } catch (Exception e) {
             e.getStackTrace();
         } finally {
@@ -230,7 +239,7 @@ public class CommonController {
      */
     @RequestMapping(value = "/common/createCommonQRCode")
     public void createCommonQRCode(HttpServletResponse response) throws Exception {
-        String url="http://localhost:8080/repair/repairInfo/add";
+        String url="http://114.116.230.130:8080/repair/repairInfo/add";
         ServletOutputStream stream = null;
         try {
             stream = response.getOutputStream();
@@ -245,5 +254,7 @@ public class CommonController {
             }
         }
     }
+
+
 
 }

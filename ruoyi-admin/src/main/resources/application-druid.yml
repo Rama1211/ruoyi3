@@ -6,9 +6,10 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://localhost:3306/graduation project?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                url: jdbc:mysql://114.116.230.130:3306/Dormanager?autoReconnectForPools=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&characterSetResults=utf8
+#                url: jdbc:mysql://114.116.230.130:3306/graduation project?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                 username: root
-                password: 971013
+                password: 1qazZSE$
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭

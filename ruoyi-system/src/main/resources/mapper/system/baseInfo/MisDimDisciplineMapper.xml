@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.baseInfo.MisDimDisciplineMapper">
+
+    <resultMap type="DimDiscipline" id="MisDimDisciplineResult">
+        <id property="disciplineId" column="id"/>
+        <result property="dimDisciplineType" column="dim_discipline_type"/>
+    </resultMap>
+
+    <sql id="selectDisciplineVo">
+        select *from mis_dim_discipline
+    </sql>
+
+    <select id="selectDimDisciplineList"  resultMap="MisDimDisciplineResult">
+        <include refid="selectDisciplineVo"/>
+    </select>
+
+
+</mapper> 

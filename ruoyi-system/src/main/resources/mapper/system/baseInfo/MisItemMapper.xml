@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.baseInfo.MisItemMapper">
+
+    <resultMap type="MisItem" id="MisItemResult">
+        <id property="itemId" column="id"/>
+        <result property="itemName" column="item_name"/>
+        <result property="itemNum" column="item_num"/>
+        <result property="itemTime" column="item_time"/>
+        <result property="studentName" column="student_name"/>
+        <result property="studentNum" column="student_num"/>
+        <result property="floorName" column="floor_name"/>
+        <result property="campusName" column="campus_name"/>
+        <result property="roomNum" column="room_num"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectItemVo">
+        select *from mis_item
+    </sql>
+
+    <select id="selectItemList"  resultMap="MisItemResult">
+        <include refid="selectItemVo"/>
+        <where>
+            <if test="campusName != null and campusName != ''">
+                AND campus_name like concat('%', #{campusName}, '%')
+            </if>
+            <if test="floorName != null and floorName != ''">
+                AND floor_name like concat('%', #{floorName}, '%')
+            </if>
+            <if test="studentName != null and studentName != ''">
+                AND student_name like concat('%', #{studentName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selecItemById"  resultMap="MisItemResult">
+        <include refid="selectItemVo"/>
+          where id=#{id}
+    </select>
+
+    <insert id="insertItem" parameterType="MisItem" useGeneratedKeys="true" keyProperty="id">
+        insert into mis_item(item_name,
+                             item_num,
+                             item_time,
+                             student_name,
+                             student_num,
+                             floor_name,
+                             campus_name,
+                             room_num)
+        values (#{itemName},
+                #{itemNum},
+                #{itemTime},
+                #{studentName},
+                #{studentNum},
+                #{floorName},
+                #{campusName},
+                #{roomNum})
+    </insert>
+
+
+    <update id="updateItem" parameterType="MisItem">
+        update mis_item
+        <set>
+            <if test="itemName != null and itemName != ''">item_name = #{itemName},</if>
+            <if test="itemNum != null and itemNum != ''">item_num = #{itemNum},</if>
+            <if test="studentName != null and studentName != ''">student_name = #{studentName},</if>
+            <if test="studentNum != null and studentNum != ''">student_num = #{studentNum},</if>
+            <if test="roomNum != null and roomNum != ''">room_num = #{roomNum},</if>
+            item_time = #{itemTime},
+            update_by=#{updateBy},
+            update_time=sysdate()
+        </set>
+        where id = #{itemId}
+    </update>
+
+    <delete id="deleteItemByIds" parameterType="String">
+        delete from mis_item where id=#{ids}
+    </delete>
+</mapper>

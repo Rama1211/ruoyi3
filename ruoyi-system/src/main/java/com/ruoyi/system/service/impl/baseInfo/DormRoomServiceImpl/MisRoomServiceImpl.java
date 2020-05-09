@@ -87,30 +87,7 @@ public class MisRoomServiceImpl implements MisRoomService
         return roomMapper.insertRoom(room);
     }
 
-//    /**
-//     * 修改保存岗位信息
-//     *
-//     * @param post 岗位信息
-//     * @return 结果
-//     */
-//    @Override
-//    public int updatePost(SysPost post)
-//    {
-//        return postMapper.updatePost(post);
-//    }
-//
-//    /**
-//     * 通过岗位ID查询岗位使用数量
-//     *
-//     * @param postId 岗位ID
-//     * @return 结果
-//     */
-//    @Override
-//    public int countUserPostById(Long postId)
-//    {
-//        return userPostMapper.countUserPostById(postId);
-//    }
-//
+
     /**
      * 校验宿舍号是否唯一
      *
@@ -137,22 +114,5 @@ public class MisRoomServiceImpl implements MisRoomService
     public String selectminNum(int floorId,int campusId,int floorLevel) {
         return roomMapper.selectminNum(floorId,campusId,floorLevel);
     }
-//
-//    /**
-//     * 校验岗位编码是否唯一
-//     *
-//     * @param post 岗位信息
-//     * @return 结果
-//     */
-//    @Override
-//    public String checkPostCodeUnique(SysPost post)
-//    {
-//        Long postId = StringUtils.isNull(post.getPostId()) ? -1L : post.getPostId();
-//        SysPost info = postMapper.checkPostCodeUnique(post.getPostCode());
-//        if (StringUtils.isNotNull(info) && info.getPostId().longValue() != postId.longValue())
-//        {
-//            return UserConstants.POST_CODE_NOT_UNIQUE;
-//        }
-//        return UserConstants.POST_CODE_UNIQUE;
-//    }
+
 }

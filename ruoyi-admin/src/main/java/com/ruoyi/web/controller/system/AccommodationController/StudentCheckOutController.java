@@ -82,8 +82,8 @@ public class StudentCheckOutController extends BaseController {
     @ResponseBody
     public AjaxResult addSaveBatch(String roomId, Long studentId) {
         studentService.updateApartment(studentId,"","","",ShiroUtils.getLoginName());
-        accommodationService.checnkOut(studentId);
         MisRoom room=roomService.selectRoomById(accommodationService.selectAccommodationById(studentId).getRoomId());
+        accommodationService.checnkOut(studentId);
        room.setDormActualPeople(room.getDormActualPeople()-1);
        room.setEarlyCheckIn(room.getEarlyCheckIn()-1);
         return toAjax(roomService.updateRoom(room));

@@ -38,6 +38,10 @@ public class MisAccommodation extends BaseEntity
     @Excel(name = "是否入住",cellType = ColumnType.NUMERIC)
     private String checkInStatus;
 
+    /** 数据类型 */
+    @Excel(name = "数据类型",cellType = ColumnType.STRING)
+    private String dataStatus;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -88,5 +92,13 @@ public class MisAccommodation extends BaseEntity
 
     public void setCheckInStatus(String checkInStatus) {
         this.checkInStatus = checkInStatus;
+    }
+
+    public String getDataStatus() {
+        return dataStatus;
+    }
+
+    public void setDataStatus(String dataStatus) {
+        this.dataStatus = dataStatus;
     }
 }

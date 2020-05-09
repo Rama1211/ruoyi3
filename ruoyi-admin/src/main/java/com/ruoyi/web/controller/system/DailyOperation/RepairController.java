@@ -5,6 +5,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.MisRepair;
 import com.ruoyi.system.domain.MisRoom;
@@ -42,6 +43,12 @@ public class RepairController extends BaseController {
     @Autowired
     private MisRepairService repairService;
 
+    @Autowired
+    private MisFloorService floorService;
+
+    @Autowired
+    private MisCampusService scampusService;
+
     @GetMapping()
     public String operlog(ModelMap mmap) {
         mmap.put("user", ShiroUtils.getSysUser());
@@ -52,7 +59,27 @@ public class RepairController extends BaseController {
     @ResponseBody
     public TableDataInfo list(MisRepair repair) {
         startPage();
+        if(StringUtils.isNotEmpty(repair.getRepairCampus())){
+            if (scampusService.selectMiScampusByName(repair.getRepairCampus())!=null){
+                repair.setRepairCampus(scampusService.selectMiScampusByName(repair.getRepairCampus()).getCampusId());
+            }else {
+                repair.setRepairCampus("xx");
+            }
+        }
+        if (StringUtils.isNotEmpty(repair.getRepairFloor())){
+            if (floorService.selectFloorByCampusId(repair.getRepairCampus(),repair.getRepairFloor()).size()>0){
+                repair.setRepairFloor(floorService.selectFloorByCampusId(repair.getRepairCampus(),repair.getRepairFloor()).get(0).getFloorId());
+            }else {
+                repair.setRepairFloor("xx");
+            }
+        }
+        System.out.println(repair.getRepairFloor()+"floor");
+        System.out.println(repair.getRepairCampus()+"campus");
         List<MisRepair> list = repairService.selectRepairList(repair);
+        for (MisRepair repair1:list){
+            repair1.setRepairFloor(floorService.selectFloorById(repair1.getRepairFloor()).getFloorName());
+            repair1.setRepairCampus(scampusService.selectMiScampusById(Long.parseLong(repair1.getRepairCampus())).getCampusName());
+        }
         return getDataTable(list);
     }
 

@@ -111,6 +111,7 @@ public class StudentDistributionController extends BaseController {
                         accommodation.setRoomId(Long.parseLong(room.getDormId().toString()));
                         accommodation.setStudentNum(l);
                         accommodation.setCheckInStatus("0");
+                        accommodation.setDataStatus("new");
                         accommodationService.insertAccommodation(accommodation);
                         String fl=floorService.selectFloorById(room.getFloorId().toString()).getFloorName();
                         String ca=campusService.selectMiScampusById(Long.parseLong(room.getCampusId().toString())).getCampusName();

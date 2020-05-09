@@ -27,7 +27,32 @@ public class MisDisciplineServiceImpl implements MisDisciplineService
 
 
     @Override
-    public List<MisDiscipline> selectDisciplineList(MisDiscipline discipline) {
-        return disciplineMapper.selectDisciplineList(discipline);
+    public List<MisDiscipline> selectDisciplineList(MisDiscipline discipline,String check) {
+        return disciplineMapper.selectDisciplineList(discipline,check);
+    }
+
+    @Override
+    public List<MisDiscipline> selectDisciplineListByStuNum(String studentNum) {
+        return disciplineMapper.selectDisciplineListByStuNum(studentNum);
+    }
+
+    @Override
+    public List<String> selectDisciplineStuList(String check) {
+        return disciplineMapper.selectDisciplineStuList(check);
+    }
+
+    @Override
+    public MisDiscipline selectDisciplineById(String id) {
+        return disciplineMapper.selectDisciplineById(id);
+    }
+
+    @Override
+    public int updateDiscipline(MisDiscipline discipline) {
+        return disciplineMapper.updateDiscipline(discipline);
+    }
+
+    @Override
+    public int deleteDisciplineByIds(String ids) {
+        return disciplineMapper.deleteDisciplineByIds(ids);
     }
 }

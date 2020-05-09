@@ -14,23 +14,66 @@
         <result property="disciplineTime" column="discipline_time"/>
         <result property="disciplineType" column="discipline_type"/>
         <result property="disciplineReason" column="discipline_reason"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="selectDisciplineVo">
-        select *from mis_discipline
+        select id,discipline_student_name,discipline_student_num,discipline_campus,discipline_floor,discipline_dorm,discipline_time,discipline_type,discipline_reason from mis_discipline
     </sql>
 
-    <select id="selectDisciplineList" parameterType="MisDiscipline" resultMap="MisDisciplineResult">
+    <select id="selectDisciplineList"  resultMap="MisDisciplineResult">
         <include refid="selectDisciplineVo"/>
         <where>
-            <if test="disciplineCampus != null and disciplineCampus != ''">
-                AND discipline_campus like concat('%', #{disciplineCampus}, '%')
+            <if test="discipline.disciplineCampus != null and discipline.disciplineCampus != ''">
+                AND discipline_campus like concat('%', #{discipline.disciplineCampus}, '%')
             </if>
-            <if test="disciplineFloor != null and disciplineFloor != ''">
-                AND discipline_floor like concat('%', #{disciplineFloor}, '%')
+            <if test="discipline.disciplineFloor != null and discipline.disciplineFloor != ''">
+                AND discipline_floor like concat('%', #{discipline.disciplineFloor}, '%')
+            </if>
+            <if test="discipline.disciplineType != null and discipline.disciplineType != ''">
+                AND discipline_type like concat('%', #{discipline.disciplineType}, '%')
+            </if>
+            <if test="discipline.disciplineStudentName != null and discipline.disciplineStudentName != ''">
+                AND discipline_student_name like concat('%', #{discipline.disciplineStudentName}, '%')
             </if>
         </where>
     </select>
 
+    <select id="selectDisciplineById" parameterType="String"  resultMap="MisDisciplineResult">
+        <include refid="selectDisciplineVo"/>
+       where id=#{id}
+    </select>
 
+
+    <select id="selectDisciplineStuList"  resultType="String">
+        select discipline_student_num from mis_discipline GROUP BY  discipline_student_num HAVING COUNT(discipline_student_num)>=#{check}
+    </select>
+
+
+    <select id="selectDisciplineListByStuNum" parameterType="String" resultMap="MisDisciplineResult">
+        <include refid="selectDisciplineVo"/>
+          where discipline_student_num=#{studentNum}
+    </select>
+
+    <update id="updateDiscipline" parameterType="MisDiscipline">
+        update mis_discipline
+        <set>
+            discipline_student_name=#{disciplineStudentName},
+            discipline_student_num=#{disciplineStudentNum},
+            discipline_dorm=#{disciplineDorm},
+            discipline_time=#{disciplineTime},
+            discipline_type=#{disciplineType},
+            discipline_reason=#{disciplineReason},
+            update_time = sysdate(),
+            update_by = #{updateBy}
+        </set>
+        where id = #{disciplineId}
+    </update>
+
+    <delete id="deleteDisciplineByIds" parameterType="String">
+        delete from mis_discipline where id=#{ids}
+    </delete>
 </mapper> 

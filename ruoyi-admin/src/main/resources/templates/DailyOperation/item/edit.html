@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('修改物品进入信息')"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-dorm-edit" th:object="${item}">
+        <input id="visitorId" name="visitorId" type="hidden" th:field="*{itemId}"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">所在校区：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="campusName" readonly id="campusName"
+                       th:field="*{campusName}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">所在楼栋：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="floorName" readonly id="floorName"
+                       th:field="*{floorName}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">宿舍号：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="roomNum"  id="roomNum"
+                       th:field="*{roomNum}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">学生姓名：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="studentName"  id="studentName" th:field="*{studentName}"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">学生学号：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="studentNum"  id="studentNum" th:field="*{studentNum}"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">物品名称：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="itemName"  id="itemName" th:field="*{itemName}"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">物品数量：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="itemNum"  id="itemNum" th:field="*{itemNum}"
+                       required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">离宿时间：</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="itemTime"  id="itemTime"
+                       th:field="*{itemTime}" required>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: datetimepicker-js"/>
+<script type="text/javascript">
+    var prefix = ctx + "item/itemInfo";
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/edit", $('#form-dorm-edit').serialize());
+        }
+    }
+</script>
+</body>
+</html>

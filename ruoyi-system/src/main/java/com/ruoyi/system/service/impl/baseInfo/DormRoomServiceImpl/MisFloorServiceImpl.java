@@ -27,10 +27,7 @@ public class MisFloorServiceImpl implements MisFloorService
         return floorMapper.selectFloorByCampusId(campusId,floorId);
     }
 
-    @Override
-    public MisFloor selectFloorByFloorName(String campusId, String floorName) {
-        return floorMapper.selectFloorByFloorName(campusId,floorName);
-    }
+
 
 
     @Override

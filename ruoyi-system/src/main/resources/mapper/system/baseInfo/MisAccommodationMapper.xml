@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="checkInStatus" column="checkIn_status"/>
 		<result property="checkInTime" column="checkIn_time"/>
 		<result property="checkoutTime" column="checkout_time"/>
+		<result property="dataStatus" column="data_status"/>
 	</resultMap>
 
 	<sql id="selectAccommodationVo">
@@ -19,14 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectAccommodationById" resultMap="MisAccommodationResult">
 		<include refid="selectAccommodationVo"/>
-		where student_num=#{studentId}
+		where student_num=#{studentId} and data_status='new'
 	</select>
 
 
 	<insert id ="insertAccommodation" parameterType="MisAccommodation" >
 		insert into mis_accommodation
-		(student_num, room_id, checkIn_status)
-		values(#{studentNum},#{roomId},#{checkInStatus})
+		(student_num, room_id, checkIn_status,data_status)
+		values(#{studentNum},#{roomId},#{checkInStatus},#{dataStatus})
 	</insert >
 
 
@@ -43,7 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update mis_accommodation
 		<set>
 			checkIn_status='2',
-			checkout_time= sysdate()
+			checkout_time= sysdate(),
+			data_status='old'
 		</set>
 		where student_num = #{studentId}
 	</update>
